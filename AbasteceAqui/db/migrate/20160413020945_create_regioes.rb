@@ -1,6 +1,6 @@
-class CreateRegiaos < ActiveRecord::Migration
+class CreateRegioes < ActiveRecord::Migration
   def change
-    create_table :regiaos do |t|
+    create_table :regioes do |t|
       t.string :nome
 
       t.timestamps null: false
