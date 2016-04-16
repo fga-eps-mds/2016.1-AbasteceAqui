@@ -8,9 +8,10 @@ require 'roo'
 	file.default_sheet = file.sheets.first
 
 		1.upto(1) do |line| # just wait for the sheet opening delay 
+			msg = file.cell(line, 'A')
 		end
 
-		14.upto(100) do |line|
+		14.upto(file.last_row) do |line|
 
 			#Region
 			region_name = file.cell(line, 'C')
@@ -27,7 +28,7 @@ require 'roo'
 
 			#Fuel
 			date = file.cell(line, 'A')
-			type = file.cell(line, 'B')
+			fuel_type = file.cell(line, 'B')
 			min_resale_price = file.cell(line, 'J')
 			medium_resale_price = file.cell(line, 'H')
 			max_resale_price = file.cell(line, 'K')
@@ -37,7 +38,7 @@ require 'roo'
 			resale_standard_deviation = file.cell(line, 'I')
 			distribuition_standard_deviation = file.cell(line, 'O')
 	
-			build_fuel(date, type, min_resale_price, medium_resale_price, max_resale_price, 
+			build_fuel(date, fuel_type, min_resale_price, medium_resale_price, max_resale_price, 
 			resale_standard_deviation, min_distribuition_price, medium_distribuition_price,
 			max_distribuition_price, distribuition_standard_deviation, county)
 		end
@@ -57,7 +58,7 @@ require 'roo'
 
 		region = Region.new
 		region.name = name
-		check_and_save(region)
+		region.save
 		region
 	end
 
@@ -73,7 +74,7 @@ require 'roo'
 		state = State.new
 		state.name = name
 		state.region_id = region.id
-		check_and_save(state)
+		state.save
 		state
 	end
 
@@ -82,18 +83,18 @@ require 'roo'
 		county.name = name
 		county.number_of_gas_station = number_of_gas_station
 		county.state_id = state.id
-		check_and_save(county)
+		county.save
 		county
 	end
 
-	def build_fuel(date, type, min_resale_price, medium_resale_price, max_resale_price, 
+	def build_fuel(date, fuel_type, min_resale_price, medium_resale_price, max_resale_price, 
 		resale_standard_deviation, min_distribuition_price, medium_distribuition_price,
 		max_distribuition_price, distribuition_standard_deviation, county)
 
 
 		fuel = Fuel.new
 		fuel.date = date
-		fuel.type = type
+		fuel.fuel_type = fuel_type
 		fuel.min_resale_price = min_resale_price
 		fuel.medium_resale_price = medium_resale_price
 		fuel.max_resale_price = max_resale_price
@@ -104,19 +105,9 @@ require 'roo'
 		fuel.distribuition_standard_deviation = distribuition_standard_deviation
 		fuel.county_id = county.id
 
-		check_and_save(fuel)
+		fuel.save
 
 	end
 
-
-	def check_and_save(c)
-	  begin
-	    c.save!
-	    c
-	  rescue ActiveRecord::RecordInvalid
-	    c = c.refresh!
-	    c
-	  end
-	end
 
 end
