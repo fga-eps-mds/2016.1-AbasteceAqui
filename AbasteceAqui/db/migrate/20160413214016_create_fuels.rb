@@ -10,6 +10,8 @@ class CreateFuels < ActiveRecord::Migration
       t.float :medium_distribuition_price
       t.float :max_distribuition_price
       t.float :distribuition_standard_deviation
+      t.belongs_to :fuel_research
+      t.belongs_to :fuel_type
       t.timestamps null: false
     end
   
