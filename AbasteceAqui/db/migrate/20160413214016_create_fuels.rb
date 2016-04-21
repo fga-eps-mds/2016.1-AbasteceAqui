@@ -2,6 +2,7 @@ class CreateFuels < ActiveRecord::Migration
   
   def change
     create_table :fuels do |t|
+      t.integer :number_of_gas_station
       t.float :min_resale_price
       t.float :medium_resale_price
       t.float :max_resale_price
