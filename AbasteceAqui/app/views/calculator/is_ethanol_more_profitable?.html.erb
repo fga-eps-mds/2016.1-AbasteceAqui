@@ -1,0 +1,15 @@
+<form action='/calculator'>
+  Preço da Gasolina: <input type='text' name='gas_price'/>
+  Preço do Etanol: <input type='text' name='ethanol_price'/>
+  <input type='submit' value='Calcular'/>
+</form>
+
+
+<%if @a == nil %>
+<!-- Nothing to do-->
+<% elsif @a == true %>
+<h1>O Etanol é mais rentável</h1>
+<% else %>
+<h1>A Gasolina é mais rentável</h1>
+<% end %>
+
