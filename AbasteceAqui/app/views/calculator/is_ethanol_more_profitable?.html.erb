@@ -1,15 +1,48 @@
-<form action='/calculator'>
-  Preço da Gasolina: <input type='text' name='gas_price'/>
-  Preço do Etanol: <input type='text' name='ethanol_price'/>
-  <input type='submit' value='Calcular'/>
-</form>
+	<div class="container">
+	<form action='/calculator'>
+		<form class="form-horizontal">
+			<fieldset>
+
+				<legend>FuelProftability</legend>
+
+				<br><br>
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="gas_price">Gasolina</label>  
+				  <div class="col-md-5">
+				  <input id="gas_price" name="gas_price" type="text" placeholder="Digite o valor da gasolina" class="form-control input-md" required=""><br>
+				    
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="ethanol_price">Alcool</label>  
+				  <div class="col-md-5">
+				  <input id="ethanol_price" name="ethanol_price" type="text" placeholder="Digite o valor do alcool" class="form-control input-md" required=""><br>
+				    
+				  </div>
+				</div>
+
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for=""></label>
+				  <div class="col-md-6">
+				     <input type='submit' value='Calcular'/>
+				  </div>
+				</div>
+
+			</fieldset>
+		</form>
+
+	 
+	</form>
+</div>
 
 
 <%if @a == nil %>
 <!-- Nothing to do-->
-<% elsif @a == true %>
+<%elsif @a == true %>
+<div class="profitability-message">
 <h1>O Etanol é mais rentável</h1>
 <% else %>
-<h1>A Gasolina é mais rentável</h1>
+<h2>A Gasolina é mais rentável</h2>
+</div>
 <% end %>
-

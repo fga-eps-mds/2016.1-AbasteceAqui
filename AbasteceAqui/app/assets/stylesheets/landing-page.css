@@ -17,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Lato","Helvetica Neue",sans-serif,Helvetica,Arial;
     font-weight: 700;
 }
 
@@ -35,7 +35,7 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(../assets/intro-bg.jpg) no-repeat center center;
+    background: url(../assets/gas_station.jpg) no-repeat center center;
     background-size: cover;
 }
 
@@ -70,6 +70,11 @@ h6 {
         font-size: 3em;
     }
 
+    .profitability-message > h2 {
+
+        font-size: 20px;
+    }
+
     ul.intro-social-buttons > li {
         display: block;
         margin-bottom: 20px;
@@ -84,7 +89,6 @@ h6 {
         width: 100%;
     }
 }
-
 .network-name {
     text-transform: uppercase;
     font-size: 14px;
@@ -161,9 +165,18 @@ h6 {
 }
 
 footer {
-    padding: 50px 0;
+    padding: 27px 0;
     background-color: #f8f8f8;
 }
+
+html, body, .padding-page-top {
+    height:93%;
+}
+body > .padding-page-top {
+ height: auto; min-height: 100%;    
+}
+
+.padding-page-top { padding-bottom: 1em; }
 
 p.copyright {
     margin: 15px 0 0;
