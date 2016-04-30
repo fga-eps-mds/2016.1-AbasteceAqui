@@ -37,16 +37,8 @@
 	</form>
 </div>
 
-<!-- Chamar a funcao -->
 
-
-
-<%if @answer == nil %>
-<!-- Nothing to do-->
-<%elsif @answer == true %>
 <div class="profitability-message">
-<h1>O Etanol é mais rentável</h1>
-<% else %>
-<h2>A Gasolina é mais rentável</h2>
+<%= @more_profitable %>
 </div>
-<% end %>
+
