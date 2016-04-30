@@ -17,7 +17,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato","Helvetica Neue",sans-serif,Helvetica,Arial;
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
 
@@ -30,6 +30,11 @@ h6 {
     font-weight: 400;
 }
 
+.align-img {
+
+    text-align: center;
+}
+
 .intro-header {
     padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
     padding-bottom: 50px;
@@ -37,6 +42,7 @@ h6 {
     color: #f8f8f8;
     background: url(../assets/gas_station.jpg) no-repeat center center;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .intro-message {
@@ -58,7 +64,9 @@ h6 {
 }
 
 .intro-message > h3 {
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    color: #FFFFFF; 
+    text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px
+    
 }
 
 @media(max-width:767px) {
@@ -120,7 +128,7 @@ h6 {
 .banner {
     padding: 100px 0;
     color: #f8f8f8;
-    background: url(../assets/banner-bg.jpg) no-repeat center center;
+    background: url(../assets/banner-bg.png) no-repeat center center;
     background-size: cover;
 }
 
@@ -165,7 +173,7 @@ h6 {
 }
 
 footer {
-    padding: 27px 0;
+    padding: 37px 0;
     background-color: #f8f8f8;
 }
 
@@ -176,7 +184,9 @@ body > .padding-page-top {
  height: auto; min-height: 100%;    
 }
 
-.padding-page-top { padding-bottom: 1em; }
+.padding-page-top { 
+    padding-bottom: 1em; 
+}
 
 p.copyright {
     margin: 15px 0 0;
