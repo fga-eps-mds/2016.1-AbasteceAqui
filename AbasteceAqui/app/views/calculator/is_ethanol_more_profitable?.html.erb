@@ -1,4 +1,5 @@
-	<div class="container">
+<div class="container">
+	<!-- Usar mais os forms do ruby -->
 	<form action='/calculator'>
 		<form class="form-horizontal">
 			<fieldset>
@@ -36,10 +37,13 @@
 	</form>
 </div>
 
+<!-- Chamar a funcao -->
 
-<%if @a == nil %>
+
+
+<%if @answer == nil %>
 <!-- Nothing to do-->
-<%elsif @a == true %>
+<%elsif @answer == true %>
 <div class="profitability-message">
 <h1>O Etanol é mais rentável</h1>
 <% else %>
