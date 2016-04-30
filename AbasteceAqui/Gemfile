@@ -51,3 +51,16 @@ group :development do
   gem 'spring'
 end
 
+# Create unit tests
+  #
+  gem 'rspec-rails'
+
+
+# Tool to manage data of the tests
+#
+  gem 'database_cleaner'
+
+# Factory Girl
+
+	gem "factory_girl"
+	gem "factory_girl_rails"
