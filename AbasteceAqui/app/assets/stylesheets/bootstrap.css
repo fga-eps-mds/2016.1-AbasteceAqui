@@ -4550,7 +4550,34 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #555;
   background-color: #e7e7e7;
 }
+#tf-menu {
+  padding: 20px;
+  transition: all 0.8s;
+}
+#tf-menu.navbar-default {
+  background-color: rgba(248, 248, 248, 0);
+  border-color: rgba(231, 231, 231, 0);
+}
+#tf-menu a.navbar-brand {
+text-transform: uppercase;
+font-size: 22px;
+color: #fff;
+font-weight: 900;
+}
+
+#tf-menu.navbar-default .navbar-nav > li > a {
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.on {
+
+  background-color: #f8f8f8 !important;
+  border-color: #e7e7e7 !important; 
+  padding: 0 !important;
+}
 @media (max-width: 767px) {
+
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
     color: #777;
   }
