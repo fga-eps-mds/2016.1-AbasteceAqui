@@ -18,6 +18,16 @@ RSpec.describe CalculatorController, type: :controller do
       expect(assigns(:more_profitable)).to eq "A Gasolina é mais rentável"
 		end
 
+    it "Should be successful" do
+      get :index
+      expect(response).to be_success
+    end
+
+    it "Renders the index templete" do
+      get :index
+      expect(response).to render_template("index")
+    end
+
   end
 
 end 
