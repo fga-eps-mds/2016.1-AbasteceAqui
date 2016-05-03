@@ -55,6 +55,7 @@ end
   #
   gem 'rspec-rails'
 
+gem 'simplecov', :require => false, :group => :test
 
 # Tool to manage data of the tests
 #
