@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
 //= require turbolinks
-//= require_tree .
+//require_tree .
+//= require smooth_scroll
+//= require bootstrap
+//= require bootstrap.js.coffee
+//= require bootstrap.min.js

@@ -1,8 +1,5 @@
-/*!
- * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400);
 
 body,
 html {
@@ -130,6 +127,7 @@ h6 {
     color: #f8f8f8;
     background: url(../assets/banner-bg.png) no-repeat center center;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .banner h2 {
@@ -173,19 +171,21 @@ h6 {
 }
 
 footer {
-    padding: 37px 0;
+    padding: 49px 0;
     background-color: #f8f8f8;
 }
 
 html, body, .padding-page-top {
-    height:93%;
+    height:90%;
 }
 body > .padding-page-top {
  height: auto; min-height: 100%;    
 }
-
+.padding-page-top > #tf-home {
+    padding-top: 0px;
+}
 .padding-page-top { 
-    padding-bottom: 1em; 
+    padding-bottom: 5em; 
 }
 
 p.copyright {

@@ -4521,7 +4521,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #555;
+  color: #555 !important;
   background-color: #e7e7e7;
 }
 .navbar-default .navbar-nav > .disabled > a,
@@ -4569,6 +4569,7 @@ font-weight: 900;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 1px;
+  color: #a6a6a6;
 }
 .on {
 

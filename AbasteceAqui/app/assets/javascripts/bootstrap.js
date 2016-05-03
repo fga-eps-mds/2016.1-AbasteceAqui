@@ -2374,8 +2374,8 @@ if (typeof jQuery === 'undefined') {
       ======================================*/
 
       $(document).ready(function() {
-      /*var welcome = document.getElementById('tf-home');*/
-      if (document.getElementById('tf-home')  == null)
+      var welcome = document.getElementById('tf-home');
+      if (welcome  == null)
       {
         $('.navbar-default').addClass('on');
       }
@@ -2400,11 +2400,6 @@ if (typeof jQuery === 'undefined') {
           target: '.navbar-default',
           offset: 80
       })
-
-      $(document).ready(function() {
-
-      });
-
 
   }());
 

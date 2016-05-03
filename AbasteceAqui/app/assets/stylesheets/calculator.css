@@ -3,3 +3,27 @@
 		font-size: 36px;
 		margin-top: 60px;
 }
+#calculatorTitle {
+    color: #fff;
+    padding: 20px;
+    border-radius: 6px 6px 0 0;
+    font-size: 16px;
+    font-weight: 300;
+}
+.mb-green {
+    background-color: #c1f0c1;
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.text-center {
+    text-align: center;
+}
+* {
+    font-family: Helvetica;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
