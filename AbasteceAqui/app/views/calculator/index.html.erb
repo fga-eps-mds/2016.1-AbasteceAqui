@@ -7,27 +7,33 @@
 				<legend>FuelProftability</legend>
 
 				<br><br>
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="gas_price">Gasolina</label>  
-				  <div class="col-md-5">
-				  <input id="gas_price" name="gas_price" type="number" step="0.001" min="0" placeholder="Digite o valor da gasolina" class="form-control input-md" required=""><br>	
-				    
-				  </div>
-				</div>
 
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="ethanol_price">Alcool</label>  
-				  <div class="col-md-5">
-				  <input id="ethanol_price" name="ethanol_price" type="number" step="0.001" min="0" placeholder="Digite o valor do alcool" class="form-control input-md" required=""><br>
-				    
-				  </div>
-				</div>
+				<div id="calculatorTitle" class="row mb-green text-center"><i class="fa fa-form"></i><font color="#000000"><h2> Calculadora de Rentabilidade </h2></font><br><br>
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="gas_price"><font color="#000000"><strong> Gasolina </strong></font><br><br></label>  
+					  <div class="col-md-5">
+					  <input id="gas_price" name="gas_price" type="number" step="0.001" min="0" placeholder="Digite o valor da gasolina" class="form-control input-md" required=""><br>	
+					    
+					  </div>
+					</div>
 
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for=""></label>
-				  <div class="col-md-6">
-				     <input type='submit' value='Calcular'/>
-				  </div>
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="ethanol_price"><font color="#000000"><strong> Alcool </strong></font><br><br></label>  
+					  <div class="col-md-5">
+					  <input id="ethanol_price" name="ethanol_price" type="number" step="0.001" min="0" placeholder="Digite o valor do alcool" class="form-control input-md" required=""><br>
+					    
+					  </div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-4 control-label" ></label>
+						<div class="col-md-1">
+							<br>
+							<button type="submit" class="btn btn-success" >
+                			<i class="icon-circle-arrow-right icon-large"></i> Calcular
+            				</button>
+					   	</div>
+					</div>
 				</div>
 
 			</fieldset>
@@ -37,7 +43,17 @@
 	</form>
 </div>
 
-
 <div id="profitability-message">
-	<%= @more_profitable %>
-</div>
+	<% if @more_profitable== "A Gasolina é mais rentável" %>
+		<CENTER> 
+			<img class="img-responsive" src="assets/gasoline.png" alt="">
+		</CENTER>
+	<% elsif @more_profitable == "O Etanol é mais rentável" %>
+		<CENTER> 
+			<img class="img-responsive" src="assets/alcool.png" alt="">
+		</CENTER>
+	<% else %>
+		<!-- do nothing -->
+	<% end -%>
+	
+ </div>
