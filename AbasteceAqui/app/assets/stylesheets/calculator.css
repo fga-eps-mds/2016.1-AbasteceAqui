@@ -1,0 +1,98 @@
+* {
+    font-family: Helvetica;
+}
+
+#profitability-message {
+		text-align: center;
+		margin-top: 60px;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+input[name=gas_price], input[name=ethanol_price] {
+	display: block;
+	border-radius: 5px;
+	border-color: lightgray;
+	border-style: solid;
+	width: 37%;
+	font-weight: lighter;
+	margin-left: 10%;
+}
+
+label[for=gas_price] {
+	float: left;
+	margin-right: 40px;
+	color: #000;
+}
+
+label[for=ethanol_price] {
+	float: left;
+	margin-right: 56px;
+	color: #000;
+}
+
+#gas-group {
+	margin-left: 33%;
+}
+
+#ethanol-group {
+	margin-left: 33%;
+	margin-top: 30px;
+	margin-bottom: 15px;
+}
+
+input[name=commit] {
+	width: 100px;
+	height: 40px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: calc(50% - 50px);
+}
+
+form {
+	background-color: #E6E6E6;
+	border-radius: 5px;
+	width: auto;
+	height: auto;
+	margin-left: 70px;
+	margin-right: 80px;
+	margin-top: 50px;
+	border: solid lightgray 1px;
+}
+
+#title-form {
+	color: black;
+	text-align: center;
+}
+
+@media (max-width: 768px) {
+
+	label[for=ethanol_price] {
+		float: none;
+	}
+
+	label[for=gas_price] {
+		float: none;
+	}
+
+	input[name=gas_price], input[name=ethanol_price] {
+		width: 80%;
+		margin-left: -2%;
+	}
+
+}
+
+@media (max-width: 340px){
+	#title-form {
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 475px){
+	input[name=gas_price], input[name=ethanol_price] {
+		font-size: 10px;
+	}
+}
