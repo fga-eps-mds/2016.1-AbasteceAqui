@@ -41,13 +41,25 @@ h6 {
     background-size: cover;
     background-attachment: fixed;
 }
+@media(max-width: 1000px) {
+    .intro-header {
+        background-attachment: scroll;
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+}
 
 .intro-message {
     position: relative;
     padding-top: 20%;
     padding-bottom: 20%;
 }
-
+@media(max-width: 440px) {
+    .intro-message > h3 {
+        font-size: 15px;
+    }
+}
 .intro-message > h1 {
     margin: 0;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
@@ -130,6 +142,14 @@ h6 {
     background-attachment: fixed;
 }
 
+@media(max-width: 1230px) {
+    .banner {
+        background-attachment: scroll;
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+}
 .banner h2 {
     margin: 0;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
@@ -147,7 +167,7 @@ h6 {
 
 @media(max-width:1199px) {
     ul.banner-social-buttons {
-        float: left;
+        float: none;
         margin-top: 15px;
     }
 }

@@ -1,4 +1,4 @@
-/*!
+ /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under the MIT license
@@ -2381,19 +2381,25 @@ if (typeof jQuery === 'undefined') {
       }
       else
       {
-        $('.navbar-default').removeClass('on');
-      
-
-        $(window).bind('scroll', function() {
-            var navHeight = $(window).height() - 580;
-            if ($(window).scrollTop() > navHeight) {
-                $('.navbar-default').addClass('on');
-            } else {
-                $('.navbar-default').removeClass('on');
-            }
-        });
+        if($(window).width()<300 || $(window).height()<580) {
 
         }
+        else {
+          $('.navbar-default').removeClass('on');
+        
+
+          $(window).bind('scroll', function() {
+            var navHeight = $(window).height() - 580;
+            if ($(window).scrollTop() > navHeight) {
+              $('.navbar-default').addClass('on');
+            }
+            else {
+              $('.navbar-default').removeClass('on');
+            }
+          });
+        }
+
+      }
       });
 
       $('body').scrollspy({ 
