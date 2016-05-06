@@ -11,7 +11,7 @@ class County < ActiveRecord::Base
 		researches_of_county = []
 
 		county_researches.each do |research|
-			researches_of_county << research.date
+			researches_of_county << research.id
 		end
 
 		return researches_of_county.last

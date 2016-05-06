@@ -12,18 +12,37 @@
 	</div>
 	<%= submit_tag("Pesquisar", class: "btn btn-success") %>
 <% end %>
+         
+  <table class="table table-responsive">
+  <thead>
+    <th>Combustivel</th>
+    <th>Preço minimo</th>		
+    <th>Preço médio</th>
+    <th>Preço Maximo</th>
+    <th>Número de postos pesquisados</th>
+    <th>Data da Pesquisa</th>
+  </thead>
 
-<p> 
-	<%= @counties_of_state %>
-</p>
+<% @fuel.each do |fuel_atributes| %>
 
-<p>
-	<%= @last_research%>
-</p>
 
-<% @teste.each do |fuel| %>
-<p>
-<%= fuel.fuel_type.type_name %>
-<%= fuel.max_resale_price %></p>
+  <tbody>
+    <td><%= fuel_atributes.fuel_type.type_name %></td>
+
+	<td><%= fuel_atributes.min_resale_price %></td>
+
+	<td><%= fuel_atributes.medium_resale_price %></td>
+
+	<td><%= fuel_atributes.max_resale_price %></td>
+ 
+	<td><%= fuel_atributes.number_of_gas_station %></td>
+
+	<td><%= @date%></td>
+  </tbody>
+
 <% end %>
+
+</table>
+
+
 

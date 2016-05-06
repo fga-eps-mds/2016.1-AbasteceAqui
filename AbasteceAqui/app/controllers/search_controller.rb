@@ -7,7 +7,8 @@ class SearchController < ApplicationController
 		find_counties_of_state()
 		@county_searched = params[:county_searched]
 		find_researches_of_county()
-		teste()
+		find_date_last_research()
+		search_fuels_last_research()
 
 	end
 
@@ -25,16 +26,21 @@ class SearchController < ApplicationController
 
 	def find_researches_of_county
 
-		@last_research = County.search_county_research(@county_searched)
+		@id_last_research = County.search_county_research(@county_searched)
 
 	end
 
-	def teste
-		@teste = FuelResearch.search_fuels_research(@last_research)
+	def find_date_last_research 
+
+		@date = FuelResearch.find_by(id: @id_last_research).date
+	
 	end
 
-	def search_state
+	def search_fuels_last_research
 
+		@fuel = FuelResearch.search_fuels_research(@id_last_research)
+	
 	end
+
 
 end

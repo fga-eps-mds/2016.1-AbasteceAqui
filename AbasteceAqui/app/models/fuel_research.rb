@@ -3,10 +3,10 @@ class FuelResearch < ActiveRecord::Base
 	belongs_to :county
 	has_many :fuels
 
-	def self.search_fuels_research (last_research)
+	def self.search_fuels_research (id_last_research)
 
-		research_date ||= "2016-02-01"
-		fuel_researches = FuelResearch.find_by(date: research_date).fuels
+	
+		fuel_researches = FuelResearch.find_by(id: id_last_research).fuels
 
 		researches_of_fuels = []
 
