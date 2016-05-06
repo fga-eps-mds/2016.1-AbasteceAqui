@@ -1,0 +1,65 @@
+* {
+    font-family: Helvetica;
+}
+
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+input[name=state_name], input[name=county_name] {
+	display: block;
+	border-radius: 5px;
+	border-color: lightgray;
+	border-style: solid;
+	width: 37%;
+	font-weight: lighter;
+	margin-left: 10%;
+}
+
+label[for=state_name] {
+	float: left;
+	margin-right: 75px;
+	color: #000;
+}
+
+label[for=county_name] {
+	float: left;
+	margin-right: 56px;
+	color: #000;
+}
+
+#county-group {
+	margin-left: 33%;
+}
+
+#state-group {
+	margin-left: 33%;
+	margin-top: 30px;
+	margin-bottom: 15px;
+}
+
+input[name=commit] {
+	width: 100px;
+	height: 40px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: calc(50% - 50px);
+}
+
+form {
+	background-color: #E6E6E6;
+	border-radius: 5px;
+	width: auto;
+	height: auto;
+	margin-left: 70px;
+	margin-right: 80px;
+	margin-top: 50px;
+	border: solid lightgray 1px;
+}
+
+#title-form {
+	color: black;
+	text-align: center;
+}
