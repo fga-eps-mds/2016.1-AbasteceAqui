@@ -3,32 +3,43 @@ class State < ActiveRecord::Base
 	belongs_to :region
 	has_many :counties
 
-	def fill_states
+	def initialize
+
+		@states_name = []
+
+	end
+
+	def self.fill_states
+
+		fill_object_states()
+
+		@object_states.each do |state|
+			@states_name << state.name
+		end
+
+		return @states_name.sort!
+
+	end
+
+	def fill_object_states
 
 		@object_states = State.all
 
 	end
 
-	def initialize
+	def self.search_state_counties(state_searched)
 
-		@state_searched = "Digite o estado"
-		@states = []
+		state_counties = State.find_by(name: state_searched).counties
 
-		@object_states.each do |state|
-			@states << state.name
+		counties_of_state = []
+
+		state_counties.each do |counties|
+			counties_of_state = counties.name
 		end
 
-	end
+		counties_of_state.sort!
 
-	def seach_state_id
-
-		@state_id = Hash.new
-
-		@object_states.each do |state|
-			if state.name == @state_searched
-				@state_id[@state_searched] = state.id
-			end
-		end
+		return counties_of_state
 
 	end
 
