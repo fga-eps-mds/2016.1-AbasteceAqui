@@ -1,5 +1,8 @@
 <legend>SearchCounty</legend>
 
+
+<div id="main-content"> 
+
 <%= form_tag("/searcher", method: "get") do %>
 	<h2 id = "title-form">Pesquisar Município</h2>
 		<div id="state-group">
@@ -8,12 +11,18 @@
 	</div>
  	<div id="county-group">
 		<%= label_tag(:county_searched, "Município") %>
-		<%= text_field_tag 'county_searched', nil, placeholder: "Nome do Município", :required => true %>
+		
+		<input list="counties">
+		<datalist id= "counties">
+			<% @counties_of_state.each do |county| %>
+				<option value=<%= county %>><%= county %></option>
+			<% end %>
+		</datalist>
 	</div>
-	<%= submit_tag("Pesquisar", class: "btn btn-success") %>
-<% end %>
-         
 
+	<%= submit_tag("Pesquisar", class: "btn btn-success") %>
+
+<div id= "card-container">
 <% @fuel.each do |fuel_atributes| %>
 	<div class="card">
 
@@ -21,13 +30,14 @@
 			
 		</div>
 		<div class="card-info">
-			<p><%= fuel_atributes.fuel_type.type_name.capitalize %></p>
+			<p class= "card-title"><%= fuel_atributes.fuel_type.type_name.capitalize %></p>
+			<p class= "card-info-content">Preço médio: <%= fuel_atributes.medium_resale_price %></p>
 		</div>
 		<div class="card-hidden">
-			<p id="card-hidden-title"><%= fuel_atributes.fuel_type.type_name.capitalize %></p>
+			<p class="card-title"><%= fuel_atributes.fuel_type.type_name.capitalize %></p> <hr/>
 
 			<div id="card-hidden-content">
-				<p>Preço mínimo: <%= fuel_atributes.min_resale_price %></p>
+				<p >Preço mínimo: <%= fuel_atributes.min_resale_price %></p>
 
 				<p>Preço médio: <%= fuel_atributes.medium_resale_price %></p>
 
@@ -39,7 +49,12 @@
 			</div>
 		</div>
 	</div>
+<% end %>
+</div>
 
 <% end %>
+         
+</div>
+
 
 
