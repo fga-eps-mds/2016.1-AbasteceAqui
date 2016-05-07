@@ -63,3 +63,16 @@ form {
 	color: black;
 	text-align: center;
 }
+
+
+.card {
+	display: inline-block;
+	width: 200px;
+	height: 220px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	position: relative;
+	box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),  0 17px 17px 0 rgba(0, 0, 0, 0.15);
+}
