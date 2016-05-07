@@ -23,6 +23,7 @@ RSpec.describe SearchController, type: :controller do
 
 
 
+
 		state1.save
 		state2.save
 		state3.save
@@ -68,7 +69,13 @@ RSpec.describe SearchController, type: :controller do
   	end
   end
 =end
-
+	
+	describe "#find_date_last_research" do
+		it "Should return the last date research" do
+			date = controller.find_date_last_research(1)
+			expect(date.to_s).to eq("2016-01-01")
+		end
+	end
 
 	describe "#search_fuels_last_research" do
 		it "Should return one object of array" do
