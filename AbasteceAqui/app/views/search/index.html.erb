@@ -13,36 +13,33 @@
 	<%= submit_tag("Pesquisar", class: "btn btn-success") %>
 <% end %>
          
-  <table class="table table-responsive">
-  <thead>
-    <th>Combustivel</th>
-    <th>Preço minimo</th>		
-    <th>Preço médio</th>
-    <th>Preço Maximo</th>
-    <th>Número de postos pesquisados</th>
-    <th>Data da Pesquisa</th>
-  </thead>
 
 <% @fuel.each do |fuel_atributes| %>
+	<div class="card">
 
+		<div class="card-color">
+			
+		</div>
+		<div class="card-info">
+			<p><%= fuel_atributes.fuel_type.type_name.capitalize %></p>
+		</div>
+		<div class="card-hidden">
+			<p id="card-hidden-title"><%= fuel_atributes.fuel_type.type_name.capitalize %></p>
 
-  <tbody>
-    <td><%= fuel_atributes.fuel_type.type_name %></td>
+			<div id="card-hidden-content">
+				<p>Preço mínimo: <%= fuel_atributes.min_resale_price %></p>
 
-	<td><%= fuel_atributes.min_resale_price %></td>
+				<p>Preço médio: <%= fuel_atributes.medium_resale_price %></p>
 
-	<td><%= fuel_atributes.medium_resale_price %></td>
+				<p>Preço máximo: <%= fuel_atributes.max_resale_price %></p>
+	 
+				<p>Postos pesquisados: <%= fuel_atributes.number_of_gas_station %></p>
 
-	<td><%= fuel_atributes.max_resale_price %></td>
- 
-	<td><%= fuel_atributes.number_of_gas_station %></td>
-
-	<td><%= @date%></td>
-  </tbody>
+				<p>Data de pesquisa: <%= @date %> </p>
+			</div>
+		</div>
+	</div>
 
 <% end %>
-
-</table>
-
 
 
