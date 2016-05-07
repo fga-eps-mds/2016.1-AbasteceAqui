@@ -12,6 +12,14 @@ RSpec.describe State, type: :model do
 		state2.save
 		state3.save
 
+		county1 = County.new(id: 1, name: "ABAETETUBA", state_id: 1)
+		county2 = County.new(id: 2, name: "ACAILANDIA", state_id: 1)
+		county3 = County.new(id: 3, name: "ADAMANTINA", state_id: 1)
+
+		county1.save
+		county2.save
+		county3.save
+
 	end
 
 	describe "#fill_states" do
@@ -31,7 +39,19 @@ RSpec.describe State, type: :model do
 		it "Find 2 states" do
 
 			expect((State.fill_object_states).count).to eq(3)
-			
+
+		end
+
+	end
+
+	describe "#search_state_counties" do
+
+		it "Find counties of a state" do
+
+				counties_name = State.search_state_counties("PARA")
+
+				expect(counties_name).to eql(["ABAETETUBA","ACAILANDIA","ADAMANTINA"])
+
 		end
 
 	end
