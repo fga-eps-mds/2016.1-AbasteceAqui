@@ -46,31 +46,13 @@ RSpec.describe SearchController, type: :controller do
     end
   end
 
-
 	
-
-=begin
-
-  describe "#find_counties_of_state" do
-
-  	before do
-
-  	get :index, {:state_searched => "DISTRITO FEDERAL", :county_searched => "GAMA"} 
-
-  	end
-  	it "Should be the counties of the state" do
-
-   			state_searched = "DISTRITO FEDERAL"
-
-   			counties_of_state = controller.find_counties_of_state #, {:state_searched => "DISTRITO FEDERAL"}
-  			
-   		expect(counties_of_state).to eql(["BRASILIA", "GAMA"])
-  		
-  		
-  	end
-  end
-=end
-
+	describe "#find_counties_of_state" do
+		it "Should return the counties of the state" do
+			state = controller.find_counties_of_state("DISTRITO FEDERAL")
+			expect(state).to eql(["BRASILIA", "GAMA"])
+		end
+	end
 
 	describe "#find_researches_of_county" do
 		it "Should return the id of the last county searched" do
