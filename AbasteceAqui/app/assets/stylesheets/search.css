@@ -76,3 +76,43 @@ form {
 	position: relative;
 	box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),  0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
+
+.card-hidden {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #FAFAFA;
+	display: none;
+}
+
+.card-hidden  #card-hidden-title {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.card-hidden #card-hidden-content {
+	font-size: 12px;
+}
+
+.card-color {
+	height: 70%;
+	width: auto;
+	background-color: red;
+}
+
+.card-info {
+	height: 30%;
+	background-color: #FAFAFA;
+}
+
+.card p {
+	font-weight: lighter;
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+.card-info:active + .card-hidden {
+	display: inline-block;
+}
