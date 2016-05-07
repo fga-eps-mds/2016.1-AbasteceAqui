@@ -6,3 +6,9 @@ function get_random_color() {
     }
     return color;
 }
+
+$(function() {
+    $(".card-color").each(function() {
+        $(this).css("background-color", get_random_color());
+    });
+});
