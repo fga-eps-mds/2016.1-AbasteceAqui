@@ -71,7 +71,7 @@ hr {
 }
 
 #card-container{
-
+	margin-top: 5%;
 	margin-left: auto;
 	margin-right: auto;
 	display: inline-block;
@@ -80,30 +80,47 @@ hr {
 
 .card {
 	text-align: justify;
-	margin: 10px;
-	margin-left: 10%;
-	display: inline-block;
+	display: inline-block;	
 	width: 200px;
-	height: 220px;
+	height: 250px;
+	margin-bottom: 20%;
 	position: relative;
 	box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),  0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
 
-.center {
-    margin: auto;
-    width: 60%;
-    border: 3px solid #73AD21;
-    padding: 10px;
-}
 
 .card-hidden {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 100%;
 	height: 100%;
+	width: 100%;
 	background-color: #f5f5f5;
 	display: none;
+}
+
+
+.card-color {
+	height: 70%;
+	width: 100%;
+	background-color: red;
+}
+
+.card-info {
+	height: 30%;
+	background-color: #FAFAFA;
+}
+
+.card-title{
+	text-align: center;
+	padding-top: 10px;
+	font-weight: bold;
+}
+
+
+.card-info-content{
+	font-weight: lighter;
+	text-align: center;
 }
 
 .card-hidden  #card-hidden-title {
@@ -115,31 +132,10 @@ hr {
 	font-size: 12px;
 }
 
-.card-color {
-	height: 70%;
-	width: auto;
-	background-color: red;
-}
-
-.card-info {
-	height: 30%;
-	background-color: #FAFAFA;
-}
-
 .card-info:active + .card-hidden {
 	display: inline-block;
 }
 
-.card-title{
-	text-align: center;
-	padding-top: 10px;
-	font-weight: bold;
-}
-
-.card-info-content{
-	font-weight: lighter;
-	text-align: center;
-}
 
 #card-hidden-content p {
 	font-weight: lighter;
