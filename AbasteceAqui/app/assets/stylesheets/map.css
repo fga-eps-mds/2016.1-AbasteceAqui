@@ -1,0 +1,81 @@
+#mapa {
+
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+	height: auto;
+
+}
+@media(max-width: 768px) {
+	#mapa {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+	height: auto;
+
+	}
+}
+#mapa svg path {
+
+    stroke:#fff; /*cor da borda do estado*/
+    cursor:pointer;
+}
+
+#Acre, #Amapa, #Amazonas, #Para, #Rondonia, #Roraima, #Tocatins {
+    
+    fill: #77bc08; /*cor do região*/
+    cursor:pointer;
+}
+#Acre:hover, #Amapa:hover, #Amazonas:hover, #Para:hover, #Rondonia:hover, #Roraima:hover, #Tocatins:hover{
+	
+	fill:#507e05; /*cor do região selecionada*/
+	
+}
+
+#DF, #Goias, #MatoGrosso, #MatoGrossoDoSul {
+	
+    fill: #fdd525; /*cor do região*/
+    cursor:pointer;
+}
+
+#DF:hover, #Goias:hover, #MatoGrosso:hover, #MatoGrossoDoSul:hover {
+	
+    fill: #a98e19; /*cor do região selecionada*/
+}
+#Parana, #RioGrandeDoSul, #SantaCatarina {
+	
+    fill: #5798fe; /*cor do região*/
+    cursor:pointer;
+}
+
+#Parana:hover, #RioGrandeDoSul:hover, #SantaCatarina:hover {
+	
+    fill: #2b4b7e; /*cor do região selecionada*/
+}
+
+#SaoPaulo, #RioDeJaneiro, #EspiritoSanto, #MinasGerais {
+
+	fill: #fe002f; /*cor do região*/
+    cursor:pointer;
+
+}
+
+#SaoPaulo:hover, #RioDeJaneiro:hover, #EspiritoSanto:hover, #MinasGerais:hover {
+ 
+	fill: #95001c; /*cor do região selecionada*/
+
+}
+
+#Alagoas, #Bahia, #Piaui, #Maranhao, #Ceara, #Sergipe, #Pernambuco, #Paraiba, #RioGrandeDoNorte {
+
+	fill: #ffa303; /*cor do região*/
+    cursor:pointer;
+
+}
+
+#Alagoas:hover, #Bahia:hover, #Piaui:hover, #Maranhao:hover, #Ceara:hover, #Sergipe:hover, #Pernambuco:hover, #Paraiba:hover, #RioGrandeDoNorte:hover {
+
+	fill: #845402; /*cor do região selecionada*/
+}
