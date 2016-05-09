@@ -18,36 +18,32 @@
 
 
 <div id= "card-container">
-<% @fuel.each do |fuel_atributes| %>
-	<div class="col-md-3 col-sm-4 col-xs-6">
-		<div class="card">
-
-			<div class="card-color">
-			 		
-			</div>
-			<div class="card-info">
-				<p class= "card-title"><%= fuel_atributes.fuel_type.type_name.capitalize %></p>
-				<p class= "card-info-content">Preço médio: <%= fuel_atributes.medium_resale_price %></p>
-			</div>
-			
-			<div class="card-hidden">
-				<p class="card-title"><%= fuel_atributes.fuel_type.type_name.capitalize %></p> <hr/>
-
-				<div id="card-hidden-content">
-					<p >Preço mínimo: <%= fuel_atributes.min_resale_price %></p>
-
-					<p>Preço médio: <%= fuel_atributes.medium_resale_price %></p>
-
-					<p>Preço máximo: <%= fuel_atributes.max_resale_price %></p>
-		 
-					<p>Postos pesquisados: <%= fuel_atributes.number_of_gas_station %></p>
-
-					<p>Data de pesquisa: <%= @date %> </p>
+	<div class="container">
+		<div class="row">
+		<% @fuel.each do |fuel_atributes| %>
+    		<div class="[ col-sm-6 col-md-3 col-xs-6 ]">
+				<div class="[ card-info ]">
+					<div class="card-color">
+						<img style="width: 100%" src="assets/logo_pin.png" />
+						<div class="[ card-info-details ] animate">
+							<div class="[ card-info-title ]">
+								<h1> <%= fuel_atributes.fuel_type.type_name %>	 </h1>
+								<h3><p><br>Preço médio: <%= fuel_atributes.medium_resale_price %></p></h3>
+							</div>
+							<div class="[ card-info-detail ]">
+								<p>Preço mínimo: <%= fuel_atributes.min_resale_price %></p>
+								<p>Preço máximo: <%= fuel_atributes.max_resale_price %></p>
+								<p>Postos pesquisados: <%= fuel_atributes.number_of_gas_station %></p>
+								<p>Data de pesquisa: <%= @date %> </p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
+		<% end %>
 		</div>
 	</div>
-<% end %>
+</div>
 
 </div>
 <div id="map-brazil">
