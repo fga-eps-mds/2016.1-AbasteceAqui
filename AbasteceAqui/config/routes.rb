@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/parser/run' => 'parser#import'
   get '/calculator' => 'calculator#index'
   get '/searcher' => 'search#index'
+  get '/search-map-brazil' => 'search#map_brazil'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

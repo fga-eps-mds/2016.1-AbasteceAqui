@@ -12,6 +12,10 @@ class SearchController < ApplicationController
 
 	end
 
+	def map_brazil 
+		render :_map
+	end
+
 	def find_states
 
 		@states = State.fill_states
