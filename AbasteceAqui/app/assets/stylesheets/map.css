@@ -1,4 +1,4 @@
-#mapa {
+#map {
 
 	display: block;
 	margin-left: auto;
@@ -8,74 +8,148 @@
 
 }
 @media(max-width: 768px) {
-	#mapa {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 90%;
-	height: auto;
+	#map {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 90%;
+		height: auto;
 
 	}
 }
-#mapa svg path {
+#map svg path {
 
-    stroke:#fff; /*cor da borda do estado*/
-    cursor:pointer;
+	stroke:#fff; /*cor da borda do estado*/
+	cursor:pointer;
 }
 
-#Acre, #Amapa, #Amazonas, #Para, #Rondonia, #Roraima, #Tocatins {
-    
-    fill: #77bc08; /*cor do região*/
-    cursor:pointer;
-}
-#Acre:hover, #Amapa:hover, #Amazonas:hover, #Para:hover, #Rondonia:hover, #Roraima:hover, #Tocatins:hover{
-	
-	fill:#507e05; /*cor do região selecionada*/
-	
+#map text {
+	fill:#fff;
+	font:15px Arial-BoldMT, sans-serif;
+	cursor:pointer;
 }
 
-#DF, #Goias, #MatoGrosso, #MatoGrossoDoSul {
-	
-    fill: #fdd525; /*cor do região*/
-    cursor:pointer;
+#map .North {
+
+	fill: #77bc08 !important;
 }
 
-#DF:hover, #Goias:hover, #MatoGrosso:hover, #MatoGrossoDoSul:hover {
-	
-    fill: #a98e19; /*cor do região selecionada*/
-}
-#Parana, #RioGrandeDoSul, #SantaCatarina {
-	
-    fill: #5798fe; /*cor do região*/
-    cursor:pointer;
+#map a:hover .North {
+
+	fill:#507e05 !important;
 }
 
-#Parana:hover, #RioGrandeDoSul:hover, #SantaCatarina:hover {
-	
-    fill: #2b4b7e; /*cor do região selecionada*/
+#map .circle-north {
+
+	fill: #77bc08;
+	stroke: #c5dbfe;
 }
 
-#SaoPaulo, #RioDeJaneiro, #EspiritoSanto, #MinasGerais {
+#map a:hover .circle-north {
 
-	fill: #fe002f; /*cor do região*/
-    cursor:pointer;
+	fill:#507e05 !important; cursor:pointer
+}
+
+#map .Northeast {
+
+	fill: #ffa303; /*region color*/
+}
+
+#map a:hover .Northeast {
+
+	fill: #845402; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .circle-northeast {
+
+	fill: #ffa303; /*region color*/
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-northeast {
+
+	fill: #845402; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .Midwest {
+
+	fill: #ddba20 !important; /*region color*/
+}
+
+#map a:hover .Midwest {
+
+	fill: #a98e19 !important; /*region color selected */
 
 }
 
-#SaoPaulo:hover, #RioDeJaneiro:hover, #EspiritoSanto:hover, #MinasGerais:hover {
- 
-	fill: #95001c; /*cor do região selecionada*/
 
+#map .circle-midwest {
+
+	fill: #ddba20 !important;
+	stroke: #c5dbfe;
 }
 
-#Alagoas, #Bahia, #Piaui, #Maranhao, #Ceara, #Sergipe, #Pernambuco, #Paraiba, #RioGrandeDoNorte {
+#map a:hover .circle-midwest {
 
-	fill: #ffa303; /*cor do região*/
-    cursor:pointer;
-
+	fill:#a98e19 !important;
+	cursor:pointer;
 }
 
-#Alagoas:hover, #Bahia:hover, #Piaui:hover, #Maranhao:hover, #Ceara:hover, #Sergipe:hover, #Pernambuco:hover, #Paraiba:hover, #RioGrandeDoNorte:hover {
+#map .Southwest {
 
-	fill: #845402; /*cor do região selecionada*/
+	fill: #fe002f; /*region color*/
+}
+
+#map a:hover .Southwest {
+
+	fill: #95001c; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .circle-southwest {
+
+	fill: #fe002f; /*region color*/
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-southwest {
+
+	fill: #95001c; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .South {
+
+	fill: #5798fe; /*region color*/
+}
+
+#map a:hover .South {
+
+	fill: #2b4b7e; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .circle-south {
+
+	fill: #5798fe; /*region color*/
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-south {
+
+	fill: #2b4b7e; /*region color selected*/
+	cursor: pointer;
+}
+
+
+#map a {
+
+	text-decoration:none
+}
+
+#map a:hover {
+
+	cursor:pointer; text-decoration:none
 }
