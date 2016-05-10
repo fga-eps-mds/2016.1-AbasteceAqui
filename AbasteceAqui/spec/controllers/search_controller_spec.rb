@@ -39,9 +39,16 @@ RSpec.describe SearchController, type: :controller do
 	end
 
 	describe "GET #index" do
-		it "Renders the index templete" do
+		it "Should render the index templete" do
       get :index, {:state_searched => "DISTRITO FEDERAL", :county_searched => "BRASILIA"}
       expect(response).to render_template("index")
+    end
+	end
+
+	describe "#map_brazil" do
+		it "Should render the brazilian map" do
+			get :map_brazil
+      expect(response).to render_template("search/_map")
     end
 	end
 
