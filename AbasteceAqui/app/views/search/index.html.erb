@@ -1,6 +1,6 @@
 <legend>SearchCounty</legend>
 <%= form_tag("/searcher", method: "get") do %>
-	<h2 id = "title-form">Pesquisar Município</h2>
+	<h1 id = "title-form">Pesquisar Município</h2>
  	<div id="county-group">
 		<%= label_tag(:county_searched, "Município") %>
 		
@@ -27,14 +27,14 @@
 						<img id="card-logo" src="assets/logo_pin.png" />
 						<div class="[ card-info-details ] animate">
 							<div class="[ card-info-title ]">
-								<h1> <%= fuel_atributes.fuel_type.type_name %>	 </h1>
-								<h3><p><br>Preço médio: <%= fuel_atributes.medium_resale_price %></p></h3>
+								<h2 id="fuel-name"> <%= fuel_atributes.fuel_type.type_name %> </h2>
+								<p><br>Preço médio: <%= fuel_atributes.medium_resale_price %></p>
 							</div>
 							<div class="[ card-info-detail ]">
 								<p>Preço mínimo: <%= fuel_atributes.min_resale_price %></p>
 								<p>Preço máximo: <%= fuel_atributes.max_resale_price %></p>
 								<p>Postos pesquisados: <%= fuel_atributes.number_of_gas_station %></p>
-								<p>Data de pesquisa: <%= @date %> </p>
+								<p>Data de pesquisa: <%= @date %></p>
 							</div>
 						</div>
 					</div>

@@ -110,8 +110,8 @@ form {
 	padding-bottom: 25px;
 }
 
-.card-info .card-info-details .card-info-title h1,	
-.card-info .card-info-details .card-info-title h3 {
+.card-info .card-info-details .card-info-title h2,	
+.card-info .card-info-details .card-info-title p {
 	color: rgb(62, 62, 62);
 	font-size: 18px;
 	font-weight: 900;
@@ -120,7 +120,7 @@ form {
 	padding: 0;
 }
 
-.card-info .card-info-details .card-info-title h3 {
+.card-info .card-info-details .card-info-title p {
 	color: rgb(142, 182, 52);
 	font-size: 15px;
 	font-weight: 400;
@@ -144,4 +144,14 @@ form {
 	text-align: center;
 	background-color: rgb(215, 215, 215);
 	border-radius: 40px;
+}
+
+@media (max-width: 450px) {
+	.card-info .card-info-details .card-info-title h2 {
+		font-size: 15px;
+	}
+
+	.card-info .card-info-details .card-info-title p {
+		font-size: 12px;
+	}
 }
