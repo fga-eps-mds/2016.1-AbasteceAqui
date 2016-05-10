@@ -2,14 +2,15 @@
 <%= form_tag("/searcher", method: "get") do %>
 	<h1 id = "title-form">Pesquisar Município</h2>
  	<div id="county-group">
-		<%= label_tag(:county_searched, "Município") %>
-		
-		<input list="counties">
-		<datalist id= "counties">
-			<% @counties_of_state.each do |county| %>
-				<option value=<%= county %>><%= county %></option>
-			<% end %>
-		</datalist>
+ 	
+		<select name="county_name" class="search-dropdown" required="on">
+
+			<option value="">Escolha o município</option>
+			  	<% @counties_of_state.each do |county| %>
+					<option value=<%= county %>><%= county %></option>
+				<% end %>
+		</select>
+
 	</div>
 
 	<%= submit_tag("Pesquisar", class: "btn btn-success") %>

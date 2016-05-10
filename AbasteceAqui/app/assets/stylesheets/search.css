@@ -18,27 +18,19 @@ input[name=state_name], input[name=county_name] {
 	margin-left: 10%;
 }
 
-label[for=state_name] {
-	float: left;
-	margin-right: 75px;
-	color: #000;
-}
-
-label[for=county_name] {
-	float: left;
-	margin-right: 56px;
-	color: #000;
-}
 
 #county-group {
-	margin-left: 33%;
+
+	width:250px;
+	position: relative;
+	margin: auto;
 }
 
-#state-group {
-	margin-left: 33%;
-	margin-top: 30px;
-	margin-bottom: 15px;
+.search-dropdown{
+	margin-top: 15%;
+	margin-bottom: 15%;
 }
+
 
 input[name=commit] {
 	width: 100px;
