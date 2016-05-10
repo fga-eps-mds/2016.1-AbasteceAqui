@@ -73,9 +73,9 @@ form {
 	box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),  0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
 
-.card-info > img {
-	width: 100px;
-	margin-bottom: 60px;
+#card-logo {
+	width: 100%;
+	margin-bottom: 15%;
 }
 
 .card-info .card-info-details,
