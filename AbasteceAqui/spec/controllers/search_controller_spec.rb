@@ -78,14 +78,14 @@ RSpec.describe SearchController, type: :controller do
 
 	describe "#find_date_last_research" do
 		it "Should return the last date research" do
-			date = controller.find_date_last_research(1)
+			date = controller.find_date_last_research(1,1)
 			expect(date.to_s).to eq("2016-01-01")
 		end
 	end
 
 	describe "#search_fuels_last_research" do
 		it "Should return one object of array" do
-			fuel = controller.search_fuels_last_research(1)
+			fuel = controller.search_fuels_last_research(1,1)
 			expect(fuel.count).to eq(1)
 		end
 	end
