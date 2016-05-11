@@ -25,7 +25,7 @@
 
 <% end %>
 
-
+<% if @county_searched != nil %>
 <div id= "card-container">
   <div class="container">
     <div class="row">
@@ -54,3 +54,7 @@
     </div>
   </div>
 </div>
+
+<% else %>
+  <!-- do nothing -->
+<% end %>
