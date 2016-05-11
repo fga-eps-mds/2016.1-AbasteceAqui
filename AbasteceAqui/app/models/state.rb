@@ -26,7 +26,6 @@ class State < ActiveRecord::Base
 
 	def self.search_state_counties(state_searched)
 
-		state_searched ||= "SAO PAULO"
 		state_counties = State.find_by(name: state_searched).counties
 
 		counties_of_state = []
