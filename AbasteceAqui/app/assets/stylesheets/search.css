@@ -185,7 +185,7 @@ label[for=county_searched] {
 
   label[for=state_searched] {
     float: none;
-    margin-left: 8%;
+    margin-left: 2%;
   }
   label[for=county_searched] {
     float: none;
@@ -204,7 +204,35 @@ label[for=county_searched] {
     width: 150px !important;
     height:20px;
     color: #626364;
-    margin-left: -35%;
+    margin-left: 0%;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  label[for=state_searched] {
+    float: none;
+    margin-left: 3%;
+  }
+  label[for=county_searched] {
+    float: none;
+    margin-left: 1%;
+  }
+  #search-buttons {
+    margin-top: 30px;
+    margin-left: calc(50% - 80px);
+  }
+
+  .dropdown {
+    border-color: #f1f1f1;
+    border-width: 1px;
+    border-style: solid ;
+    border-radius: 5px;
+    width: 150px !important;
+    height:20px;
+    color: #626364;
+    margin-left: -25%;
   }
 
 }
@@ -218,3 +246,4 @@ label[for=county_searched] {
    font-size: 12px;
  }
 }
+

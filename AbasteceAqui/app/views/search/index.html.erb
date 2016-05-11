@@ -29,6 +29,7 @@
 <div id= "card-container">
   <div class="container">
     <div class="row">
+    <h3><CENTER> Município escolhido: <%= @county_searched.split.map(&:capitalize).join(' ') %> </CENTER></h3>
       <% @fuel.each do |fuel_atributes| %>
       <div class="[ col-sm-6 col-md-3 col-xs-6 ]">
         <div class="[ card-info ]">
