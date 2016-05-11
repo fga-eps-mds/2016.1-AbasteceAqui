@@ -247,3 +247,19 @@ label[for=county_searched] {
  }
 }
 
+@media (max-width: 320px){
+ .card-info .card-info-details .card-info-title h2 {
+   font-size: 11px;
+ }
+
+ .card-info .card-info-details .card-info-title p {
+   font-size: 9px;
+ }
+
+ .card-info-detail {
+  font-size: 10px;
+ }
+}
+
+
+
