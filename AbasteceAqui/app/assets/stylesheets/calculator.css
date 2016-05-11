@@ -44,15 +44,13 @@ label[for=ethanol_price] {
 	margin-bottom: 15px;
 }
 
-input[name=commit] {
-	width: 100px;
-	height: 40px;
+.btn-calculate {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	margin-left: calc(50% - 50px);
 }
 
-form {
+.form-calculate {
 	background-color: #E6E6E6;
 	border-radius: 5px;
 	width: auto;
