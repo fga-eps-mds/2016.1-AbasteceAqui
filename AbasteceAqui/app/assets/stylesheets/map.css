@@ -7,6 +7,19 @@
 	height: auto;
 
 }
+
+.form-map{
+
+	background-color: #E6E6E6;
+	border-radius: 5px;
+	width: auto;
+	height: auto;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 70px;
+	border: solid lightgray 1px;
+}
+
 @media(max-width: 768px) {
 	#map {
 		display: block;
@@ -21,6 +34,11 @@
 
 	stroke:#fff; /*cor da borda do estado*/
 	cursor:pointer;
+}
+
+#title-form{
+	margin-top: 5%;
+
 }
 
 #map text {
