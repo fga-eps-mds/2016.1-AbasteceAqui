@@ -1,11 +1,11 @@
 * {
-    font-family: Helvetica;
+  font-family: Helvetica;
 }
 
 
 button, html input[type="button"], input[type="reset"], input[type="submit"] {
-    -webkit-appearance: button;
-    cursor: pointer;
+  -webkit-appearance: button;
+  cursor: pointer;
 }
 
 input[name=state_name], input[name=county_name] {
@@ -72,9 +72,9 @@ input[name=commit] {
   box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),  0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
 
-.card-info > img {
-  width: 100px;
-  margin-bottom: 60px;
+#card-logo {
+ width: 100%;
+ margin-bottom: 15%;
 }
 
 .card-info .card-info-details,
@@ -88,7 +88,7 @@ input[name=commit] {
   background: rgb(255, 255, 255);
   text-align: center;
 }
-       
+
 
 .card-info .card-info-details .card-info-title {
   height: auto;   
@@ -109,8 +109,8 @@ input[name=commit] {
   padding-bottom: 25px;
 }
 
-.card-info .card-info-details .card-info-title h1,  
-.card-info .card-info-details .card-info-title h3 {
+.card-info .card-info-details .card-info-title h2,  
+.card-info .card-info-details .card-info-title p {
   color: rgb(62, 62, 62);
   font-size: 18px;
   font-weight: 900;
@@ -119,7 +119,7 @@ input[name=commit] {
   padding: 0;
 }
 
-.card-info .card-info-details .card-info-title h3 {
+.card-info .card-info-details .card-info-title p {
   color: rgb(142, 182, 52);
   font-size: 15px;
   font-weight: 400;
@@ -145,14 +145,14 @@ input[name=commit] {
   border-radius: 40px;
 }
 .dropdown {
-    border-color: #f1f1f1;
-    border-width: 1px;
-    border-style: solid ;
-    border-radius: 5px;
-    background: #f1f1f1;
-    width: 25% !important;
-    height:25px;
-    color: #626364;
+  border-color: #f1f1f1;
+  border-width: 1px;
+  border-style: solid ;
+  border-radius: 5px;
+  background: #f1f1f1;
+  width: 25% !important;
+  height:25px;
+  color: #626364;
 }
 
 
@@ -206,4 +206,15 @@ label[for=county_searched] {
     color: #626364;
     margin-left: -35%;
   }
+
+}
+
+@media (max-width: 450px) {
+ .card-info .card-info-details .card-info-title h2 {
+   font-size: 15px;
+ }
+
+ .card-info .card-info-details .card-info-title p {
+   font-size: 12px;
+ }
 }
