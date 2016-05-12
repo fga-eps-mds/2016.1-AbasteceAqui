@@ -23,6 +23,10 @@
   <%= submit_tag("Pesquisar", class: "btn btn-success") %>
 </div>
 
+  <button type="button" class="btn btn-secondary" id="tooltip-button-search" data-toggle="tooltip" data-placement="left" title="A pesquisa dos dados de cada municipio é feita através dos dados abertos disponibilizados pela Agência Nacional do Petróleo, Gás Natural e Biocombustíveis(ANP). Esses dados são atualizados mensalmente e a pesquisa mostra os dados mais recentes disponíveis.">
+        ?
+  </button>
+
 <% end %>
 
 <% if @county_searched != nil %>
