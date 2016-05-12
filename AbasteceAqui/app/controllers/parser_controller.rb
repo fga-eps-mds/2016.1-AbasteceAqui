@@ -3,16 +3,16 @@ class ParserController < ApplicationController
 require 'roo'
 
 	@@states = Hash.new
-	
+
 	def import
 	file = Roo::Spreadsheet.open( "parser_data/Combustiveis.xlsx" )
 	file.default_sheet = file.sheets.first
 
-		1.upto(1) do |line| # just wait for the sheet opening delay 
+		1.upto(1) do |line| # just wait for the sheet opening delay
 			msg = file.cell(line, 'A')
 		end
 
-		98955.upto(104211) do |line|
+		106850.upto(109480) do |line|
 
 			#Region
 			region_name = file.cell(line, 'C')
@@ -47,8 +47,8 @@ require 'roo'
 			max_distribuition_price = file.cell(line, 'Q')
 			resale_standard_deviation = file.cell(line, 'I')
 			distribuition_standard_deviation = file.cell(line, 'O')
-	
-			build_fuel(number_of_gas_station, min_resale_price, medium_resale_price, max_resale_price, 
+
+			build_fuel(number_of_gas_station, min_resale_price, medium_resale_price, max_resale_price,
 			resale_standard_deviation, min_distribuition_price, medium_distribuition_price,
 			max_distribuition_price, distribuition_standard_deviation, fuel_research, fuel_type)
 		end
@@ -90,7 +90,7 @@ require 'roo'
 		return state
 	end
 
-	
+
 	def build_county(county_name, state_object)
 
 		#iteration in hash
@@ -142,7 +142,7 @@ require 'roo'
 		return fuel_type
 	end
 
-	def build_fuel(number_of_gas_station, min_resale_price, medium_resale_price, max_resale_price, 
+	def build_fuel(number_of_gas_station, min_resale_price, medium_resale_price, max_resale_price,
 		resale_standard_deviation, min_distribuition_price, medium_distribuition_price,
 		max_distribuition_price, distribuition_standard_deviation, fuel_research, fuel_type)
 

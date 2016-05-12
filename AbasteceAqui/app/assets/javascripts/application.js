@@ -18,3 +18,6 @@
 //= require bootstrap
 //= require bootstrap.js.coffee
 //= require bootstrap.min.js
+//= require navbar.js
+//= require search.js
+//= require calculator.js

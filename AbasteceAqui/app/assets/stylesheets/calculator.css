@@ -44,15 +44,13 @@ label[for=ethanol_price] {
 	margin-bottom: 15px;
 }
 
-input[name=commit] {
-	width: 100px;
-	height: 40px;
+.btn-calculate {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	margin-left: calc(50% - 50px);
 }
 
-form {
+.form-calculate {
 	background-color: #E6E6E6;
 	border-radius: 5px;
 	width: auto;
@@ -66,6 +64,18 @@ form {
 #title-form {
 	color: black;
 	text-align: center;
+}
+
+#form-header {
+	text-align: center;
+}
+
+#tooltip-button {
+	border-radius: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 17px 0 rgba(0, 0, 0, 0.19);
+    opacity: 0.7;
+    float: right;
+    margin-top: -35px;
 }
 
 @media (max-width: 768px) {
