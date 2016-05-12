@@ -1,17 +1,24 @@
 <legend>FuelProftability</legend>
 
 <!-- initializing form -->
-<%= form_tag("/calculator", method: "get") do %>
+<%= form_tag("/calculator", method: "get", class: "form-calculate") do %>
 	<h2 id = "title-form">Calculadora de Rentabilidade</h2>
-		<div id="ethanol-group">
+
+	<div id="ethanol-group">
 		<%= label_tag(:ethanol_price, "Etanol") %>
-		<%= number_field_tag 'ethanol_price', nil, min: 0, step: 0.001, placeholder: "Preço do etanol", :required => true %>
+		<%= number_field_tag 'ethanol_price', nil, min: 0, step: 0.001, placeholder: "Preço do etanol", :required => true , :autocomplete => :off %>
 	</div>
  	<div id="gas-group">
 		<%= label_tag(:gas_price, "Gasolina") %>
-		<%= number_field_tag 'gas_price', nil, min: 0, step: 0.001, placeholder: "Preço da gasolina", :required => true %>
+		<%= number_field_tag 'gas_price', nil, min: 0, step: 0.001, placeholder: "Preço da gasolina", :required => true, :autocomplete => :off %>
 	</div>
+	<div class="btn-calculate">
 	<%= submit_tag("Calcular", class: "btn btn-success") %>
+	</div>
+
+	<button type="button" class="btn btn-secondary" id="tooltip-button" data-toggle="tooltip" data-placement="left" title="Segundo pesquisas da equipe AbasteceAqui no site da Inmetro, o etanol rende, em média, 30% a menos que a gasolina nos carros mais populares do Brasil. Ou seja, o calculo realizado para gente te dizer qual combustivel é mais rentavel é feito pela conta: etanol/gasolina = coeficiente, se o coeficiente for menor ou igual a 0.7 a gente te diz que vale a pena abastecer com etanol.">
+	  		?
+	</button>
 <% end %>	
 
 <!-- choosing a image to tell user if ehtanol or gas is more profitable  -->

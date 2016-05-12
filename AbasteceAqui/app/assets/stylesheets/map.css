@@ -1,0 +1,173 @@
+#map {
+
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 40%;
+	height: auto;
+
+}
+
+.form-map{
+
+	background-color: #fff;
+	border-radius: 5px;
+	width: auto;
+	height: auto;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 70px;
+	border: solid lightgray 1px;
+}
+
+@media(max-width: 768px) {
+	#map {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		width: 90%;
+		height: auto;
+
+	}
+}
+#map svg path {
+
+	stroke:#fff; /*cor da borda do estado*/
+	cursor:pointer;
+}
+
+#title-form{
+	margin-top: 5%;
+
+}
+
+#map text {
+	fill:#fff;
+	font:15px Arial-BoldMT, sans-serif;
+	cursor:pointer;
+}
+
+#map .North {
+
+	fill: #77bc08 !important;
+}
+
+#map a:hover .North {
+
+	fill:#507e05 !important;
+}
+
+#map .circle-north {
+
+	fill: #77bc08;
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-north {
+
+	fill:#507e05 !important; cursor:pointer
+}
+
+#map .Northeast {
+
+	fill: #ffa303; /*region color*/
+}
+
+#map a:hover .Northeast {
+
+	fill: #845402; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .circle-northeast {
+
+	fill: #ffa303; /*region color*/
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-northeast {
+
+	fill: #845402; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .Midwest {
+
+	fill: #ddba20 !important; /*region color*/
+}
+
+#map a:hover .Midwest {
+
+	fill: #a98e19 !important; /*region color selected */
+
+}
+
+
+#map .circle-midwest {
+
+	fill: #ddba20 !important;
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-midwest {
+
+	fill:#a98e19 !important;
+	cursor:pointer;
+}
+
+#map .Southwest {
+
+	fill: #fe002f; /*region color*/
+}
+
+#map a:hover .Southwest {
+
+	fill: #95001c; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .circle-southwest {
+
+	fill: #fe002f; /*region color*/
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-southwest {
+
+	fill: #95001c; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .South {
+
+	fill: #5798fe; /*region color*/
+}
+
+#map a:hover .South {
+
+	fill: #2b4b7e; /*region color selected*/
+	cursor: pointer;
+}
+
+#map .circle-south {
+
+	fill: #5798fe; /*region color*/
+	stroke: #c5dbfe;
+}
+
+#map a:hover .circle-south {
+
+	fill: #2b4b7e; /*region color selected*/
+	cursor: pointer;
+}
+
+
+#map a {
+
+	text-decoration:none
+}
+
+#map a:hover {
+
+	cursor:pointer; text-decoration:none
+}
