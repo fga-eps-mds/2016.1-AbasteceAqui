@@ -66,6 +66,18 @@ label[for=ethanol_price] {
 	text-align: center;
 }
 
+#form-header {
+	text-align: center;
+}
+
+#tooltip-button {
+	border-radius: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 17px 0 rgba(0, 0, 0, 0.19);
+    opacity: 0.7;
+    float: right;
+    margin-top: -35px;
+}
+
 @media (max-width: 768px) {
 
 	label[for=ethanol_price] {
