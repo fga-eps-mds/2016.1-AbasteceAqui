@@ -1,8 +1,12 @@
+let routeCoords;
+let routeCities = new Set();
+
 // initialize the map
 function initMap() {
 
 	const directionsDisplay = new google.maps.DirectionsRenderer;
 	const directionsService = new google.maps.DirectionsService;  
+  const geocoder = new google.maps.Geocoder;
   const brazilCoords = new google.maps.LatLng(-13, -55);
 
   // create a map centered in brazil  
@@ -17,7 +21,8 @@ function initMap() {
 
   // callback to when the user type a origin and a destination
   const onChangeHandler = function() {
-    calculateAndDisplayRoute(directionsService, directionsDisplay, map);
+    let routeCoords = calculateAndDisplayRoute(directionsService, directionsDisplay, map);
+    setTimeout(findCitiesOfRoute, 3000, geocoder, map);
   };
 
   // create the search boxes and link them to the UI elements.
@@ -43,10 +48,11 @@ function initMap() {
 // calculate and display a route
 function calculateAndDisplayRoute(directionsService, directionsDisplay, map) {
 
-	var origin = document.getElementById('origin').value;
-  var destination = document.getElementById('destination').value;
+	const origin = document.getElementById('origin').value;
+  const destination = document.getElementById('destination').value;
 
   // check if user typed a origin and a destination
+  // duplicated, refactor
   if (origin.length === 0 || destination.length === 0) {
   	return;
   }
@@ -59,8 +65,66 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map) {
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
+      routeCoords = response.routes[0].overview_path;
     } else {
       window.alert('Directions request failed due to ' + status);
     }
   });
+}
+
+// find the address of a coord
+function geocodeLatLng(geocoder, map, latlng) {
+
+  // start reverse geocoder with the given coords
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        var address_components = results[0].address_components;
+
+        // for each addres_components
+        for (var i = 0; i < address_components.length; i++) {
+
+          if (address_components[i].types[0] === "locality" || 
+              address_components[i].types[0] === "administrative_area_level_2") {
+
+            // if the city doesn't exist in set we add it
+            if (!routeCities.has(address_components[i].long_name)){
+              routeCities.add(address_components[i].long_name);
+            }
+          }
+
+        }
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+        // if over query limit, try again in 200ms
+        setTimeout(geocodeLatLng, 200, geocoder, map, latlng);
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    }
+  });
+  console.log(".");
+}
+
+// Find cities of a route
+function findCitiesOfRoute(geocoder, map) {
+
+  const origin = document.getElementById('origin').value;
+  const destination = document.getElementById('destination').value;
+
+  // check if user typed a origin and a destination
+  // duplicated, refactor
+  if (origin.length === 0 || destination.length === 0) {
+    return;
+  }
+
+  // 5% of routecoords lenght rounded down
+  const adder = Math.floor(routeCoords.length * 0.05);
+
+  for (var i = 0; i < routeCoords.length; i += adder) {
+    setTimeout(geocodeLatLng, 200 * i, geocoder, map, routeCoords[i]);
+  }
 }
