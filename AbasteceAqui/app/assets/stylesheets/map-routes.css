@@ -1,6 +1,5 @@
-#map { 
-
-	height: 100%; 
-	margin-top: 100px; 
-	padding: 250px;
+#map-container { 
+	margin-top: 100px;
+	height: 500px;
+	width: 100%; 
 }
