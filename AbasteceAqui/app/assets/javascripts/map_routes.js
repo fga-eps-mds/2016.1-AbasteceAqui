@@ -42,8 +42,13 @@ function initMap() {
 
   originBox.addListener('places_changed', onChangeHandler);
   destinationBox.addListener('places_changed', onChangeHandler);
-}
 
+  var addPinsButton = document.getElementById("add-pins");
+  addPinsButton.addEventListener("click", function() {
+    alert('Not finished');
+  });
+
+}
 
 // calculate and display a route
 function calculateAndDisplayRoute(directionsService, directionsDisplay, map) {
