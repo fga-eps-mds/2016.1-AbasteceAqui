@@ -1,16 +1,21 @@
-namespace :parser do
-
 require 'roo'
 
-  task :run => :environment do
-    @states = Hash.new
+namespace :parser do
+
+  task :prepare do
+    Rake::Task['db:drop'].invoke
+    Rake::Task['db:create'].invoke
+    Rake::Task['db:migrate'].invoke
+  end
+
+  task :process => :environment do
 
     def build_region(name)
       regions = Region.all
 
-      regions.each do |t|
-        if(t.name == name)
-          return t
+      regions.each do |region|
+        if(region.name == name)
+          return region
         end
 
       end
@@ -23,11 +28,11 @@ require 'roo'
     end
 
     def build_state(name, region)
-      states = State.all
+      states = region.states
 
-      states.each do |t|
-        if(t.name == name)
-          return t
+      states.each do |state|
+        if(state.name == name)
+          return state
         end
       end
 
@@ -36,55 +41,54 @@ require 'roo'
       state.region_id = region.id
       state.save
       puts "State save true"
-      @states[name] = Hash.new
 
       return state
     end
 
 
-    def build_county(county_name, state_object)
+    def build_county(county_name, state)
 
-      #iteration in hash
-      @states.each do |state, counties|
-        if state == state_object.name
-          counties.each do |county, id|
-            if county_name == county
-              return id
-            end
-          end
+      counties = state.counties
+
+      counties.each do |county|
+        if county_name == county.name
+          return county
         end
       end
 
       county = County.new
       county.name = county_name
-      county.state_id = state_object.id
+      county.state_id = state.id
       county.save
       puts "County save true"
-      @states[state_object.name][county_name] = county.id
-      return county.id
+      return county
     end
 
-    def build_fuel_research(date, county_id)
-      fuel_researches = FuelResearch.all
-      fuel_researches.each do |t|
-        if(t.date == date && t.county_id == county_id)
-          return t
+    def build_fuel_research(date, county)
+
+      fuel_researches = county.fuel_researches
+
+      fuel_researches.each do |fuel_research|
+        if(fuel_research.date == date)
+          return fuel_research
         end
       end
 
       fuel_research = FuelResearch.new
       fuel_research.date = date
-      fuel_research.county_id = county_id
+      fuel_research.county_id = county.id
       fuel_research.save
       puts "FuelResearch save true"
       return fuel_research
     end
 
     def build_fuel_type(type_name, unit_of_measurement)
+
       fuel_types = FuelType.all
-      fuel_types.each do |t|
-        if(t.type_name == type_name)
-          return t
+
+      fuel_types.each do |fuel_type|
+        if(fuel_type.type_name == type_name)
+          return fuel_type
         end
       end
 
@@ -117,12 +121,16 @@ require 'roo'
       puts "Fuel save true"
       return fuel
     end
+  end
+
+  task :run => :environment do
+    Rake::Task['parser:process'].invoke
 
 
       file = Roo::Spreadsheet.open( "parser_data/Combustiveis.xlsx" )
       file.default_sheet = file.sheets.first
 
-      14.upto(20) do |line|
+      14.upto(109480) do |line|
 
         #Region
         region_name = file.cell(line, 'C')
@@ -134,11 +142,11 @@ require 'roo'
 
         #County
         county_name = file.cell(line, 'E')
-        county_id = build_county(county_name, state)
+        county = build_county(county_name, state)
 
         #FuelResearch
         date = file.cell(line, 'A')
-        fuel_research = build_fuel_research(date, county_id)
+        fuel_research = build_fuel_research(date, county)
 
 
         #FuelType
@@ -162,7 +170,6 @@ require 'roo'
         resale_standard_deviation, min_distribuition_price, medium_distribuition_price,
         max_distribuition_price, distribuition_standard_deviation, fuel_research, fuel_type)
       end
-
   end
 
 end
