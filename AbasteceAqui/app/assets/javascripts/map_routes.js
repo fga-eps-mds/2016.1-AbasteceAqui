@@ -46,10 +46,40 @@ function initMap() {
 
   var addPinsButton = document.getElementById("add-pins");
   addPinsButton.addEventListener("click", function() {
-    alert('Not finished');
+    putMarks(geocoder, map);
   });
 
 }
+
+function putMarks(geocoder, map) {
+
+  const cities = Array.from(routeCities);
+
+  for (var i = 0; i < cities.length; i++) {
+    geocodeAddress(geocoder, map, cities[i]);
+  }
+}
+
+function geocodeAddress(geocoder, map, address) {
+
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+        // if over query limit, try again in 300ms
+        setTimeout(geocodeAddress, 300, geocoder, map, address);
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    }
+  });
+}
+
+
 
 // calculate and display a route
 function calculateAndDisplayRoute(directionsService, directionsDisplay, map, findCities) {
