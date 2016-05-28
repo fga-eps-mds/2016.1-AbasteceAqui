@@ -45,11 +45,6 @@ function initMap() {
   originBox.addListener('places_changed', onChangeHandler);
   destinationBox.addListener('places_changed', onChangeHandler);
 
-  var addPinsButton = document.getElementById("add-pins");
-  addPinsButton.addEventListener("click", function() {
-    putMarks(geocoder, map);
-  });
-
 }
 
 function putMarks(geocoder, map) {
@@ -136,6 +131,7 @@ function geocodeLatLng(geocoder, map, latlng) {
 
                 if (!routeCities.has(city)){
                   routeCities.add(city);
+                  putMarks(geocoder, map);
                 }
               }
             }
