@@ -5,6 +5,9 @@
 
 <button type="button" class="btn btn-success" id="add-pins">Add pins</button>
 
+<%= content_tag :div, class: "counties", data: {counties: @counties} do %>
+<% end %>
+
 <script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDfGB7KMArZa_LfxkHdqJH6Yd1ExsXO1I&libraries=places&callback=initMap">
 </script>

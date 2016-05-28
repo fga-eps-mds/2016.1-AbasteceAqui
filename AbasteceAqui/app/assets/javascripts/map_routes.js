@@ -1,5 +1,6 @@
 let routeCoords;
 let routeCities = new Set();
+let counties = $('.counties').data('counties');
 
 // initialize the map
 function initMap() {
@@ -168,9 +169,9 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
   }
 
   // 5% of routecoords lenght rounded down
-  const adder = Math.floor(routeCoords.length * 0.05);
+  const adder = Math.floor(routeCoords.length * 0.02);
 
   for (var i = 0; i < routeCoords.length; i += adder) {
-    setTimeout(geocodeLatLng, 200 * i, geocoder, map, routeCoords[i]);
+    setTimeout(geocodeLatLng, 300 * i, geocoder, map, routeCoords[i]);
   }
 }
