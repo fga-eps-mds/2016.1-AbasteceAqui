@@ -21,8 +21,9 @@ function initMap() {
 
   // callback to when the user type a origin and a destination
   const onChangeHandler = function() {
-    let routeCoords = calculateAndDisplayRoute(directionsService, directionsDisplay, map);
-    setTimeout(findCitiesOfRoute, 3000, geocoder, map);
+    calculateAndDisplayRoute(directionsService, directionsDisplay, map, function(){
+      findCitiesOfRoute(geocoder,map, routeCoords);
+    });
   };
 
   // create the search boxes and link them to the UI elements.
@@ -51,7 +52,7 @@ function initMap() {
 }
 
 // calculate and display a route
-function calculateAndDisplayRoute(directionsService, directionsDisplay, map) {
+function calculateAndDisplayRoute(directionsService, directionsDisplay, map, findCities) {
 
 	const origin = document.getElementById('origin').value;
   const destination = document.getElementById('destination').value;
@@ -71,10 +72,12 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
       routeCoords = response.routes[0].overview_path;
+      findCities();
     } else {
       window.alert('Directions request failed due to ' + status);
     }
   });
+
 }
 
 // find the address of a coord
@@ -86,18 +89,26 @@ function geocodeLatLng(geocoder, map, latlng) {
       if (results[0]) {
         var address_components = results[0].address_components;
 
-        // for each addres_components
+        // for each address_components
         for (var i = 0; i < address_components.length; i++) {
 
           if (address_components[i].types[0] === "locality" || 
               address_components[i].types[0] === "administrative_area_level_2") {
 
-            // if the city doesn't exist in set we add it
-            if (!routeCities.has(address_components[i].long_name)){
-              routeCities.add(address_components[i].long_name);
+            let city = address_components[i].long_name;
+
+            for (var j = 0; j < address_components.length; j++) {
+
+              if (address_components[j].types[0] == "administrative_area_level_1") {
+
+                city = city + ", " + address_components[j].long_name;
+
+                if (!routeCities.has(city)){
+                  routeCities.add(city);
+                }
+              }
             }
           }
-
         }
       } else {
         window.alert('No results found');
@@ -115,7 +126,7 @@ function geocodeLatLng(geocoder, map, latlng) {
 }
 
 // Find cities of a route
-function findCitiesOfRoute(geocoder, map) {
+function findCitiesOfRoute(geocoder, map, routeCoords) {
 
   const origin = document.getElementById('origin').value;
   const destination = document.getElementById('destination').value;
