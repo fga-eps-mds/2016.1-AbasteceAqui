@@ -65,3 +65,6 @@ gem 'simplecov', :require => false, :group => :test
 
 	gem "factory_girl"
 	gem "factory_girl_rails"
+
+# Cucumber
+gem 'cucumber-rails'
