@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get '/calculator' => 'calculator#index'
   get '/searcher' => 'search#index'
   get '/search-map-brazil' => 'search#map_brazil'
+
   get '/map-routes' => 'map_routes#index'
+  get '/map-routes/data' => 'map_routes#find_fuels_of_research'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
