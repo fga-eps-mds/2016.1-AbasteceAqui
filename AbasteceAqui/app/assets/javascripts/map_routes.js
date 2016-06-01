@@ -171,3 +171,10 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
     setTimeout(geocodeLatLng, 300 * i, geocoder, map, routeCoords[i]);
   }
 }
+
+
+$.ajax({url: 'map-routes/data.html'}).done(
+  function(data) {
+    data = $(data).find('div.data').data("counties");
+    alert(data);
+  });
