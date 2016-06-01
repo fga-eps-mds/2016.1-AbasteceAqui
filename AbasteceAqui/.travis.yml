@@ -2,6 +2,7 @@ language:
         - ruby
 
 before_script:
+	- bndle install
         - rake db:migrate RAILS_ENV=test
         - gem install rspec rspec-rails simplecov
 
