@@ -1,6 +1,10 @@
 let routeCoords;
 let routeCities = new Set();
-let counties = $('.counties').data('counties');
+
+let counties;
+let researches;
+let fuels;
+let canPutMarks = false;
 
 // initialize the map
 function initMap() {
@@ -76,7 +80,6 @@ function geocodeAddress(geocoder, map, address) {
 }
 
 
-
 // calculate and display a route
 function calculateAndDisplayRoute(directionsService, directionsDisplay, map, findCities) {
 
@@ -131,7 +134,9 @@ function geocodeLatLng(geocoder, map, latlng) {
 
                 if (!routeCities.has(city)){
                   routeCities.add(city);
-                  putMarks(geocoder, map);
+                  if (canPutMarks) {
+                    putMarks(geocoder, map);
+                  }
                 }
               }
             }
@@ -171,10 +176,23 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
     setTimeout(geocodeLatLng, 300 * i, geocoder, map, routeCoords[i]);
   }
 }
+ 
+  function loadData() {
+    $(document).ready(function() {
+      const map = document.getElementById('map-container');
+      if (map != null) {
 
+        $.ajax({url: 'map-routes/data.html'}).done(
+          function(data) {
+            counties = $(data).find('div.data').data("counties");
+            researches = $(data).find('div.data').data("researches");
+            fuels = $(data).find('div.data').data("fuels");
+          }).then(function(){
+            alert("ok");
+            canPutMarks = true;
+          });
+      }
+    });
+  }
 
-$.ajax({url: 'map-routes/data.html'}).done(
-  function(data) {
-    data = $(data).find('div.data').data("counties");
-    alert(data);
-  });
+loadData();
