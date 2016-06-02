@@ -1,0 +1,21 @@
+language:
+      - ruby
+
+before_script:
+	- rake db:migrate RAILS_ENV=test
+  - gem install rspec rspec-rails simplecov
+
+script:
+        - bundle exec rspec spec
+
+rvm:
+  - 2.2.0
+
+notifications:
+  email:
+    recipients:
+      - jonatas_lenon@hotmail.com.br
+
+branches:
+  only:
+  - homologacao
