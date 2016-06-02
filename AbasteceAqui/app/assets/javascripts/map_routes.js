@@ -1,20 +1,23 @@
-let routeCoords;
+let routeCoords = [];
 let routeCities = new Set();
 
 let counties;
 let researches;
 let fuels;
 let canPutMarks = false;
+let overQuerry = false;
+let countOverQuery = 0;
+let count = 0;
 
 // initialize the map
 function initMap() {
 
 	const directionsDisplay = new google.maps.DirectionsRenderer;
-	const directionsService = new google.maps.DirectionsService;  
+	const directionsService = new google.maps.DirectionsService;
   const geocoder = new google.maps.Geocoder;
   const brazilCoords = new google.maps.LatLng(-13, -55);
 
-  // create a map centered in brazil  
+  // create a map centered in brazil
 	const map = new google.maps.Map(document.getElementById('map-container'), {
     center: brazilCoords,
     zoom: 4
@@ -100,7 +103,12 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-      routeCoords = response.routes[0].overview_path;
+			const steps = response.routes[0].legs[0].steps;
+			for(var i = 0; i < steps.length; i++) {
+				for(var j = 0; j < steps[i].path.length; j += 150) {
+					routeCoords.push(steps[i].path[j]);
+				}
+			}
       findCities();
     } else {
       window.alert('Directions request failed due to ' + status);
@@ -121,7 +129,7 @@ function geocodeLatLng(geocoder, map, latlng) {
         // for each address_components
         for (var i = 0; i < address_components.length; i++) {
 
-          if (address_components[i].types[0] === "locality" || 
+          if (address_components[i].types[0] === "locality" ||
               address_components[i].types[0] === "administrative_area_level_2") {
 
             let city = address_components[i].long_name;
@@ -134,9 +142,6 @@ function geocodeLatLng(geocoder, map, latlng) {
 
                 if (!routeCities.has(city)){
                   routeCities.add(city);
-                  if (canPutMarks) {
-                    putMarks(geocoder, map);
-                  }
                 }
               }
             }
@@ -148,7 +153,9 @@ function geocodeLatLng(geocoder, map, latlng) {
     } else {
       if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         // if over query limit, try again in 200ms
-        setTimeout(geocodeLatLng, 200, geocoder, map, latlng);
+				count ++;
+        setTimeout(geocodeLatLng, 2000*count, geocoder, map, latlng);
+				console.log("overQuerry");
       } else {
         window.alert('Geocoder failed due to: ' + status);
       }
@@ -170,29 +177,27 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
   }
 
   // 5% of routecoords lenght rounded down
-  const adder = Math.floor(routeCoords.length * 0.02);
-
-  for (var i = 0; i < routeCoords.length; i += adder) {
-    setTimeout(geocodeLatLng, 300 * i, geocoder, map, routeCoords[i]);
+  // const adder = Math.floor(routeCoords.length * 0.01);
+	for (var i = 0; i < routeCoords.length; i++) {
+    setTimeout(geocodeLatLng, 2000*count, geocoder, map, routeCoords[i]);
+		count ++;
   }
 }
- 
-  function loadData() {
-    $(document).ready(function() {
-      const map = document.getElementById('map-container');
-      if (map != null) {
 
-        $.ajax({url: 'map-routes/data.html'}).done(
-          function(data) {
-            counties = $(data).find('div.data').data("counties");
-            researches = $(data).find('div.data').data("researches");
-            fuels = $(data).find('div.data').data("fuels");
-          }).then(function(){
-            alert("ok");
-            canPutMarks = true;
-          });
-      }
-    });
-  }
+function loadData() {
+  $(document).ready(function() {
+    const map = document.getElementById('map-container');
+    if (map != null) {
 
-loadData();
+      $.ajax({url: 'map-routes/data.html'}).done(
+        function(data) {
+          counties = $(data).find('div.data').data("counties");
+          researches = $(data).find('div.data').data("researches");
+          fuels = $(data).find('div.data').data("fuels");
+        }).then(function(){
+          alert("ok");
+          canPutMarks = true;
+        });
+    }
+  });
+} loadData();
