@@ -8,6 +8,8 @@ let canPutMarks = false;
 let overQuerry = false;
 let countOverQuery = 0;
 let count = 0;
+let countGeocoder = 0;
+let allCitiesFounded = false;
 
 // initialize the map
 function initMap() {
@@ -120,6 +122,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
 // find the address of a coord
 function geocodeLatLng(geocoder, map, latlng) {
 
+	countGeocoder++;
   // start reverse geocoder with the given coords
   geocoder.geocode({'location': latlng}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
@@ -155,13 +158,17 @@ function geocodeLatLng(geocoder, map, latlng) {
         // if over query limit, try again in 200ms
 				count ++;
         setTimeout(geocodeLatLng, 2000*count, geocoder, map, latlng);
-				console.log("overQuerry");
+				countOverQuery++;
+				console.log("OVER_QUERY_LIMIT");
       } else {
         window.alert('Geocoder failed due to: ' + status);
       }
     }
   });
   console.log(".");
+	if(countGeocoder == (routeCoords.length + countOverQuery)) {
+		allCitiesFounded =  true;
+	}
 }
 
 // Find cities of a route
