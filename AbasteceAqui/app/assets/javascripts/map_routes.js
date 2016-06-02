@@ -9,7 +9,7 @@ let overQuerry = false;
 let countOverQuery = 0;
 let count = 0;
 let countGeocoder = 0;
-let allCitiesFounded = false;
+let allCitiesFound = false;
 
 // initialize the map
 function initMap() {
@@ -167,7 +167,8 @@ function geocodeLatLng(geocoder, map, latlng) {
   });
   console.log(".");
 	if(countGeocoder == (routeCoords.length + countOverQuery)) {
-		allCitiesFounded =  true;
+		allCitiesFound =  true;
+		compareData();
 	}
 }
 
@@ -198,9 +199,15 @@ function loadData() {
 
       $.ajax({url: 'map-routes/data.html'}).done(
         function(data) {
-          counties = $(data).find('div.data').data("counties");
-          researches = $(data).find('div.data').data("researches");
-          fuels = $(data).find('div.data').data("fuels");
+
+					counties = $(data).find('div.data').data("counties");
+					researches = $(data).find('div.data').data("researches");
+					fuels = $(data).find('div.data').data("fuels");
+
+					/* Stringifying objects counties, researches and fuels */
+					conties = JSON.stringify(counties, null, 4);
+					researches = JSON.stringify(researches, null, 4);
+					fuels = JSON.stringify(fuels, null, 4);
         }).then(function(){
           alert("ok");
           canPutMarks = true;
@@ -208,3 +215,8 @@ function loadData() {
     }
   });
 } loadData();
+
+function compareData() {
+
+
+}
