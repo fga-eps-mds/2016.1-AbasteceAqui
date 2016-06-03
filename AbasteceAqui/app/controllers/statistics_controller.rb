@@ -1,11 +1,18 @@
 class StatisticsController < ApplicationController
+  
+
+
   def index
   end
 
   def county_anual
+  	@years = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
+             2014, 2015, 2016]
+
+  	titulo = "Preço do combustivel no decorrer dos anos"
 
   	@chart = LazyHighCharts::HighChart.new('graph') do |f|
-	  f.title(text:  "Preço do combustivel no decorrer dos anos")
+	  f.title(text:  titulo)
 	  f.xAxis(categories: ["2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016"])
 	  f.series(name: "Preço Da Gasolina", yAxis: 0, data: [14119, 5068, 4985, 3339, 2656, 14119, 5068, 4985, 3339, 2656, 14119, 5068, 4985, 3339])
 	  
