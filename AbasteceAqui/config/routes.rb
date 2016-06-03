@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
 
 
+  get 'statistics/index'
+  get 'statistics/county_anual' => 'statistics#county_anual'
+
   get '/parser/run' => 'parser#import'
   get '/calculator' => 'calculator#index'
   get '/searcher' => 'search#index'
