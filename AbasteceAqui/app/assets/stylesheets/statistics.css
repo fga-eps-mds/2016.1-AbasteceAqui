@@ -1,5 +1,15 @@
+
 .padding-page-top > *:nth-of-type(1) {
   padding-top: 80px;
 }
 .padding-page-top > #tf-home {
   padding-top: 0px;
+
+#type_of_fuel_selection {
+ 	
+}
+
+ #type_of_fuel_selection .nav-tabs{
+ 	text-align: center;
+ }
+

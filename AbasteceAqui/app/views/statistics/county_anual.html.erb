@@ -1,18 +1,20 @@
-<div id ="type_of_fuel">
+<div id ="type_of_fuel_selection">
 
-      <ul class="nav nav-tabs">
-        <li role="presentation" class="active" id="gasolina-info-btn">
-          <a href="#">Gasolina</a>
-        </li>
-        <li role="presentation" id="etanol-info-btn">
-          <a href="#">Etanol</a>
-        </li>
-        <li role="presentation" id="diesel-info-btn">
-          <a href="#">Diesel</a>
-        </li>
+  <ul class="nav nav-tabs">
 
-      </ul>
-    </div>
+    <li role="presentation" class="active" id="gasolina-info-btn">
+      <a href="#">Gasolina</a>
+    </li>
+    <li role="presentation" id="etanol-info-btn">
+      <a href="#">Etanol</a>
+    </li>
+    <li role="presentation" id="diesel-info-btn">
+      <a href="#">Diesel</a>
+    </li>
+
+  </ul>
+  
+</div>
 
     <div class="gasolina-info">
       <%= render "gasolina" %>
@@ -23,8 +25,9 @@
     </div>
 
     <div class="diesel-info">
-      <%= render "etanol" %>
+      <%= render "diesel" %>
     </div>
+
 
 <div class="container">
 
@@ -43,4 +46,5 @@
 <div class="graph_sanction_type">
 	<%= high_chart("id", @chart) %>
 
+</div>
 </div>
