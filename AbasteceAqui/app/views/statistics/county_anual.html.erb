@@ -34,13 +34,23 @@
 
 
 <span class="same_line">
-     Escolha o Municipio Desejado:
+     Escolha o Estado Desejado:
 
-  <%= select_tag 'county', options_for_select(@years, :selected => params[:county]), id: "select_tag"%>
+  <%= select_tag 'state', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag"%>
   <%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 
 </span>
 
+<div>
+
+<span class="same_line">
+     Escolha o Municipio Desejado:
+
+  <%= select_tag 'County', options_for_select(@counties_of_state, :selected => params[:county_searched]), id: "select_tag"%>
+  <%= submit_tag "Confirmar", name: nil, id: "select_button"%>
+
+</span>
+</div>
 </div>
 
 <div class="graph_sanction_type">
