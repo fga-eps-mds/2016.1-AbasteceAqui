@@ -4,12 +4,13 @@
 }
 .padding-page-top > #tf-home {
   padding-top: 0px;
-
-#type_of_fuel_selection {
- 	
 }
 
- #type_of_fuel_selection .nav-tabs{
+#gasolina-info-btn {
+	margin-left: 35%;
+}
+
+#type_of_fuel_selection .nav-tabs{
  	text-align: center;
  }
 
