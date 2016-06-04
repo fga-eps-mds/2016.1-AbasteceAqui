@@ -1,6 +1,7 @@
 let routeCoords = [];
 let routeCities = new Set();
 
+let states;
 let counties;
 let researches;
 let fuels;
@@ -200,14 +201,11 @@ function loadData() {
       $.ajax({url: 'map-routes/data.html'}).done(
         function(data) {
 
+          states = $(data).find('div.data').data("states");
 					counties = $(data).find('div.data').data("counties");
 					researches = $(data).find('div.data').data("researches");
 					fuels = $(data).find('div.data').data("fuels");
 
-					/* Stringifying objects counties, researches and fuels */
-					conties = JSON.stringify(counties, null, 4);
-					researches = JSON.stringify(researches, null, 4);
-					fuels = JSON.stringify(fuels, null, 4);
         }).then(function(){
           alert("ok");
           canPutMarks = true;
