@@ -3,10 +3,18 @@ class MapRoutesController < ApplicationController
 	def index
 
 	end
+
+	def find_states 
+
+		@states = State.fill_object_states()
+
+		return @states
+
+	end
 	
 	def find_counties
 
-		@counties = County.fill_counties
+		@counties = County.fill_counties()
 
 		return @counties
 
@@ -14,11 +22,7 @@ class MapRoutesController < ApplicationController
 
 	def find_last_research_of_counties
 
-		@researches = []
-
-		for county in @counties
-			@researches << FuelResearch.search_fuels_research(county)
-		end
+		@researches = FuelResearch.fill_object_last_research(@counties)
 
 		return @researches
 
@@ -28,21 +32,9 @@ class MapRoutesController < ApplicationController
 
 		find_counties()
 		find_last_research_of_counties()
+		find_states()
 
-		@fuels = []
-
-		for research in @researches
-
-			for fuel in research
-
-				name = fuel.fuel_type.type_name
-				fuel_hash = Hash.new
-				fuel_hash[name] = research
-				@fuels << fuel_hash
-
-			end
-
-		end
+		@fuels = Fuel.fuels_latest_researches_counties(@researches)
 
 		return @fuels
 
