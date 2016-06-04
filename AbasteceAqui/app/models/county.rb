@@ -18,6 +18,7 @@ class County < ActiveRecord::Base
 		else
 			#do nothing
 		end
+	end
 
 	def self.search_all_county_researches (county_searched)
 
@@ -34,7 +35,6 @@ class County < ActiveRecord::Base
 		else
 			#do nothing
 		end
-
 	end
 
 end

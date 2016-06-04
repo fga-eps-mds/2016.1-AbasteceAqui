@@ -1,60 +1,36 @@
-<div id ="type_of_fuel_selection">
-
-  <ul class="nav nav-tabs">
-
-    <li role="presentation" class="active" id="gasolina-info-btn">
-      <a href="#">Gasolina</a>
-    </li>
-    <li role="presentation" id="etanol-info-btn">
-      <a href="#">Etanol</a>
-    </li>
-    <li role="presentation" id="diesel-info-btn">
-      <a href="#">Diesel</a>
-    </li>
-
-  </ul>
-  
-</div>
-
-    <div class="gasolina-info">
-      <%= render "gasolina" %>
-    </div>
-
-    <div class="etanol-info">
-      <%= render "etanol" %>
-    </div>
-
-    <div class="diesel-info">
-      <%= render "diesel" %>
-    </div>
-
-
 <div class="container">
 
-
-
-<span class="same_line">
-     Escolha o Estado Desejado:
-
-  <%= select_tag 'state', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag"%>
-  <%= submit_tag "Confirmar", name: nil, id: "select_button"%>
-
-</span>
-
-<div>
-
-<span class="same_line">
-     Escolha o Municipio Desejado:
-
-  <%= select_tag 'County', options_for_select(@counties_of_state, :selected => params[:county_searched]), id: "select_tag"%>
-  <%= submit_tag "Confirmar", name: nil, id: "select_button"%>
-
-</span>
+<%= form_tag("/statistics/county_anual", method: "get", class: "form-search") do %>
+<div id="state-group">
+  <%= label_tag(:state_searched, "Estado:") %>
+  <select name="state_searched" class="dropdown" required="on">
+    <option value=""> Escolha um estado </option>
+    <% @states.each do |state| %>
+    <option value="<%= state %>"><%= state %></option>
+    <% end %>
+  </select>
 </div>
+
+<div id="county-group">
+  <%= label_tag(:county_searched, "Município:") %>
+  <select name="county_searched" class="dropdown" required="on">
+    <option value=""> Escolha um município </option>
+    <% @counties_of_state.each do |county| %>
+    <option value="<%= county %>"><%= county %></option>
+    <% end %>
+  </select>
 </div>
+
+<div id="search-buttons">
+  <%= submit_tag("Pesquisar", class: "btn btn-success") %>
+</div>
+
+<% end %>
 
 <div class="graph_sanction_type">
 	<%= high_chart("id", @chart) %>
 
 </div>
+
+
 </div>
