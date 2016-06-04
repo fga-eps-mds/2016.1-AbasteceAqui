@@ -12,6 +12,15 @@ let count = 0;
 let countGeocoder = 0;
 let allCitiesFound = false;
 
+let fuelType = [
+  "ETANOL HIDRATADO",
+  "GASOLINA COMUM",
+  "GLP",
+  "GNV",
+  "OLEO DIESEL",
+  "OLEO DIESEL S10"
+];
+
 // initialize the map
 function initMap() {
 
@@ -207,7 +216,7 @@ function loadData() {
 					fuels = $(data).find('div.data').data("fuels");
 
         }).then(function(){
-          alert("ok");
+          console.log("sent all data");
           canPutMarks = true;
         });
     }
@@ -251,6 +260,29 @@ function compareData() {
         break;
       }
     }
+
+    let researchID = -1;
+
+    for (var l = 0; l < researches.length; l++) {
+      if (researches[l].county_id === countyID) {
+        researchID = researches[l].id;
+        console.log("Research id: " + researchID);
+        break;
+      }
+    }
+
+    let fuelsID = [];
+
+    console.log("FUELS");
+
+    for (var m = 0; m < fuels.length; m++) {
+      if (fuels[m].fuel_research_id === researchID) {
+        fuelsID.push(fuels[m].id);
+
+        console.log(fuels[m].id);
+      }
+    }
+
 
   }
 }

@@ -11,10 +11,7 @@ class Fuel < ActiveRecord::Base
 
 			for fuel in research.fuels
 
-				name = fuel.fuel_type.type_name
-				fuel_hash = Hash.new
-				fuel_hash[name] = research
-				fuels << fuel_hash
+				fuels << fuel
 
 			end
 
