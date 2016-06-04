@@ -19,6 +19,22 @@ class County < ActiveRecord::Base
 			#do nothing
 		end
 
+	def self.search_all_county_researches (county_searched)
+
+		if county_searched != nil
+			county_researches = County.find_by(name: county_searched).fuel_researches
+
+			researches_of_county = []
+
+			county_researches.each do |research|
+				researches_of_county << research.id
+			end
+
+			return researches_of_county
+		else
+			#do nothing
+		end
+
 	end
 
 end
