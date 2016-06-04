@@ -17,5 +17,18 @@ class FuelResearch < ActiveRecord::Base
 		return researches_of_fuels
 
 	end
+
+	def self.fill_object_last_research (counties) 
+
+
+		last_researches  = []
+
+		counties.each do |county|
+			last_researches << county.fuel_researches.last
+		end
+
+		return last_researches
+
+	end
 	
 end
