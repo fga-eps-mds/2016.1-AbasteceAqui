@@ -169,7 +169,7 @@ function geocodeLatLng(geocoder, map, latlng) {
   console.log(".");
 	if(countGeocoder == (routeCoords.length + countOverQuery)) {
 		allCitiesFound =  true;
-		compareData();
+    compareData();
 	}
 }
 
@@ -214,7 +214,40 @@ function loadData() {
   });
 } loadData();
 
+
 function compareData() {
 
+  const routeCitiesArray = Array.from(routeCities);
 
+  for (var i = 0; i < routeCitiesArray.length; i++) {
+    const city = routeCitiesArray[i];
+
+    var stateName = city.substr(city.indexOf(",") + 2);
+    var cityName = city.substr(0, city.indexOf(","));
+
+    stateName = stateName.toUpperCase();
+    cityName = cityName.toUpperCase();
+
+    let stateID = -1;
+
+    for (var j = 0; j < states.length; j++) {
+      if (states[i].name === stateName) {
+        stateID = states[i].id;
+        console.log("State id: " + stateID);
+      }
+    }
+
+    let countyID = -1;
+
+    for (var k = 0; k < counties.length; k++) {
+      if (counties[i].name === cityName && counties[i].state_id === stateID) {
+        countyID = counties[i].id;
+        console.log("City id: " + countyID);
+      }
+    }
+
+    console.log(stateName);
+    console.log(cityName);
+
+  }
 }
