@@ -1,24 +1,25 @@
 <div class="container">
 
-<span class="same_line">
-     Escolha o Estado Desejado:
-<%= form_tag("/statistics/county_anual", method: "get", remote: true) do %>
-  <%= select_tag 'state_searched', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag"%>
-  <%= submit_tag "Confirmar", name: nil, id: "select_button"%>
-<% end %>
-</span>
+	<span class="same_line">
+		Escolha o Estado Desejado:
+		<%= form_tag("/statistics/county_anual", method: "get", remote: false) do %>
+		<%= select_tag 'state_searched', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag"%>
+		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
+		<% end %>
+	</span>
 
-<span class="same_line">
-     Escolha o Municipio Desejado:
-<%= form_tag("/statistics/county_anual", method: "get", remote: true) do %>
-  <%= select_tag 'county_searched', options_for_select(@counties_of_state, :selected => params[:county_searched]), id: "select_tag1"%>  
-<% end %>
-</span>
 
-<div class="graph_county_anual">
-	<%= render "county_anual" %>
+		<span class="same_line">
+			Escolha o Municipio Desejado:
+			<%= form_tag("/statistics/county_anual", method: "get", remote: true) do %>
+			<%= select_tag 'county_searched', options_for_select(@counties_of_state, :selected => params[:county_searched]), id: "select_tag1"%>  
+			<% end %>
+		</span>
 
-</div>
+	<div class="graph_county_anual">
+		<%= render "county_anual" %>
+
+	</div>
 
 
 </div>
