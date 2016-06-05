@@ -24,6 +24,12 @@ class StatisticsController < ApplicationController
 			@county_searched = counties.first.name
 		end
 
+		generate_annual_graph_by_county()
+
+	end
+
+	def generate_annual_graph_by_county
+
 		@years = [2013, 2014, 2015]
 
 		titulo = "Preço do combustivel no decorrer dos anos"
@@ -132,7 +138,6 @@ class StatisticsController < ApplicationController
 		@gas_prices << (sum_gas / gas_price_div).round(3)
 		@ethanol_prices << (sum_ethanol / ethanol_price_div).round(3)
 		@diesel_prices << (sum_diesel / diesel_price_div).round(3)
-
 
 	end
 
