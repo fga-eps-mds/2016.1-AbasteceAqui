@@ -11,7 +11,7 @@ let countOverQuery = 0;
 let count = 0;
 let countGeocoder = 0;
 let allCitiesFound = false;
-
+let chosenFuel = 2; // default option
 let fuelType = [
   "ETANOL HIDRATADO",
   "GASOLINA COMUM",
@@ -227,6 +227,7 @@ function loadData() {
 function compareData() {
 
   const routeCitiesArray = Array.from(routeCities);
+	let fuelsPosition = [];
 
   for (var i = 0; i < routeCitiesArray.length; i++) {
     const city = routeCitiesArray[i];
@@ -242,10 +243,10 @@ function compareData() {
 
     let stateID = -1;
 
-    for (var j = 0; j < states.length; j++) {
+    for (var state_count = 0; state_count < states.length; state_count++) {
 
-      if (states[j].name === stateName) {
-        stateID = states[j].id;
+      if (states[state_count].name === stateName) {
+        stateID = states[state_count].id;
         console.log("State id: " + stateID);
         break;
       }
@@ -253,9 +254,9 @@ function compareData() {
 
     let countyID = -1;
 
-    for (var k = 0; k < counties.length; k++) {
-      if (counties[k].name === cityName && counties[k].state_id === stateID) {
-        countyID = counties[k].id;
+    for (var county_count = 0; county_count < counties.length; county_count++) {
+      if (counties[county_count].name === cityName && counties[county_count].state_id === stateID) {
+        countyID = counties[county_count].id;
         console.log("City id: " + countyID);
         break;
       }
@@ -263,28 +264,31 @@ function compareData() {
 
     let researchID = -1;
 
-    for (var l = 0; l < researches.length; l++) {
-      if (researches[l].county_id === countyID) {
-        researchID = researches[l].id;
+    for (var research_count = 0; research_count < researches.length; research_count++) {
+      if (researches[research_count].county_id === countyID) {
+        researchID = researches[research_count].id;
         console.log("Research id: " + researchID);
         break;
       }
     }
 
-    let fuelsID = [];
-
     console.log("FUELS");
 
-    for (var m = 0; m < fuels.length; m++) {
-      if (fuels[m].fuel_research_id === researchID) {
-        fuelsID.push(fuels[m].id);
-
-        console.log(fuels[m].id);
+    for (var fuels_count = 0; fuels_count < fuels.length; fuels_count++) {
+      if ((fuels[fuels_count].fuel_research_id === researchID) && (fuels[fuels_count].fuel_type_id === chosenFuel)) {
+        fuelsPosition.push(fuels_count);
+				console.log(fuels_count);
       }
     }
-
-
   }
+
+	let mediumResalePriceRoute = 0;
+	for(var medium_price_count = 0; medium_price_count < fuelsPosition.length; medium_price_count++) {
+		mediumResalePriceRoute += fuels[fuelsPosition[medium_price_count]].medium_resale_price;
+	}
+	mediumResalePriceRoute /= fuelsPosition.length;
+	console.log("PRECO MEDIO DA ROTA: ");
+	console.log(mediumResalePriceRoute);
 }
 
 function removeDiacritics (str) {
