@@ -21,6 +21,17 @@ let fuelType = [
   "OLEO DIESEL S10"
 ];
 
+var iconBase = 'https://maps.google.com/mapfiles/kml/shapes';
+var icons = {
+  goodCity: {
+    icon: iconBase + '<%= asset_path('green_mark.png') %>'
+  },
+  badCity: {
+    icon: iconBase + '<%= asset_path('red_mark.png') %>'
+  }
+};
+
+
 // initialize the map
 function initMap() {
 
@@ -66,21 +77,22 @@ function initMap() {
 
 }
 
-function putMarks(geocoder, map) {
+function putMarks(geocoder, map, kindOfCity) {
 
   const cities = Array.from(routeCities);
 
   for (var i = 0; i < cities.length; i++) {
-    geocodeAddress(geocoder, map, cities[i]);
+    geocodeAddress(geocoder, map, cities[i], kindOfCity);
   }
 }
 
-function geocodeAddress(geocoder, map, address) {
+function geocodeAddress(geocoder, map, address, kindOfCity) {
 
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       var marker = new google.maps.Marker({
           map: map,
+          icon: '/assets/green_mark.png',
           position: results[0].geometry.location
       });
     } else {
@@ -178,7 +190,7 @@ function geocodeLatLng(geocoder, map, latlng) {
   console.log(".");
 	if(countGeocoder == (routeCoords.length + countOverQuery)) {
 		allCitiesFound =  true;
-    compareData();
+    compareData(geocoder, map);
 	}
 }
 
@@ -224,7 +236,7 @@ function loadData() {
 } loadData();
 
 
-function compareData() {
+function compareData(geocoder, map) {
 
   const routeCitiesArray = Array.from(routeCities);
 	let fuelsPosition = [];
@@ -289,6 +301,8 @@ function compareData() {
 	mediumResalePriceRoute /= fuelsPosition.length;
 	console.log("PRECO MEDIO DA ROTA: ");
 	console.log(mediumResalePriceRoute);
+
+  putMarks(geocoder,map, "goodCity");
 }
 
 function removeDiacritics (str) {
