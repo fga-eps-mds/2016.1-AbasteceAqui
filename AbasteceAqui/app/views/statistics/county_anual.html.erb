@@ -9,17 +9,21 @@
 	</span>
 
 
+		<% if @counties_of_state != nil %>
 		<span class="same_line">
 			Escolha o Municipio Desejado:
 			<%= form_tag("/statistics/county_anual", method: "get", remote: true) do %>
-			<%= select_tag 'county_searched', options_for_select(@counties_of_state, :selected => params[:county_searched]), id: "select_tag1"%>  
+			<%= select_tag 'county_searched', options_for_select([[""]] + @counties_of_state ,:selected => params[:county_searched]) , id: "select_tag1" %>
 			<% end %>
 		</span>
 
-	<div class="graph_county_anual">
-		<%= render "county_anual" %>
+		<div class="graph_county_anual">
+			<%= render "county_anual" %>
+		</div>
 
-	</div>
+		<% end %>
+
+
 
 
 </div>

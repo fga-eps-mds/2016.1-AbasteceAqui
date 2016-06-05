@@ -8,23 +8,19 @@ class StatisticsController < ApplicationController
 		@states = State.fill_states
 		@state_searched = params[:state_searched]
 
-		@SearchController = SearchController.new
-
 		if @state_searched != nil
 			@counties_of_state = State.search_state_counties(@state_searched)
 		else
-			@state_searched = 'ACRE'
-			@counties_of_state = @SearchController.find_counties_of_state(@state_searched)
+			# do nothing
 		end
 
-		if params[:county_searched] != nil
-			@county_searched = params[:county_searched]
-		else
-			counties = State.find_by(name: @state_searched).counties
-			@county_searched = counties.first.name
-		end
+		@county_searched = params[:county_searched]
 
+		if @county_searched != nil
 		generate_annual_graph_by_county()
+		else
+			# do nothing
+		end
 
 	end
 
