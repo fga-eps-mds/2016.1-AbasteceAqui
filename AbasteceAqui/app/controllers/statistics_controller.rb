@@ -23,7 +23,7 @@ class StatisticsController < ApplicationController
 			counties = State.find_by(name: @state_searched).counties
 			@county_searched = counties.first.name
 		end
-		
+
 		@years = [2013, 2014, 2015]
 
 		titulo = "Preço do combustivel no decorrer dos anos"
@@ -75,66 +75,70 @@ class StatisticsController < ApplicationController
 
 	def prices_of_fuel
 
-		@gas_prices = [] #FuelType id: 2
-		@ethanol_prices = [] #FuelType id: 1 
-		@diesel_prices = [] #FuelType id: 5
+	#These variables stores the three mediums prices of the three types of fuels.
+	@gas_prices = [] #FuelType id: 2
+	@ethanol_prices = [] #FuelType id: 1 
+	@diesel_prices = [] #FuelType id: 5
 
-		fuels_of_year.each do |year, fuels|
+	fuels_of_year.each do |year, fuels|
 
-			@gas_prices_month = []
-			@ethanol_prices_month = []
-			@diesel_prices_month =[]
+		#These variables will store the fuels that equals to the type evidenced by the name of the vectors.
+		@gas_prices_month = []
+		@ethanol_prices_month = []
+		@diesel_prices_month =[]
 
-			gas_price_div = 0.0
-			diesel_price_div = 0.0
-			ethanol_price_div = 0.0
-			
+		#These following variables will serve as iterators,
+		# ... storing only the values of prices of fuels that are different from zero.
+		gas_price_div = 0.0
+		diesel_price_div = 0.0
+		ethanol_price_div = 0.0
+		
 
-			fuels.each do |fuel|
+		fuels.each do |fuel|
 
-				if fuel.fuel_type_id == 1
-					@ethanol_prices_month << fuel
-				elsif fuel.fuel_type_id == 2
-					@gas_prices_month << fuel 
-				elsif fuel.fuel_type_id == 5
-					@diesel_prices_month << fuel
-				end
+			if fuel.fuel_type_id == 1
+				@ethanol_prices_month << fuel
+			elsif fuel.fuel_type_id == 2
+				@gas_prices_month << fuel 
+			elsif fuel.fuel_type_id == 5
+				@diesel_prices_month << fuel
 			end
-
-			sum_gas = 0.0
-			@gas_prices_month.each do |fuel|
-				sum_gas = sum_gas + fuel.medium_distribuition_price
-				if fuel.medium_distribuition_price != 0.0
-					gas_price_div = gas_price_div + 1
-				end
-			end
-
-			sum_ethanol = 0.0
-			@ethanol_prices_month.each do |fuel|
-				sum_ethanol = sum_ethanol + fuel.medium_distribuition_price
-				if fuel.medium_distribuition_price != 0.0
-					ethanol_price_div = ethanol_price_div + 1
-				end
-			end
-
-			sum_diesel = 0.0
-			@diesel_prices_month.each do |fuel|
-				sum_diesel = sum_diesel + fuel.medium_distribuition_price
-				if fuel.medium_distribuition_price != 0.0
-					diesel_price_div = diesel_price_div + 1
-				end
-			end
-
-			@gas_prices << sum_gas / gas_price_div
-			@ethanol_prices << sum_ethanol / ethanol_price_div
-			@diesel_prices << sum_diesel / diesel_price_div
-
-
 		end
 
-		@total_price = [@gas_prices, @ethanol_prices, @diesel_prices]
+		sum_gas = 0.0
+		@gas_prices_month.each do |fuel|
+			sum_gas = sum_gas + fuel.medium_distribuition_price
+			if fuel.medium_distribuition_price != 0.0
+				gas_price_div = gas_price_div + 1
+			end
+		end
 
-		return @total_price 
+		sum_ethanol = 0.0
+		@ethanol_prices_month.each do |fuel|
+			sum_ethanol = sum_ethanol + fuel.medium_distribuition_price
+			if fuel.medium_distribuition_price != 0.0
+				ethanol_price_div = ethanol_price_div + 1
+			end
+		end
+
+		sum_diesel = 0.0
+		@diesel_prices_month.each do |fuel|
+			sum_diesel = sum_diesel + fuel.medium_distribuition_price
+			if fuel.medium_distribuition_price != 0.0
+				diesel_price_div = diesel_price_div + 1
+			end
+		end
+
+		@gas_prices << sum_gas / gas_price_div
+		@ethanol_prices << sum_ethanol / ethanol_price_div
+		@diesel_prices << sum_diesel / diesel_price_div
+
+
 	end
+
+	@total_price = [@gas_prices, @ethanol_prices, @diesel_prices]
+
+	return @total_price 
+end
 
 end

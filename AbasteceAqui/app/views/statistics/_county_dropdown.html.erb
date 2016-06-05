@@ -1,8 +1,0 @@
-<div class = "">
-<span class="same_line">
-     Escolha o Municipio Desejado:
-<%= form_tag("/statistics/county_anual", method: "get", remote: true) do %>
-  <%= select_tag 'county_searched', options_for_select(@counties_of_state, :selected => params[:county_searched]), id: "select_tag"%>  
-<% end %>
-</span>
-</div>
