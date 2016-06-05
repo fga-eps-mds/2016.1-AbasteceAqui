@@ -7,7 +7,6 @@ class StatisticsController < ApplicationController
 	def county_anual
 	
 		@states = State.fill_states
-		@state_searched = "no option"
 		@state_searched = params[:state_searched]
 
 		@SearchController = SearchController.new
@@ -19,32 +18,32 @@ class StatisticsController < ApplicationController
 			@counties_of_state = @SearchController.find_counties_of_state(@state_searched)
 		end
 
-		@county_searched = 'SENA MADUREIRA'
+		if params[:county_searched] != nil
+			@county_searched = params[:county_searched]
+		else
+			@county_searched = 'CRUZEIRO DO SUL'
+		end
+		
+
 		@years = [2013, 2014, 2015]
 
 		titulo = "Preço do combustivel no decorrer dos anos"
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-		  f.title(text:  titulo)
+		  f.title(text:  titulo + " - " + @county_searched)
 		  f.xAxis(categories: @years)
 		  f.series(name: "Preço Da Gasolina", yAxis: 0, data: prices_of_fuel[0])
 		  f.series(name: "Preço Do Etanol", yAxis: 0, data: prices_of_fuel[1])
 		  f.series(name: "Preço Do Diesel", yAxis: 0, data: prices_of_fuel[2])
 
 		  f.yAxis [
-		    {title: {text: "Preço Da Gasolina", margin: 70} },
-		    #{title: {text: "Preço Da Etanol", margin: 70} },
-		   # {title: {text: "Preço Do Diesel", margin: 70} },
+		    {title: {text: "Preço Dos Combustíveis", margin: 70} },
 
 		  ]
 
 		  f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
 		  f.chart({defaultSeriesType: "line"})
-		 end
-
-		 prices_of_fuel()
-
-			
+		 end			
 	end
 
  	def fuels_of_year
