@@ -117,8 +117,8 @@ def calculate_price_fuel(fuel_prices_month)
 	fuel_price_div = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
 
 	fuel_prices_month.each do |fuel|
-		sum_fuel = sum_fuel + fuel.medium_distribuition_price
-		if fuel.medium_distribuition_price != 0.0
+		sum_fuel = sum_fuel + fuel.medium_resale_price
+		if fuel.medium_resale_price != 0.0
 			fuel_price_div = fuel_price_div + 1
 		end
 	end

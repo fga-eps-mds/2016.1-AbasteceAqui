@@ -7,8 +7,8 @@ RSpec.describe StatisticsController, type: :controller do
     @county1 = County.new(id: 1, name: "BRASILIA", state_id: 1)
     @fuel_research1 = FuelResearch.new(id: 1, date: "2016-04-01", county_id: 1)
     @fuel_research2 = FuelResearch.new(id: 2, date: "2016-05-01", county_id: 1)
-    @fuel1 = Fuel.new(id: 1, medium_distribuition_price: 3.0)
-    @fuel2 = Fuel.new(id: 2, medium_distribuition_price: 5.0)
+    @fuel1 = Fuel.new(id: 1, medium_resale_price: 3.0)
+    @fuel2 = Fuel.new(id: 2, medium_resale_price: 5.0)
 
 
     @state1.save

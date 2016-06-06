@@ -74,4 +74,4 @@ gem 'simplecov', :require => false, :group => :test
   gem 'metric_fu'
 
 # Cucumber
-gem 'cucumber-rails'
+gem 'cucumber-rails', :require => false, :group => :test
