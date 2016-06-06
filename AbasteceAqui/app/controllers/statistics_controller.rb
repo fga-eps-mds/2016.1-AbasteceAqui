@@ -47,6 +47,18 @@
 		end
 	end
 
+	def check_year_of_research(researches_of_county, researches_of_year, year)
+		researches_of_county.each do |research|
+
+			if research.date.strftime("%Y").to_i == year
+
+				research.fuels.each do |fuel|
+					researches_of_year << fuel
+				end
+			end
+		end
+	end
+
 	def fuels_of_year
 
 		@researches_of_county = County.find_by(name: @county_searched).fuel_researches
@@ -57,15 +69,7 @@
 			@years_of_researches[year] = Hash.new
 			@researches_of_year = []
 
-			@researches_of_county.each do |research|
-
-				if research.date.strftime("%Y").to_i == year
-
-					research.fuels.each do |fuel|
-						@researches_of_year << fuel
-					end
-				end
-			end
+			check_year_of_research(@researches_of_county, @researches_of_year, year)
 
 			@years_of_researches[year] = @researches_of_year
 
@@ -77,55 +81,58 @@
 
 	def prices_of_fuel
 
-	#These variables stores the three mediums prices of the three types of fuels.
-	@gas_prices = [] #FuelType id: 2
-	@ethanol_prices = [] #FuelType id: 1
-	@diesel_prices = [] #FuelType id: 5
+		#These variables stores the three mediums prices of the three types of fuels.
+		@gas_prices_for_year = [] #FuelType id: 2
+		@ethanol_prices_for_year = [] #FuelType id: 1
+		@diesel_prices_for_year = [] #FuelType id: 5
 
-	fuels_of_year.each do |year, fuels|
+		fuels_of_year.each do |year, fuels|
+
 
 		#These variables will store the fuels that equals to the type evidenced by the name of the vectors.
 		@gas_prices_month = []
 		@ethanol_prices_month = []
 		@diesel_prices_month =[]
 
-		fuels.each do |fuel|
+		verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
 
-			if fuel.fuel_type_id == 1
-				@ethanol_prices_month << fuel
-			elsif fuel.fuel_type_id == 2
-				@gas_prices_month << fuel
-			elsif fuel.fuel_type_id == 5
-				@diesel_prices_month << fuel
+		@gas_prices_for_year << calculate_price_fuel(@gas_prices_month)
+		@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month)
+		@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month)
+
+		end
+
+		@total_price = [@gas_prices_for_year, @ethanol_prices_for_year, @diesel_prices_for_year]
+
+		return @total_price
+	end
+
+	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
+	def calculate_price_fuel(fuel_prices_month)
+		sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
+		fuel_price_div = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
+
+		fuel_prices_month.each do |fuel|
+			sum_fuel = sum_fuel + fuel.medium_resale_price
+			if fuel.medium_resale_price != 0.0
+				fuel_price_div = fuel_price_div + 1
 			end
 		end
 
-		@gas_prices << calculate_price_fuel(@gas_prices_month)
-		@ethanol_prices << calculate_price_fuel(@ethanol_prices_month)
-		@diesel_prices << calculate_price_fuel(@diesel_prices_month)
-
+		return (sum_fuel/fuel_price_div).round(3)
 	end
 
-	@total_price = [@gas_prices, @ethanol_prices, @diesel_prices]
+	def verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
+		fuels.each do |fuel|
 
-	return @total_price
-end
-
-# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
-def calculate_price_fuel(fuel_prices_month)
-	sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
-	fuel_price_div = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
-
-	fuel_prices_month.each do |fuel|
-		sum_fuel = sum_fuel + fuel.medium_resale_price
-		if fuel.medium_resale_price != 0.0
-			fuel_price_div = fuel_price_div + 1
+			if fuel.fuel_type_id == 1
+				ethanol_prices << fuel
+			elsif fuel.fuel_type_id == 2
+				gas_prices << fuel
+			elsif fuel.fuel_type_id == 5
+				diesel_prices << fuel
+			end
 		end
 	end
 
-	return (sum_fuel/fuel_price_div).round(3)
-
-end
-
-
-end
+end #end of class
