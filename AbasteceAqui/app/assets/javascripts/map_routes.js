@@ -25,6 +25,9 @@ let fuelType = [
 ];
 let whatMarkPut = [];
 
+let defaultTime = 0;
+
+
 // initialize the map
 function initMap() {
 
@@ -86,8 +89,6 @@ function geocodeAddress(geocoder, map, address) {
   const maxZindex = google.maps.Marker.MAX_ZINDEX;
 
   geocoder.geocode( { 'address': address}, function(results, status) {
-    console.log(address);
-
     if (status == google.maps.GeocoderStatus.OK) {
       if(fuelsPosition[countGeocodeAdress] == -1) {
         var marker = new google.maps.Marker({
@@ -223,7 +224,8 @@ function geocodeLatLng(geocoder, map, latlng) {
       if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         // if over query limit, try again in 200ms
 				count ++;
-        setTimeout(geocodeLatLng, 2000*count, geocoder, map, latlng);
+        defaultTime += 350;
+        setTimeout(geocodeLatLng, defaultTime*count, geocoder, map, latlng);
 				countOverQuery++;
 				console.log("OVER_QUERY_LIMIT");
       } else {
@@ -252,10 +254,21 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
 
   // 5% of routecoords lenght rounded down
   // const adder = Math.floor(routeCoords.length * 0.01);
+  defaultTime = 1500;
+  let totalTime = 0;
+
 	for (var i = 0; i < routeCoords.length; i++) {
-    setTimeout(geocodeLatLng, 2000*count, geocoder, map, routeCoords[i]);
-		count ++;
+    totalTime += defaultTime;
+    setTimeout(geocodeLatLng, defaultTime*count, geocoder, map, routeCoords[i]);
+
+    count++;
+    if (defaultTime <= 3500) {
+      defaultTime += 10;
+    }
   }
+
+  console.log(totalTime/60000);
+
 }
 
 function loadData() {
