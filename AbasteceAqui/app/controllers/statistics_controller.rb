@@ -1,4 +1,4 @@
-class StatisticsController < ApplicationController
+	class StatisticsController < ApplicationController
 
 	def index
 	end
@@ -89,13 +89,6 @@ class StatisticsController < ApplicationController
 		@ethanol_prices_month = []
 		@diesel_prices_month =[]
 
-		#These following variables will serve as iterators,
-		# ... storing only the values of prices of fuels that are different from zero.
-		gas_price_div = 0.0
-		diesel_price_div = 0.0
-		ethanol_price_div = 0.0
-
-
 		fuels.each do |fuel|
 
 			if fuel.fuel_type_id == 1
@@ -107,33 +100,9 @@ class StatisticsController < ApplicationController
 			end
 		end
 
-		sum_gas = 0.0
-		@gas_prices_month.each do |fuel|
-			sum_gas = sum_gas + fuel.medium_distribuition_price
-			if fuel.medium_distribuition_price != 0.0
-				gas_price_div = gas_price_div + 1
-			end
-		end
-
-		sum_ethanol = 0.0
-		@ethanol_prices_month.each do |fuel|
-			sum_ethanol = sum_ethanol + fuel.medium_distribuition_price
-			if fuel.medium_distribuition_price != 0.0
-				ethanol_price_div = ethanol_price_div + 1
-			end
-		end
-
-		sum_diesel = 0.0
-		@diesel_prices_month.each do |fuel|
-			sum_diesel = sum_diesel + fuel.medium_distribuition_price
-			if fuel.medium_distribuition_price != 0.0
-				diesel_price_div = diesel_price_div + 1
-			end
-		end
-
-		@gas_prices << (sum_gas / gas_price_div).round(3)
-		@ethanol_prices << (sum_ethanol / ethanol_price_div).round(3)
-		@diesel_prices << (sum_diesel / diesel_price_div).round(3)
+		@gas_prices << calculate_price_fuel(@gas_prices_month)
+		@ethanol_prices << calculate_price_fuel(@ethanol_prices_month)
+		@diesel_prices << calculate_price_fuel(@diesel_prices_month)
 
 	end
 
@@ -141,5 +110,22 @@ class StatisticsController < ApplicationController
 
 	return @total_price
 end
+
+# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
+def calculate_price_fuel(fuel_prices_month)
+	sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
+	fuel_price_div = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
+
+	fuel_prices_month.each do |fuel|
+		sum_fuel = sum_fuel + fuel.medium_distribuition_price
+		if fuel.medium_distribuition_price != 0.0
+			fuel_price_div = fuel_price_div + 1
+		end
+	end
+
+	return (sum_fuel/fuel_price_div).round(3)
+
+end
+
 
 end
