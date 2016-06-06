@@ -1,6 +1,6 @@
 let routeCoords = [];
 let routeCities = new Set();
-
+let countGeocodeAdress = 0;
 let states;
 let counties;
 let researches;
@@ -12,6 +12,8 @@ let count = 0;
 let countGeocoder = 0;
 let allCitiesFound = false;
 let chosenFuel = 2; // default option
+let fuelsPosition = [];
+let mediumResalePriceRoute = 0;
 let fuelType = [
   "ETANOL HIDRATADO",
   "GASOLINA COMUM",
@@ -20,17 +22,6 @@ let fuelType = [
   "OLEO DIESEL",
   "OLEO DIESEL S10"
 ];
-
-var iconBase = 'https://maps.google.com/mapfiles/kml/shapes';
-var icons = {
-  goodCity: {
-    icon: iconBase + '<%= asset_path('green_mark.png') %>'
-  },
-  badCity: {
-    icon: iconBase + '<%= asset_path('red_mark.png') %>'
-  }
-};
-
 
 // initialize the map
 function initMap() {
@@ -77,24 +68,41 @@ function initMap() {
 
 }
 
-function putMarks(geocoder, map, kindOfCity) {
+function putMarks(geocoder, map) {
 
   const cities = Array.from(routeCities);
 
   for (var i = 0; i < cities.length; i++) {
-    geocodeAddress(geocoder, map, cities[i], kindOfCity);
+    geocodeAddress(geocoder, map, cities[i]);
   }
 }
 
-function geocodeAddress(geocoder, map, address, kindOfCity) {
+function geocodeAddress(geocoder, map, address) {
 
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      var marker = new google.maps.Marker({
-          map: map,
-          icon: '/assets/green_mark.png',
-          position: results[0].geometry.location
-      });
+      if(fuelsPosition[countGeocodeAdress] == -1) {
+        var marker = new google.maps.Marker({
+            map: map,
+            icon: '/assets/blue_mark.png',
+            position: results[0].geometry.location
+        });
+      } else {
+        if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price < mediumResalePriceRoute) {
+          var marker = new google.maps.Marker({
+              map: map,
+              icon: '/assets/green_mark.png',
+              position: results[0].geometry.location
+          });
+        } else {
+          var marker = new google.maps.Marker({
+              map: map,
+              icon: '/assets/red_mark.png',
+              position: results[0].geometry.location
+          });
+        }
+      }
+      countGeocodeAdress++;
     } else {
       if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         // if over query limit, try again in 300ms
@@ -209,7 +217,7 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
   // 5% of routecoords lenght rounded down
   // const adder = Math.floor(routeCoords.length * 0.01);
 	for (var i = 0; i < routeCoords.length; i++) {
-    setTimeout(geocodeLatLng, 2000*count, geocoder, map, routeCoords[i]);
+    setTimeout(geocodeLatLng, 3500*count, geocoder, map, routeCoords[i]);
 		count ++;
   }
 }
@@ -239,7 +247,7 @@ function loadData() {
 function compareData(geocoder, map) {
 
   const routeCitiesArray = Array.from(routeCities);
-	let fuelsPosition = [];
+  let countFuelsPositionValid = 0;
 
   for (var i = 0; i < routeCitiesArray.length; i++) {
     const city = routeCitiesArray[i];
@@ -289,20 +297,24 @@ function compareData(geocoder, map) {
     for (var fuels_count = 0; fuels_count < fuels.length; fuels_count++) {
       if ((fuels[fuels_count].fuel_research_id === researchID) && (fuels[fuels_count].fuel_type_id === chosenFuel)) {
         fuelsPosition.push(fuels_count);
-				console.log(fuels_count);
+        break;
+      } else if(fuels_count === (fuels.length - 1)){
+        fuelsPosition.push(-1);
       }
     }
   }
 
-	let mediumResalePriceRoute = 0;
 	for(var medium_price_count = 0; medium_price_count < fuelsPosition.length; medium_price_count++) {
-		mediumResalePriceRoute += fuels[fuelsPosition[medium_price_count]].medium_resale_price;
+    if(fuelsPosition[medium_price_count] != -1) {
+      mediumResalePriceRoute += fuels[fuelsPosition[medium_price_count]].medium_resale_price;
+      countFuelsPositionValid++;
+    }
 	}
-	mediumResalePriceRoute /= fuelsPosition.length;
+	mediumResalePriceRoute /= countFuelsPositionValid;
 	console.log("PRECO MEDIO DA ROTA: ");
 	console.log(mediumResalePriceRoute);
 
-  putMarks(geocoder,map, "goodCity");
+  putMarks(geocoder,map);
 }
 
 function removeDiacritics (str) {
