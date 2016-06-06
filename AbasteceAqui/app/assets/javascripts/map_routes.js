@@ -14,6 +14,7 @@ let allCitiesFound = false;
 let chosenFuel = 2; // default option
 let fuelsPosition = [];
 let mediumResalePriceRoute = 0;
+let stepDisplay;
 let fuelType = [
   "ETANOL HIDRATADO",
   "GASOLINA COMUM",
@@ -22,6 +23,7 @@ let fuelType = [
   "OLEO DIESEL",
   "OLEO DIESEL S10"
 ];
+let whatMarkPut = [];
 
 // initialize the map
 function initMap() {
@@ -30,6 +32,8 @@ function initMap() {
 	const directionsService = new google.maps.DirectionsService;
   const geocoder = new google.maps.Geocoder;
   const brazilCoords = new google.maps.LatLng(-13, -55);
+  stepDisplay = new google.maps.InfoWindow();
+
 
   // create a map centered in brazil
 	const map = new google.maps.Map(document.getElementById('map-container'), {
@@ -79,27 +83,41 @@ function putMarks(geocoder, map) {
 
 function geocodeAddress(geocoder, map, address) {
 
+  const maxZindex = google.maps.Marker.MAX_ZINDEX;
+
   geocoder.geocode( { 'address': address}, function(results, status) {
+    console.log(address);
+
     if (status == google.maps.GeocoderStatus.OK) {
       if(fuelsPosition[countGeocodeAdress] == -1) {
         var marker = new google.maps.Marker({
             map: map,
             icon: '/assets/blue_mark.png',
-            position: results[0].geometry.location
+            position: results[0].geometry.location,
+            zIndex: maxZindex
         });
+
+        attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, true);
       } else {
-        if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price < mediumResalePriceRoute) {
+        if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price <= mediumResalePriceRoute) {
           var marker = new google.maps.Marker({
               map: map,
               icon: '/assets/green_mark.png',
-              position: results[0].geometry.location
+              position: results[0].geometry.location,
+              zIndex: maxZindex
           });
+
+          attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address);
+
         } else {
           var marker = new google.maps.Marker({
               map: map,
               icon: '/assets/red_mark.png',
-              position: results[0].geometry.location
+              position: results[0].geometry.location,
+              zIndex: maxZindex
           });
+          attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address);
+
         }
       }
       countGeocodeAdress++;
@@ -111,6 +129,24 @@ function geocodeAddress(geocoder, map, address) {
         alert("Geocode was not successful for the following reason: " + status);
       }
     }
+  });
+}
+
+function attachInstructionText(map, marker,fuel, address, isBlue = false) {
+
+  let text;
+  if (!isBlue) {
+    text = '<h2>'+ address +'</h2>'+
+                '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
+                '<p> Maior preço: '+ fuel.max_resale_price +'</p>'+
+                '<p> Menor preço: '+ fuel.min_resale_price +'</p>';
+  } else {
+    text = '<h2>'+ address +'</h2>';
+  }
+
+  google.maps.event.addListener(marker, 'click', function() {
+    stepDisplay.setContent(text);
+    stepDisplay.open(map, marker);
   });
 }
 
@@ -146,8 +182,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
       window.alert('Directions request failed due to ' + status);
     }
   });
-
 }
+
 
 // find the address of a coord
 function geocodeLatLng(geocoder, map, latlng) {
@@ -217,7 +253,7 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
   // 5% of routecoords lenght rounded down
   // const adder = Math.floor(routeCoords.length * 0.01);
 	for (var i = 0; i < routeCoords.length; i++) {
-    setTimeout(geocodeLatLng, 3500*count, geocoder, map, routeCoords[i]);
+    setTimeout(geocodeLatLng, 2000*count, geocoder, map, routeCoords[i]);
 		count ++;
   }
 }
@@ -250,6 +286,8 @@ function compareData(geocoder, map) {
   let countFuelsPositionValid = 0;
 
   for (var i = 0; i < routeCitiesArray.length; i++) {
+    whatMarkPut[i] = -1;
+
     const city = routeCitiesArray[i];
 
     var stateName = city.substr(city.indexOf(",") + 2);
@@ -278,6 +316,7 @@ function compareData(geocoder, map) {
       if (counties[county_count].name === cityName && counties[county_count].state_id === stateID) {
         countyID = counties[county_count].id;
         console.log("City id: " + countyID);
+        whatMarkPut[i] = 0;
         break;
       }
     }
@@ -311,6 +350,15 @@ function compareData(geocoder, map) {
     }
 	}
 	mediumResalePriceRoute /= countFuelsPositionValid;
+
+  for (var i = 0; i < routeCitiesArray.length; i++) {
+    if (fuelsPosition[i] != -1) {
+      if (fuels[fuelsPosition[i]].medium_resale_price > mediumResalePriceRoute) {
+        whatMarkPut[i] = 1;
+      }
+    }
+  }  
+
 	console.log("PRECO MEDIO DA ROTA: ");
 	console.log(mediumResalePriceRoute);
 
