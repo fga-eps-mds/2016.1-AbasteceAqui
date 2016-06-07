@@ -149,6 +149,9 @@ function attachInstructionText(map, marker,fuel, address, isBlue = false) {
   let text;
   let textPreviousCity;
   let textDisplay;
+  var red,green;
+  red = "#f82929";
+  green = "#36c81e";
   if (!isBlue) {
     text = '<h2>'+ address +'</h2>'+
                 '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
@@ -157,8 +160,13 @@ function attachInstructionText(map, marker,fuel, address, isBlue = false) {
     textPreviousCity = '<p></p>';
     textDisplay = text;
     if(fuelsPosition[countGeocodeAdress+1] != -1 && ((countGeocodeAdress+1)<fuelsPosition.length)) {
-      textPreviousCity = '<h3> Preço médio da proxima cidade: </h3'+
-                         '<p>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</p>';
+      if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuel.medium_resale_price) {
+         textNextCity = '<p> Preço médio da proxima cidade: </p>'+
+                        '<font color='+green+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
+      } else {
+         textNextCity = '<p> Preço médio da proxima cidade: </p>'+
+                        '<font color='+red+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
+      }
     } else if((countGeocodeAdress+1) == fuelsPosition.length) {
       textPreviousCity = '<p></p>';
     } else {
@@ -169,8 +177,13 @@ function attachInstructionText(map, marker,fuel, address, isBlue = false) {
            '<p>Infelizmente, não temos dados deste município</p>';
     textDisplay = text;
     if(fuelsPosition[countGeocodeAdress+1] != -1 && ((countGeocodeAdress+1)<fuelsPosition.length)) {
-      textPreviousCity = '<h3> Preço médio da proxima cidade: </h3'+
-                          '<p>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</p>';
+      if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuel.medium_resale_price) {
+        textNextCity = '<p> Preço médio da proxima cidade: </p>'+
+                       '<font color='+green+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
+      } else {
+        textNextCity = '<p> Preço médio da proxima cidade: </p>'+
+                       '<font color='+red+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
+      }
     } else if((countGeocodeAdress+1) == fuelsPosition.length) {
       textPreviousCity = '<p></p>';
     } else {
@@ -530,8 +543,30 @@ function changeText(fuelName = "GASOLINA COMUM") {
 $(document).ready(function() {
  changeText();
  $("button").click(function(){
-   const buttonValue = parseInt($("#"+this.id).val());
-   changeText(fuelType[buttonValue]);
-   chosenFuel = buttonValue + 1;
- });
+    const buttonValue = parseInt($("#"+this.id).val());
+    if(buttonValue === -1) {
+        for(var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        document.getElementById('origin').value = "";
+        document.getElementById('destination').value = "";
+        markers = [];
+        routeCities = new Set();
+        fuelsPosition = [];
+        directionsDisplay.set('directions', null);
+        routeCoords = [];
+         countGeocodeAdress = 0;
+         canPutMarks = false;
+         overQuerry = false;
+         countOverQuery = 0;
+         count = 0;
+         countGeocoder = 0;
+         allCitiesFound = false;
+         mediumResalePriceRoute = 0;
+         defaultTime = 0;
+    } else {
+        changeText(fuelType[buttonValue]);
+        chosenFuel = buttonValue + 1;
+    }
+  });
 });
