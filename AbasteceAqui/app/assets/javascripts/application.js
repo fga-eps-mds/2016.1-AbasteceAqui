@@ -22,3 +22,8 @@
 //= require search.js
 //= require calculator.js
 //= require map_routes.js
+//= require dinamic_selection.js
+
+//= require highcharts/highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/highstock
