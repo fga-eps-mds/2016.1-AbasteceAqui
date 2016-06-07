@@ -18,7 +18,6 @@ class County < ActiveRecord::Base
 		else
 			#do nothing
 		end
-
 	end
 
 end

@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'statistics/index'
+  get 'statistics' => 'statistics#index'
+  get 'statistics/county_anual' => 'county_graph_year#county_anual'
 
-
-  get '/parser/run' => 'parser#import'
   get '/calculator' => 'calculator#index'
   get '/searcher' => 'search#index'
   get '/search-map-brazil' => 'search#map_brazil'
