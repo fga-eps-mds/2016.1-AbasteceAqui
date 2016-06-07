@@ -83,7 +83,7 @@ function putMarks(geocoder, map) {
   for (var i = 0; i < cities.length; i++) {
     setTimeout(geocodeAddress, defaultTimePutMarks*i, geocoder, map, cities[i]);
      if(defaultTimePutMarks <= 3500) {
-       defaultTimePutMarks += 10;
+       defaultTimePutMarks += 8;
     }
   }
 }
@@ -289,7 +289,7 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
 
     count++;
     if (defaultTime <= 3500) {
-      defaultTime += 10;
+      defaultTime += 8;
     }
   }
 
@@ -500,3 +500,16 @@ function removeDiacritics (str) {
   return str;
 
 }
+
+function changeText(fuelName = "GASOLINA COMUM") {
+ document.getElementById("selectedFuel").innerHTML = fuelName;
+}
+
+$(document).ready(function() {
+ changeText();
+ $("button").click(function(){
+   const buttonValue = parseInt($("#"+this.id).val());
+   changeText(fuelType[buttonValue]);
+   chosenFuel = buttonValue + 1;
+ });
+});
