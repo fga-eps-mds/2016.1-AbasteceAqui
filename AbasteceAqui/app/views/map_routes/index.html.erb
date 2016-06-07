@@ -3,14 +3,18 @@
 <input id="origin" class="controls" type="text" placeholder="Origem">
 <input id="destination" class="controls" type="text" placeholder="Destino">
 
-<button type = "button" id="ethanol" value = "0">Etanol</button>
-<button type = "button" id="gasoline" value = "1">Gasolina</button>
-<button type = "button" id="GLP" value = "2">GLP</button>
-<button type = "button" id="GNV" value = "3">GNV</button>
-<button type = "button" id="Disel" value = "4">Disel</button>
-<button type = "button" id="S10" value = "5">Disel S10</button>
-
-<p id="selectedFuel">Fuel Name</p>
+<div id="buttons-map-route">
+ 	<button class = "button-fuels" id="ethanol" value = "0">Etanol</button>
+ 	<button class = "button-fuels" id="gasoline" value = "1">Gasolina</button>
+ 	<button class = "button-fuels" id="GLP" value = "2">GLP</button>
+ 	<button class = "button-fuels" id="GNV" value = "3">GNV</button>
+ 	<button class = "button-fuels" id="Disel" value = "4">Disel</button>
+ 	<button class = "button-fuels" id="S10" value = "5">Disel S10</button>
+ 	<div id="text-fuel">
+		<p id="selectedFuel">Fuel Name</p>
+		<div class="loading"> </div>
+ 	</div>
+</div>
 <div id="map-container" class="col-md-6"></div>
 
 <script async defer
