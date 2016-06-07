@@ -41,3 +41,21 @@
 	margin-right: auto;
 	margin-left: auto;
 }
+#is-loaded {
+font-family: Georgia;
+ margin-right: auto;
+ margin-left: auto;
+margin-bottom: 10px;
+}
+#RemoveSearch {
+	background-color: green;
+	color: #fff;
+}
+
+#buttons-map-route > .btn-default {
+	background-color: #e6e6e6;
+}
+
+#buttons-map-route > .btn-default:hover {
+	background-color: #ddd;
+}
