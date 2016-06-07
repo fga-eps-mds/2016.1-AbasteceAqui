@@ -24,15 +24,18 @@ let fuelType = [
   "OLEO DIESEL S10"
 ];
 let whatMarkPut = [];
-
+let loadingAnimation;
 let defaultTime = 0;
 let totalTime = 0;
+let markers = [];
+let currentOption = chosenFuel;
+let directionsDisplay;
 
 
 // initialize the map
 function initMap() {
 
-	const directionsDisplay = new google.maps.DirectionsRenderer;
+	directionsDisplay = new google.maps.DirectionsRenderer;
 	const directionsService = new google.maps.DirectionsService;
   const geocoder = new google.maps.Geocoder;
   const brazilCoords = new google.maps.LatLng(-13, -55);
@@ -98,32 +101,35 @@ function geocodeAddress(geocoder, map, address) {
       if(fuelsPosition[countGeocodeAdress] == -1) {
         var marker = new google.maps.Marker({
             map: map,
+            animation: google.maps.Animation.DROP,
             icon: '/assets/blue_mark.png',
             position: results[0].geometry.location,
             zIndex: maxZindex
         });
-
+        markers.push(marker);
         attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, true);
       } else {
         if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price <= mediumResalePriceRoute) {
           var marker = new google.maps.Marker({
               map: map,
+              animation: google.maps.Animation.DROP,
               icon: '/assets/green_mark.png',
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
-
+          markers.push(marker);
           attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]],  address, false);
 
         } else {
           var marker = new google.maps.Marker({
               map: map,
+              animation: google.maps.Animation.DROP,
               icon: '/assets/red_mark.png',
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
+          markers.push(marker);
           attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, false);
-
         }
       }
       countGeocodeAdress++;
@@ -143,7 +149,7 @@ function attachInstructionText(map, marker,fuel, address, isBlue = false) {
   let text;
   let textPreviousCity;
   let textDisplay;
-  /*if (!isBlue) {
+  if (!isBlue) {
     text = '<h2>'+ address +'</h2>'+
                 '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
                 '<p> Maior preço: '+ fuel.max_resale_price +'</p>'+
@@ -170,7 +176,7 @@ function attachInstructionText(map, marker,fuel, address, isBlue = false) {
     } else {
       textPreviousCity = '<p> Infelizmente a proxima cidade não esta registrada em nosso banco de dados </p>';
     }
-  } */
+  }
   textDisplay += textPreviousCity;
   google.maps.event.addListener(marker, 'click', function() {
     stepDisplay.setContent(textDisplay);
@@ -290,7 +296,7 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
 
     count++;
     if (defaultTime <= 3500) {
-      defaultTime += 8;
+      defaultTime += 9;
     } else {
       defaultTime += 0;
     }
