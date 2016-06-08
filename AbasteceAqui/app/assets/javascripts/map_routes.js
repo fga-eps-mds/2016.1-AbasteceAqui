@@ -213,6 +213,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
 
       document.getElementById("origin").disabled = true;
       document.getElementById("destination").disabled = true;
+      $.alert({
+        title: 'Alerta!',
+        content: 'Fazer buscas de rotas muito longas pode levar alguns minutos!',
+      });
       document.getElementById("new-search").disabled = false;
       document.getElementById("new-search").style.backgroundColor = "#5cb85c";
       directionsDisplay.setDirections(response);
