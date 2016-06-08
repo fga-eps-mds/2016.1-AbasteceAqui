@@ -14,7 +14,6 @@ let allCitiesFound = false;
 let chosenFuel = 2; // default option
 let fuelsPosition = [];
 let mediumResalePriceRoute = 0;
-let stepDisplay;
 let fuelType = [
   "ETANOL HIDRATADO",
   "GASOLINA COMUM",
@@ -27,16 +26,14 @@ let whatMarkPut = [];
 
 let defaultTime = 0;
 let loadingAnimation;
-let markers = [];
-let currentOption = chosenFuel;
-let directionsDisplay;
 let dataBaseLodaded = false;
-let researchTimeUp = 0;
+let stepDisplay;
+let countPutMarks = 0;
 
 // initialize the map
 function initMap() {
 
-	directionsDisplay = new google.maps.DirectionsRenderer;
+	const directionsDisplay = new google.maps.DirectionsRenderer;
 	const directionsService = new google.maps.DirectionsService;
   const geocoder = new google.maps.Geocoder;
   const brazilCoords = new google.maps.LatLng(-13, -55);
@@ -80,24 +77,30 @@ function initMap() {
 
 }
 
+function disabledButton() {
+  document.getElementById("new-search").disabled = true;
+  document.getElementById("new-search").style.backgroundColor = "#fff";
+  document.getElementById("new-search").style.borderColor = "#fff";
+}
+$(document).ready(function() {
+   disabledButton();
+ });
+
 function putMarks(geocoder, map) {
   var totalTimeMarks = 0;
   const cities = Array.from(routeCities);
-  let defaultTimePutMarks = 2700 + researchTimeUp;
+  let defaultTimePutMarks = 2700;
+  var incressedTime = 0;
   for (var i = 0; i < cities.length; i++) {
-    setTimeout(geocodeAddress, defaultTimePutMarks*i, geocoder, map, cities[i], i);
-    if(defaultTimePutMarks == 3500) {
-      defaultTimePutMarks += 5;
-    } else {
-        defaultTimePutMarks += 20;
-        if(defaultTimePutMarks == 4500) {
-          defaultTimePutMarks = 3500;
-        }
-    }
+
+    setTimeout(geocodeAddress, defaultTimePutMarks*countPutMarks, geocoder, map, cities[i]);
+    countPutMarks++;
+    defaultTimePutMarks += 30 + incressedTime;
+    incressedTime += 12;
   }
 }
 
-function geocodeAddress(geocoder, map, address, i) {
+function geocodeAddress(geocoder, map, address) {
 
   const maxZindex = google.maps.Marker.MAX_ZINDEX;
 
@@ -111,7 +114,6 @@ function geocodeAddress(geocoder, map, address, i) {
             position: results[0].geometry.location,
             zIndex: maxZindex
         });
-        markers.push(marker);
         attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, true);
       } else {
         if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price <= mediumResalePriceRoute) {
@@ -122,7 +124,6 @@ function geocodeAddress(geocoder, map, address, i) {
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
-          markers.push(marker);
           attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, false);
         } else {
           var marker = new google.maps.Marker({
@@ -132,14 +133,15 @@ function geocodeAddress(geocoder, map, address, i) {
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
-          markers.push(marker);
           attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, false);
         }
       }
     } else {
       if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         // if over query limit, try again in 300ms
-        setTimeout(geocodeAddress, 2500*i, geocoder, map, address);
+        countPutMarks++;
+        setTimeout(geocodeAddress, 2500*countPutMarks, geocoder, map, address);
+        console.log("OVER_QUERY_LIMIT");
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
@@ -156,8 +158,6 @@ function attachInstructionText(map, marker,fuel, address, isBlue) {
   var red,green;
   red = "#f82929";
   green = "#36c81e";
-  console.log(countGeocodeAdress);
-  console.log(fuelsPosition[countGeocodeAdress]);
   if (!isBlue) {
     text = '<h2>'+ address +'</h2>'+
                 '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
@@ -210,8 +210,11 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
     travelMode: google.maps.TravelMode.DRIVING
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
+
       document.getElementById("origin").disabled = true;
       document.getElementById("destination").disabled = true;
+      document.getElementById("new-search").disabled = false;
+      document.getElementById("new-search").style.backgroundColor = "#5cb85c";
       directionsDisplay.setDirections(response);
 			const steps = response.routes[0].legs[0].steps;
 			for(var i = 0; i < steps.length; i++) {
@@ -274,7 +277,6 @@ function geocodeLatLng(geocoder, map, latlng) {
       }
     }
   });
-  console.log(".");
 	if(countGeocoder == (routeCoords.length + countOverQuery)) {
 		allCitiesFound =  true;
     if(dataBaseLodaded == false) {
@@ -299,15 +301,19 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
 
   // 5% of routecoords lenght rounded down
   // const adder = Math.floor(routeCoords.length * 0.01);
-  defaultTime = 1500 + researchTimeUp;
+  defaultTime = 1500;
   let totalTime = 0;
+  var incressedTime = 0;
 
 	for (var i = 0; i < routeCoords.length; i++) {
     totalTime += defaultTime;
     setTimeout(geocodeLatLng, defaultTime*count, geocoder, map, routeCoords[i]);
     count++;
-    if (defaultTime <= 3500) {
+    if (defaultTime <= 3500 && i <= 124) {
       defaultTime += 9;
+    } else {
+      defaultTime += 12 + incressedTime;
+      incressedTime += 3;
     }
   }
   countLoadinAnimation = 0;
@@ -315,7 +321,7 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
     countLoadinAnimation = ++countLoadinAnimation % 4;
     $(".loading").text("Carregando " + Array(countLoadinAnimation+1).join("."));
   }, 500);
-  console.log(totalTime/60000);
+
 
 }
 
@@ -333,7 +339,6 @@ function loadData() {
 					fuels = $(data).find('div.data').data("fuels");
 
         }).then(function(){
-          console.log("sent all data");
           canPutMarks = true;
           dataBaseLodaded = true;
         });
@@ -368,7 +373,6 @@ function compareData(geocoder, map) {
 
       if (states[state_count].name === stateName) {
         stateID = states[state_count].id;
-        console.log("State id: " + stateID);
         break;
       }
     }
@@ -378,7 +382,6 @@ function compareData(geocoder, map) {
     for (var county_count = 0; county_count < counties.length; county_count++) {
       if (counties[county_count].name === cityName && counties[county_count].state_id === stateID) {
         countyID = counties[county_count].id;
-        console.log("City id: " + countyID);
         whatMarkPut[i] = 0;
         break;
       }
@@ -389,12 +392,10 @@ function compareData(geocoder, map) {
     for (var research_count = 0; research_count < researches.length; research_count++) {
       if (researches[research_count].county_id === countyID) {
         researchID = researches[research_count].id;
-        console.log("Research id: " + researchID);
         break;
       }
     }
 
-    console.log("FUELS");
 
     for (var fuels_count = 0; fuels_count < fuels.length; fuels_count++) {
       if ((fuels[fuels_count].fuel_research_id === researchID) && (fuels[fuels_count].fuel_type_id === chosenFuel)) {
@@ -421,9 +422,6 @@ function compareData(geocoder, map) {
       }
     }
   }
-
-	console.log("PRECO MEDIO DA ROTA: ");
-	console.log(mediumResalePriceRoute);
 
   putMarks(geocoder,map);
 }
@@ -533,36 +531,8 @@ $(document).ready(function() {
   changeText();
   $("button").click(function(){
     const buttonValue = parseInt($("#"+this.id).val());
-    if(buttonValue === -1) {
-        for(var i = 0; i < markers.length; i++) {
-          markers[i].setMap(null);
-        }
-        document.getElementById("origin").disabled = false;
-        document.getElementById("destination").disabled = false;
-        document.getElementById('origin').value = "";
-        document.getElementById('destination').value = "";
-        document.getElementById("is-loaded").innerHTML = "";
-        markers = [];
-        routeCities = new Set();
-        fuelsPosition = [];
-        directionsDisplay.set('directions', null);
-        routeCoords = [];
-         countGeocodeAdress = 0;
-         canPutMarks = false;
-         overQuerry = false;
-         countOverQuery = 0;
-         count = 0;
-         countGeocoder = 0;
-         allCitiesFound = false;
-         mediumResalePriceRoute = 0;
-         defaultTime = 0;
-         researchTimeUp += 500;
-         if(researchTimeUp == 2000) {
-           researchTimeUp = 500;
-         }
-    } else {
-      changeText(fuelType[buttonValue]);
-      chosenFuel = buttonValue + 1;
+    if(buttonValue == -1) {
+      location.reload(true);
     }
   });
 });
