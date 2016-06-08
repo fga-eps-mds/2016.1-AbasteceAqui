@@ -31,6 +31,7 @@ let markers = [];
 let currentOption = chosenFuel;
 let directionsDisplay;
 let dataBaseLodaded = false;
+let researchTimeUp = 0;
 
 // initialize the map
 function initMap() {
@@ -82,16 +83,21 @@ function initMap() {
 function putMarks(geocoder, map) {
   var totalTimeMarks = 0;
   const cities = Array.from(routeCities);
-  let defaultTimePutMarks = 2700;
+  let defaultTimePutMarks = 2700 + researchTimeUp;
   for (var i = 0; i < cities.length; i++) {
-    setTimeout(geocodeAddress, defaultTimePutMarks*i, geocoder, map, cities[i]);
-    if(defaultTimePutMarks <= 3500) {
-      defaultTimePutMarks += 15;
+    setTimeout(geocodeAddress, defaultTimePutMarks*i, geocoder, map, cities[i], i);
+    if(defaultTimePutMarks == 3500) {
+      defaultTimePutMarks += 5;
+    } else {
+        defaultTimePutMarks += 20;
+        if(defaultTimePutMarks == 4500) {
+          defaultTimePutMarks = 3500;
+        }
     }
   }
 }
 
-function geocodeAddress(geocoder, map, address) {
+function geocodeAddress(geocoder, map, address, i) {
 
   const maxZindex = google.maps.Marker.MAX_ZINDEX;
 
@@ -100,8 +106,8 @@ function geocodeAddress(geocoder, map, address) {
       if(fuelsPosition[countGeocodeAdress] == -1) {
         var marker = new google.maps.Marker({
             map: map,
-            icon: '/assets/blue_mark.png',
             animation: google.maps.Animation.DROP,
+            icon: '/assets/blue_mark.png',
             position: results[0].geometry.location,
             zIndex: maxZindex
         });
@@ -111,8 +117,8 @@ function geocodeAddress(geocoder, map, address) {
         if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price <= mediumResalePriceRoute) {
           var marker = new google.maps.Marker({
               map: map,
-              icon: '/assets/green_mark.png',
               animation: google.maps.Animation.DROP,
+              icon: '/assets/green_mark.png',
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
@@ -121,8 +127,8 @@ function geocodeAddress(geocoder, map, address) {
         } else {
           var marker = new google.maps.Marker({
               map: map,
-              icon: '/assets/red_mark.png',
               animation: google.maps.Animation.DROP,
+              icon: '/assets/red_mark.png',
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
@@ -133,7 +139,7 @@ function geocodeAddress(geocoder, map, address) {
     } else {
       if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         // if over query limit, try again in 300ms
-        setTimeout(geocodeAddress, 2500, geocoder, map, address);
+        setTimeout(geocodeAddress, 2500*i, geocoder, map, address);
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
@@ -150,12 +156,13 @@ function attachInstructionText(map, marker,fuel, address, isBlue) {
   var red,green;
   red = "#f82929";
   green = "#36c81e";
+  console.log(countGeocodeAdress);
+  console.log(fuelsPosition[countGeocodeAdress]);
   if (!isBlue) {
     text = '<h2>'+ address +'</h2>'+
                 '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
                 '<p> Maior preço: '+ fuel.max_resale_price +'</p>'+
                 '<p> Menor preço: '+ fuel.min_resale_price +'</p>';
-    console.log(countGeocodeAdress);
     if(fuelsPosition[countGeocodeAdress+1] != -1 && (countGeocodeAdress+1) != (fuelsPosition.length)) {
       if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price) {
         textNextCity = '<font color='+green+'>Preço médio da próxima cidade: '+fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+'</font>';
@@ -174,6 +181,7 @@ function attachInstructionText(map, marker,fuel, address, isBlue) {
   if((countGeocodeAdress+1)==fuelsPosition.length) {
     clearInterval(loadingAnimation);
     document.getElementById("is-loaded").innerHTML = "Carregado com Sucesso";
+    textNextCity = '<h4>Cidade Destino</h4>';
 
   }
   textDisplay = text + textNextCity;
@@ -291,7 +299,7 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
 
   // 5% of routecoords lenght rounded down
   // const adder = Math.floor(routeCoords.length * 0.01);
-  defaultTime = 1500;
+  defaultTime = 1500 + researchTimeUp;
   let totalTime = 0;
 
 	for (var i = 0; i < routeCoords.length; i++) {
@@ -548,6 +556,10 @@ $(document).ready(function() {
          allCitiesFound = false;
          mediumResalePriceRoute = 0;
          defaultTime = 0;
+         researchTimeUp += 500;
+         if(researchTimeUp == 2000) {
+           researchTimeUp = 500;
+         }
     } else {
       changeText(fuelType[buttonValue]);
       chosenFuel = buttonValue + 1;
