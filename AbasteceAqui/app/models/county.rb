@@ -20,4 +20,11 @@ class County < ActiveRecord::Base
 		end
 	end
 
+	def self.fill_counties ()
+
+		counties = County.all
+		return counties
+
+	end
+
 end

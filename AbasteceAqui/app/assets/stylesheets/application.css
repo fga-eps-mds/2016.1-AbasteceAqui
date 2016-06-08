@@ -10,5 +10,6 @@
  =* bootstrap.min.css
  =* font-awesome.css
  *= require map.css
+ *= require map-routes.css
+ *= require jquery-confirm.css
 */
-

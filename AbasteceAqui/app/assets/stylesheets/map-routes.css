@@ -1,0 +1,61 @@
+#map-container {
+	margin-top: 30px;
+	height: 500px;
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.controls {
+
+	border-bottom-right-radius: 8px;
+	border-top-left-radius: 8px;
+	width: 250px;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+
+#buttons-map-route {
+	text-align: center;
+}
+
+#text-fuel {
+	margin-top: 10px;
+	text-align: center;
+}
+.button-fuels {
+	border-radius: 50px;
+	background-color:#e8e3e3 ;
+}
+
+.loading {
+
+	width: 400px;
+	border-style: solid;
+	border-color: #ddd;
+	padding: 8px 16px;
+	border-radius: 5px;
+	color: #000;
+	font-size: 1.5em;
+	font-family: Georgia;
+	margin-right: auto;
+	margin-left: auto;
+}
+#is-loaded {
+font-family: Georgia;
+ margin-right: auto;
+ margin-left: auto;
+margin-bottom: 10px;
+}
+#RemoveSearch {
+	background-color: green;
+	color: #fff;
+}
+
+#buttons-map-route > .btn-default {
+	background-color: #e6e6e6;
+}
+
+#buttons-map-route > .btn-default:hover {
+	background-color: #ddd;
+}
