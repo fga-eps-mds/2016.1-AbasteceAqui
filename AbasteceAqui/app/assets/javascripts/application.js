@@ -21,3 +21,12 @@
 //= require navbar.js
 //= require search.js
 //= require calculator.js
+//= require jquery
+//= require jquery_ujs
+//= require_tree .
+//= require turbolinks
+//= require map_routes
+//= require highcharts/highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/highstock
+//= require jquery-confirm.js

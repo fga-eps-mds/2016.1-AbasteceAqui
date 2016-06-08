@@ -18,6 +18,12 @@ class County < ActiveRecord::Base
 		else
 			#do nothing
 		end
+	end
+
+	def self.fill_counties ()
+
+		counties = County.all
+		return counties
 
 	end
 

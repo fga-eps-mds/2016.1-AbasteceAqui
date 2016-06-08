@@ -1,0 +1,22 @@
+<input id="origin" class="controls" type="text" placeholder="Origem">
+<input id="destination" class="controls" type="text" placeholder="Destino">
+
+<div id="buttons-map-route">
+	<button class = "btn btn-default" id="ethanol" value = "0">Etanol</button>
+	<button class = "btn btn-default" id="gasoline" value = "1">Gasolina</button>
+	<button class = "btn btn-default" id="GLP" value = "2">GLP</button>
+	<button class = "btn btn-default" id="GNV" value = "3">GNV</button>
+	<button class = "btn btn-default" id="Diesel" value = "4">Diesel</button>
+	<button class = "btn btn-default" id="S10" value = "5">Diesel S10</button>
+ 	<div id="text-fuel">
+		<p id="selectedFuel">Fuel Name</p>
+		<div class="loading" id="is-loaded"> </div>
+		<button class = "btn btn-success" id="new-search" value = "-1">Nova Pesquisa</button>
+ 	</div>
+</div>
+
+<div id="map-container" class="col-md-6"></div>
+
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDfGB7KMArZa_LfxkHdqJH6Yd1ExsXO1I&libraries=places&callback=initMap">
+</script>
