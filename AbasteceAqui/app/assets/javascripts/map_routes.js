@@ -24,13 +24,13 @@ let fuelType = [
   "OLEO DIESEL S10"
 ];
 let whatMarkPut = [];
-let loadingAnimation;
+
 let defaultTime = 0;
-let totalTime = 0;
+let loadingAnimation;
 let markers = [];
 let currentOption = chosenFuel;
 let directionsDisplay;
-
+let dataBaseLodaded = false;
 
 // initialize the map
 function initMap() {
@@ -80,14 +80,13 @@ function initMap() {
 }
 
 function putMarks(geocoder, map) {
-
+  var totalTimeMarks = 0;
   const cities = Array.from(routeCities);
-
   let defaultTimePutMarks = 2700;
   for (var i = 0; i < cities.length; i++) {
     setTimeout(geocodeAddress, defaultTimePutMarks*i, geocoder, map, cities[i]);
-     if(defaultTimePutMarks <= 3500) {
-       defaultTimePutMarks += 20;
+    if(defaultTimePutMarks <= 3500) {
+      defaultTimePutMarks += 15;
     }
   }
 }
@@ -101,8 +100,8 @@ function geocodeAddress(geocoder, map, address) {
       if(fuelsPosition[countGeocodeAdress] == -1) {
         var marker = new google.maps.Marker({
             map: map,
-            animation: google.maps.Animation.DROP,
             icon: '/assets/blue_mark.png',
+            animation: google.maps.Animation.DROP,
             position: results[0].geometry.location,
             zIndex: maxZindex
         });
@@ -112,19 +111,18 @@ function geocodeAddress(geocoder, map, address) {
         if(fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price <= mediumResalePriceRoute) {
           var marker = new google.maps.Marker({
               map: map,
-              animation: google.maps.Animation.DROP,
               icon: '/assets/green_mark.png',
+              animation: google.maps.Animation.DROP,
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
           markers.push(marker);
-          attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]],  address, false);
-
+          attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, false);
         } else {
           var marker = new google.maps.Marker({
               map: map,
-              animation: google.maps.Animation.DROP,
               icon: '/assets/red_mark.png',
+              animation: google.maps.Animation.DROP,
               position: results[0].geometry.location,
               zIndex: maxZindex
           });
@@ -132,7 +130,6 @@ function geocodeAddress(geocoder, map, address) {
           attachInstructionText(map, marker,fuels[fuelsPosition[countGeocodeAdress]], address, false);
         }
       }
-      countGeocodeAdress++;
     } else {
       if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
         // if over query limit, try again in 300ms
@@ -141,13 +138,14 @@ function geocodeAddress(geocoder, map, address) {
         alert("Geocode was not successful for the following reason: " + status);
       }
     }
+    countGeocodeAdress++;
   });
 }
 
-function attachInstructionText(map, marker,fuel, address, isBlue = false) {
+function attachInstructionText(map, marker,fuel, address, isBlue) {
 
   let text;
-  let textPreviousCity;
+  let textNextCity="";
   let textDisplay;
   var red,green;
   red = "#f82929";
@@ -157,46 +155,33 @@ function attachInstructionText(map, marker,fuel, address, isBlue = false) {
                 '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
                 '<p> Maior preço: '+ fuel.max_resale_price +'</p>'+
                 '<p> Menor preço: '+ fuel.min_resale_price +'</p>';
-    textPreviousCity = '<p></p>';
-    textDisplay = text;
-    if(fuelsPosition[countGeocodeAdress+1] != -1 && ((countGeocodeAdress+1)<fuelsPosition.length)) {
-      if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuel.medium_resale_price) {
-         textNextCity = '<p> Preço médio da proxima cidade: </p>'+
-                        '<font color='+green+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
+    console.log(countGeocodeAdress);
+    if(fuelsPosition[countGeocodeAdress+1] != -1 && (countGeocodeAdress+1) != (fuelsPosition.length)) {
+      if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price) {
+        textNextCity = '<font color='+green+'>Preço médio da próxima cidade: '+fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+'</font>';
       } else {
-         textNextCity = '<p> Preço médio da proxima cidade: </p>'+
-                        '<font color='+red+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
+        textNextCity = '<font color='+red+'>Preço médio da próxima cidade: '+fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+'</font>';
       }
-    } else if((countGeocodeAdress+1) == fuelsPosition.length) {
-      textPreviousCity = '<p></p>';
     } else {
-      textPreviousCity = '<p> Infelizmente a proxima cidade não esta registrada em nosso banco de dados </p>';
+      if(fuelsPosition[countGeocodeAdress+1] == -1) {
+        textNextCity = '<font color = "blue"> Infelizmente a próxima cidade não está regitrada no banco de dados </font>';
+      }
     }
   } else {
     text = '<h2>'+ address +'</h2>'+
-           '<p>Infelizmente, não temos dados deste município</p>';
-    textDisplay = text;
-    if(fuelsPosition[countGeocodeAdress+1] != -1 && ((countGeocodeAdress+1)<fuelsPosition.length)) {
-      if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuel.medium_resale_price) {
-        textNextCity = '<p> Preço médio da proxima cidade: </p>'+
-                       '<font color='+green+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
-      } else {
-        textNextCity = '<p> Preço médio da proxima cidade: </p>'+
-                       '<font color='+red+'>' +fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+ '</font>';
-      }
-    } else if((countGeocodeAdress+1) == fuelsPosition.length) {
-      textPreviousCity = '<p></p>';
-    } else {
-      textPreviousCity = '<p> Infelizmente a proxima cidade não esta registrada em nosso banco de dados </p>';
-    }
+           '<p>Infelizmente não temos dados deste municipio</p>';
   }
-  textDisplay += textPreviousCity;
+  if((countGeocodeAdress+1)==fuelsPosition.length) {
+    clearInterval(loadingAnimation);
+    document.getElementById("is-loaded").innerHTML = "Carregado com Sucesso";
+
+  }
+  textDisplay = text + textNextCity;
   google.maps.event.addListener(marker, 'click', function() {
     stepDisplay.setContent(textDisplay);
     stepDisplay.open(map, marker);
   });
 }
-
 
 // calculate and display a route
 function calculateAndDisplayRoute(directionsService, directionsDisplay, map, findCities) {
@@ -217,6 +202,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
     travelMode: google.maps.TravelMode.DRIVING
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
+      document.getElementById("origin").disabled = true;
+      document.getElementById("destination").disabled = true;
       directionsDisplay.setDirections(response);
 			const steps = response.routes[0].legs[0].steps;
 			for(var i = 0; i < steps.length; i++) {
@@ -282,7 +269,11 @@ function geocodeLatLng(geocoder, map, latlng) {
   console.log(".");
 	if(countGeocoder == (routeCoords.length + countOverQuery)) {
 		allCitiesFound =  true;
-    compareData(geocoder, map);
+    if(dataBaseLodaded == false) {
+      setTimeout(function(){ compareData(geocoder, map); }, 25000);
+    } else {
+      compareData(geocoder, map);
+    }
 	}
 }
 
@@ -306,28 +297,16 @@ function findCitiesOfRoute(geocoder, map, routeCoords) {
 	for (var i = 0; i < routeCoords.length; i++) {
     totalTime += defaultTime;
     setTimeout(geocodeLatLng, defaultTime*count, geocoder, map, routeCoords[i]);
-
     count++;
     if (defaultTime <= 3500) {
       defaultTime += 9;
-    } else {
-      defaultTime += 0;
     }
-    if(i == (routeCoords.length-1)) {
-      let countAnimation=0;
-      if(totalTime != 0) {
-        countInterval = 0;
-        var loadingAnimation = setInterval(function() {
-          countInterval = ++countInterval % 4;
-          $(".loading").text("Carregando " + Array(countInterval+1).join("."));
-          if(allCitiesFound == true) {
-            clearInterval(loadingAnimation);
-            $(".loading").text("Carregado com Sucesso");
-          }
-        }, 800);
-      }
   }
-
+  countLoadinAnimation = 0;
+  loadingAnimation = setInterval(function() {
+    countLoadinAnimation = ++countLoadinAnimation % 4;
+    $(".loading").text("Carregando " + Array(countLoadinAnimation+1).join("."));
+  }, 500);
   console.log(totalTime/60000);
 
 }
@@ -348,6 +327,7 @@ function loadData() {
         }).then(function(){
           console.log("sent all data");
           canPutMarks = true;
+          dataBaseLodaded = true;
         });
     }
   });
@@ -358,7 +338,8 @@ function compareData(geocoder, map) {
 
   const routeCitiesArray = Array.from(routeCities);
   let countFuelsPositionValid = 0;
-  console.log(totalTime/60000);
+  var i = 0;
+
   for (var i = 0; i < routeCitiesArray.length; i++) {
     whatMarkPut[i] = -1;
 
@@ -537,19 +518,22 @@ function removeDiacritics (str) {
 }
 
 function changeText(fuelName = "GASOLINA COMUM") {
- document.getElementById("selectedFuel").innerHTML = "Combustível escolhido: "+fuelName;
+  document.getElementById("selectedFuel").innerHTML = fuelName;
 }
 
 $(document).ready(function() {
- changeText();
- $("button").click(function(){
+  changeText();
+  $("button").click(function(){
     const buttonValue = parseInt($("#"+this.id).val());
     if(buttonValue === -1) {
         for(var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
         }
+        document.getElementById("origin").disabled = false;
+        document.getElementById("destination").disabled = false;
         document.getElementById('origin').value = "";
         document.getElementById('destination').value = "";
+        document.getElementById("is-loaded").innerHTML = "";
         markers = [];
         routeCities = new Set();
         fuelsPosition = [];
@@ -565,8 +549,8 @@ $(document).ready(function() {
          mediumResalePriceRoute = 0;
          defaultTime = 0;
     } else {
-        changeText(fuelType[buttonValue]);
-        chosenFuel = buttonValue + 1;
+      changeText(fuelType[buttonValue]);
+      chosenFuel = buttonValue + 1;
     }
   });
 });

@@ -1,7 +1,8 @@
 #map-container {
-	margin-top: 50px;
+	margin-top: 30px;
 	height: 500px;
 	width: 100%;
+	margin-bottom: 50px;
 }
 
 .controls {
@@ -16,7 +17,6 @@
 
 #buttons-map-route {
 	text-align: center;
-	margin-top: 100px;
 }
 
 #text-fuel {
