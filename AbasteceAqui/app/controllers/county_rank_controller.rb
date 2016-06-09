@@ -10,7 +10,7 @@ class CountyRankController < ApplicationController
     find_last_research_of_counties(@counties)
     find_county_fuels_last_research(@researches)
     fill_researches_by_fuel_price(@counties_fuels)
-    fil_counties_by_fuel_price(@sorted_research)
+    fill_counties_by_fuel_price(@sorted_research)
 
   end
 

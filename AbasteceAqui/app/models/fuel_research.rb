@@ -37,17 +37,23 @@ class FuelResearch < ActiveRecord::Base
 
 		sorted_research[0] = []
 		for i in 0..(counties_fuels[0].length-1)
-			sorted_research[0] << counties_fuels.fuel_research_id
+
+				sorted_research[0] << counties_fuels[0][i].fuel_research_id
+
 		end
 
 		sorted_research[1] = []
 		for i in 0..(counties_fuels[1].length-1)
-			sorted_research[1] << counties_fuels.fuel_research_id
+
+				sorted_research[1] << counties_fuels[1][i].fuel_research_id
+
 		end
 
 		sorted_research[2] = []
 		for i in 0..(counties_fuels[2].length-1)
-			sorted_research[2] << counties_fuels.fuel_research_id
+
+				sorted_research[2] << counties_fuels[2][i].fuel_research_id
+
 		end
 
 		return sorted_research
