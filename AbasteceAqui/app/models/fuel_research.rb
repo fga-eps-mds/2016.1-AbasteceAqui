@@ -5,7 +5,7 @@ class FuelResearch < ActiveRecord::Base
 
 	def self.search_fuels_research (id_last_research)
 
-	
+
 		fuel_researches = FuelResearch.find_by(id: id_last_research).fuels
 
 		researches_of_fuels = []
@@ -18,7 +18,7 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-	def self.fill_object_last_research (counties) 
+	def self.fill_object_last_research (counties)
 
 
 		last_researches  = []
@@ -30,5 +30,28 @@ class FuelResearch < ActiveRecord::Base
 		return last_researches
 
 	end
-	
+
+	def self.sort_researches_by_fuel_price(counties_fuels)
+
+		sorted_research = []
+
+		sorted_research[0] = []
+		for i in 0..(counties_fuels[0].length-1)
+			sorted_research[0] << counties_fuels.fuel_research_id
+		end
+
+		sorted_research[1] = []
+		for i in 0..(counties_fuels[1].length-1)
+			sorted_research[1] << counties_fuels.fuel_research_id
+		end
+
+		sorted_research[2] = []
+		for i in 0..(counties_fuels[2].length-1)
+			sorted_research[2] << counties_fuels.fuel_research_id
+		end
+
+		return sorted_research
+
+	end
+
 end
