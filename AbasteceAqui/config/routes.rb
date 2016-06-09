@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/map-routes' => 'map_routes#index'
   get '/map-routes/data' => 'map_routes#index_database'
 
+  get 'statistics/ranking_county' => 'county_rank#county_rank_by_month'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
