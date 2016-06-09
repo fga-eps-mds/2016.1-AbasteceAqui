@@ -13,6 +13,26 @@ class StateGraphMonthlyController < ApplicationController
 
 		@county_searched = params[:county_searched]
 
+		find_years()
+
 	end
+
+	def find_years
+
+		@years = Set.new
+		all_researches = FuelResearch.find_all_researches
+
+		all_researches.each do |research|
+
+			@years.add(research.date.year)
+
+		end
+
+		@years = @years.to_a
+
+		return @years
+
+	end
+
 
 end
