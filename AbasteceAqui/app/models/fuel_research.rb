@@ -30,5 +30,13 @@ class FuelResearch < ActiveRecord::Base
 		return last_researches
 
 	end
+
+	def self.find_all_researches
+
+		all_researches = FuelResearch.all
+		
+		return all_researches
+
+	end
 	
 end
