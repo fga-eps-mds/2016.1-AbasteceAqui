@@ -6,8 +6,8 @@ class StateGraphYearController < ApplicationController
 		@state_searched = params[:state_searched]
 
 		if @state_searched != nil
-			counties_of_state = State.search_state_counties(@state_searched)
-			generate_annual_graph_by_state
+			@counties_of_state = State.search_state_counties(@state_searched)
+			generate_annual_graph_by_state()
 		else
 			# do nothing
 		end
@@ -53,9 +53,9 @@ class StateGraphYearController < ApplicationController
 
 			verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
 
-			@gas_prices_for_year << calculate_price_fuel(@gas_prices_month, counties_of_state)
-			@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month, counties_of_state)
-			@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month, counties_of_state)
+			@gas_prices_for_year << calculate_price_fuel(@gas_prices_month, @counties_of_state)
+			@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month, @counties_of_state)
+			@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month, @counties_of_state)
 
 		end
 
@@ -67,7 +67,7 @@ class StateGraphYearController < ApplicationController
 	def fuels_of_year
 
 		@counties_of_state.each do |counties|
-			@researches_of_county = counties.fuel_researches
+			@researches_of_county = County.find_by(name: counties).fuel_researches
 			@years_of_researches = Hash.new
 
 			@years.each do |year|
@@ -115,13 +115,14 @@ class StateGraphYearController < ApplicationController
 				if fuel.medium_resale_price != 0.0
 					number_of_prices_researches = number_of_prices_researches + 1
 				end
-				total_of_the_month_county = (sum_fuel/fuel_price_div).round(3)
+				total_of_the_month_county = (sum_fuel/number_of_prices_researches).round(3)
 			end
 
-			total_of_the_month_state = total_of_the_month_state + total_of_the_month_county
+			total_of_the_month_state = (total_of_the_month_state + total_of_the_month_county)
 		end
+			total_of_the_month_state /= @counties_of_state.length
 
-		return total_of_the_month_state
+		return total_of_the_month_state.round(3)
 	end
 
 	def verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
