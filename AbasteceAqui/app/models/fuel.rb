@@ -21,7 +21,7 @@ class Fuel < ActiveRecord::Base
 
 	end
 
-	def self.county_fuels_last_research(researches)
+	def self.county_fuels_last_research_order(researches)
 
 		counties_fuels = []
 		gasoline_prices = []
@@ -49,9 +49,9 @@ class Fuel < ActiveRecord::Base
 
 		end
 
-		alcool_prices.sort_by! {|cheaper| cheaper.min_resale_price}
-		gasoline_prices.sort_by! {|cheaper| cheaper.min_resale_price}
-		diesel_prices.sort_by! {|cheaper| cheaper.min_resale_price}
+		alcool_prices.sort_by! {|cheaper| cheaper.medium_resale_price}
+		gasoline_prices.sort_by! {|cheaper| cheaper.medium_resale_price}
+		diesel_prices.sort_by! {|cheaper| cheaper.medium_resale_price}
 
 		counties_fuels[0] = alcool_prices
 		counties_fuels[1] = gasoline_prices

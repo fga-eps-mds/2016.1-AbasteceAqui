@@ -9,8 +9,7 @@ class CountyRankController < ApplicationController
     find_counties()
     find_last_research_of_counties(@counties)
     find_county_fuels_last_research(@researches)
-    fill_researches_by_fuel_price(@counties_fuels)
-    fill_counties_by_fuel_price(@sorted_research)
+    sorted_counties(@counties_fuels)
 
   end
 
@@ -33,23 +32,15 @@ class CountyRankController < ApplicationController
 
   def find_county_fuels_last_research(researches)
 
-    @counties_fuels = Fuel.county_fuels_last_research(researches)
+    @counties_fuels = Fuel.county_fuels_last_research_order(researches)
 
     return @counties_fuels
 
   end
 
-  def fill_researches_by_fuel_price(counties_fuels)
+  def sorted_counties(counties_fuels)
 
-    @sorted_research = FuelResearch.sort_researches_by_fuel_price(counties_fuels)
-
-    return @sorted_research
-
-  end
-
-  def fill_counties_by_fuel_price(sorted_research)
-
-    @sorted_counties = County.sort_counties_by_fuel_price(sorted_research)
+    @sorted_counties = County.sort_counties_by_fuel_price(counties_fuels)
 
     return @sorted_counties
 

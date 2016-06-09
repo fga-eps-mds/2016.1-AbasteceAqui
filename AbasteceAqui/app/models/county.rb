@@ -27,26 +27,32 @@ class County < ActiveRecord::Base
 
 	end
 
-	def self.sort_counties_by_fuel_price(sorted_research)
+	def self.sort_counties_by_fuel_price(counties_fuels)
 
 		sorted_counties = []
 
 		sorted_counties[0] = []
-		for i in 0..(sorted_research[0].length-1)
-			county_id = FuelResearch.find_by(id: sorted_research[0][i]).county_id
-			sorted_counties[0] << County.find_by(id: county_id).name
+		for i in 0..(counties_fuels[0].length-1)
+
+			fuel_reseach_county_id = FuelResearch.find_by(id: counties_fuels[0][i].fuel_research_id).county_id
+			sorted_counties[0] << County.find_by(id: fuel_reseach_county_id)
+
 		end
 
 		sorted_counties[1] = []
-		for i in 0..(sorted_research[1].length-1)
-			county_id = FuelResearch.find_by(id: sorted_research[1][i]).county_id
-			sorted_counties[1] << County.find_by(id: county_id).name
+		for i in 0..(counties_fuels[1].length-1)
+
+			fuel_reseach_county_id = FuelResearch.find_by(id: counties_fuels[1][i].fuel_research_id).county_id
+			sorted_counties[1] << County.find_by(id: fuel_reseach_county_id)
+
 		end
 
 		sorted_counties[2] = []
-		for i in 0..(sorted_research[2].length-1)
-			county_id = FuelResearch.find_by(id: sorted_research[2][i]).county_id
-			sorted_counties[2] << County.find_by(id: county_id).name
+		for i in 0..(counties_fuels[2].length-1)
+
+			fuel_reseach_county_id = FuelResearch.find_by(id: counties_fuels[2][i].fuel_research_id).county_id
+			sorted_counties[2] << County.find_by(id: fuel_reseach_county_id)
+
 		end
 
 		return sorted_counties
