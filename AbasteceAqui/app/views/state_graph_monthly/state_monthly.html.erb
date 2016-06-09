@@ -8,4 +8,13 @@
 		<% end %>
 	</span>
 
+	<% if @counties_of_state != nil %>
+		<span class="same_line">
+			Escolha o Ano Desejado:
+			<%= form_tag("/statistics/state_monthly", method: "get", remote: true) do %>
+			<%= select_tag 'years', options_for_select([[""]] + @years ,:selected => params[:year_selected]) , id: "select_tag1" %>
+			<% end %>
+		</span>
+	<% end %>
+
 </div>
