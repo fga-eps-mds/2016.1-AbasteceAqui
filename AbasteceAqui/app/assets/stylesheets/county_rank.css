@@ -1,0 +1,19 @@
+#county-rank-by-fuel {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 15px;
+}
+#county-rank-by-fuel th {
+  padding: 12px;
+  text-align: left;
+  background-color: #a9a3a3;
+}
+#county-rank-by-fuel td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#county-rank-by-fuel tr:hover{
+  background-color:#f5f5f5;
+}
