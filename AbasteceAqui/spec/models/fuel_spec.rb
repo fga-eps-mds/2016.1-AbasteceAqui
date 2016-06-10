@@ -36,6 +36,7 @@ RSpec.describe Fuel,  type: :model do
 
   describe "#fuels_latest_researches_counties" do
     it "should returns an array with 3 elements" do
+
       researches = FuelResearch.all
       fuels = Fuel.fuels_latest_researches_counties(researches)
 
@@ -44,12 +45,35 @@ RSpec.describe Fuel,  type: :model do
     end
   end
 
-  describe "#fuels_latest_researches_counties" do
-    it "should returns an array with 3 elements" do
-      researches = FuelResearch.all
-      fuels = Fuel.county_fuels_last_research_order(researches)
+  describe "#ethanol_sorted" do
+    it "should returns an array with 1 elements" do
 
-      expect(fuels.count).to eq(3)
+      fuels = Fuel.all
+      ethanol_sorted = Fuel.ethanol_sorted(fuels)
+
+      expect(ethanol_sorted.count).to eq(1)
+
+    end
+  end
+
+  describe "#gasoline_sorted" do
+    it "should returns an array with 1 elements" do
+
+      fuels = Fuel.all
+      gasoline_sorted = Fuel.gasoline_sorted(fuels)
+
+      expect(gasoline_sorted.count).to eq(1)
+
+    end
+  end
+
+  describe "#diesel_sorted" do
+    it "should returns an array with 1 elements" do
+
+      fuels = Fuel.all
+      diesel_sorted = Fuel.diesel_sorted(fuels)
+
+      expect(diesel_sorted.count).to eq(1)
 
     end
   end
