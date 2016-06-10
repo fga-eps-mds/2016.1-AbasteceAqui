@@ -53,6 +53,7 @@ RSpec.describe County, type: :model do
 
 	describe "#fill_counties" do
 		it "should returns all counties in database" do
+
 			counties1 = County.all
 			counties2 = County.fill_counties
 
@@ -60,15 +61,12 @@ RSpec.describe County, type: :model do
 		end
 	end
 
-	describe "#fill_counties" do
-		it "should returns all counties in database" do
+	describe "#find_counties_by_fuel_sorted" do
+		it "should returns all counties sorted by fuel in database" do
 
-			counties_fuels = []
-			counties_fuels[0] = [@fuel1, @fuel2, @fuel3]
-			counties_fuels[1] = [@fuel1, @fuel2, @fuel3]
-			counties_fuels[2] = [@fuel1, @fuel2, @fuel3]
+			fuels = Fuel.all
+			sorted_counties = County.find_counties_by_fuel_sorted(fuels)
 
-			sorted_counties = County.sort_counties_by_fuel_price(counties_fuels)
 			expect(sorted_counties.count).to eq(3)
 		end
 	end
