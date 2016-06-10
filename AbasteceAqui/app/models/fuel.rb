@@ -1,7 +1,7 @@
 class Fuel < ActiveRecord::Base
 
-	belongs_to :fuel_research
-	belongs_to :fuel_type
+belongs_to :fuel_research
+belongs_to :fuel_type
 
 	def self.fuels_latest_researches_counties(researches)
 
@@ -21,43 +21,70 @@ class Fuel < ActiveRecord::Base
 
 	end
 
-	def self.county_fuels_last_research_order(researches)
 
-		counties_fuels = []
-		gasoline_prices = []
-		alcool_prices = []
-		diesel_prices = []
+	def self.ethanol_sorted(researches)
+
+		ethanol = []
 
 		researches.each do |research|
 
-			if(research.fuels.find_by(fuel_type_id: 1) != nil)
-				alcool_prices << research.fuels.find_by(fuel_type_id: 1)
-			else
-				#do nothing
-			end
-			if(research.fuels.find_by(fuel_type_id: 2) != nil)
-				gasoline_prices << research.fuels.find_by(fuel_type_id: 2)
-			else
-				#do nothing
-			end
+			if(research.fuel_type_id == 1)
+				ethanol << research
 
-			if(research.fuels.find_by(fuel_type_id: 5) != nil)
-				diesel_prices << research.fuels.find_by(fuel_type_id: 5)
 			else
 				#do nothing
+
 			end
 
 		end
 
-		alcool_prices.sort_by! {|cheaper| cheaper.medium_resale_price}
-		gasoline_prices.sort_by! {|cheaper| cheaper.medium_resale_price}
-		diesel_prices.sort_by! {|cheaper| cheaper.medium_resale_price}
+		ethanol.sort_by! {|const_sort| const_sort.medium_resale_price}
 
-		counties_fuels[0] = alcool_prices
-		counties_fuels[1] = gasoline_prices
-		counties_fuels[2] = diesel_prices
+		return ethanol
 
-		return counties_fuels
+	end
+
+	def self.gasoline_sorted(researches)
+
+		gasoline = []
+
+		researches.each do |research|
+
+			if(research.fuel_type_id == 2)
+				gasoline << research
+
+			else
+				#do nothing
+
+			end
+
+		end
+
+		gasoline.sort_by! {|const_sort| const_sort.medium_resale_price}
+
+		return gasoline
+
+	end
+
+	def self.diesel_sorted(researches)
+
+		diesel = []
+
+		researches.each do |research|
+
+			if(research.fuel_type_id == 5)
+				diesel << research
+
+			else
+				#do nothing
+
+			end
+
+		end
+
+		diesel.sort_by! {|const_sort| const_sort.medium_resale_price}
+
+		return diesel
 
 	end
 
