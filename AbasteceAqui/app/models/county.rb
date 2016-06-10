@@ -27,35 +27,17 @@ class County < ActiveRecord::Base
 
 	end
 
-	def self.sort_counties_by_fuel_price(counties_fuels)
+	def self.find_counties_by_fuel_sorted(fuels)
 
-		sorted_counties = []
+		counties_sorted = []
 
-		sorted_counties[0] = []
-		for i in 0..(counties_fuels[0].length-1)
+		fuels.each do |fuel|
 
-			fuel_reseach_county_id = FuelResearch.find_by(id: counties_fuels[0][i].fuel_research_id).county_id
-			sorted_counties[0] << County.find_by(id: fuel_reseach_county_id)
+			counties_sorted << fuel.fuel_research.county
 
 		end
 
-		sorted_counties[1] = []
-		for i in 0..(counties_fuels[1].length-1)
-
-			fuel_reseach_county_id = FuelResearch.find_by(id: counties_fuels[1][i].fuel_research_id).county_id
-			sorted_counties[1] << County.find_by(id: fuel_reseach_county_id)
-
-		end
-
-		sorted_counties[2] = []
-		for i in 0..(counties_fuels[2].length-1)
-
-			fuel_reseach_county_id = FuelResearch.find_by(id: counties_fuels[2][i].fuel_research_id).county_id
-			sorted_counties[2] << County.find_by(id: fuel_reseach_county_id)
-
-		end
-
-		return sorted_counties
+		return counties_sorted
 
 	end
 
