@@ -22,14 +22,14 @@ belongs_to :fuel_type
 	end
 
 
-	def self.ethanol_sorted(researches)
+	def self.ethanol_sorted(fuels)
 
 		ethanol = []
 
-		researches.each do |research|
+		fuels.each do |fuel|
 
-			if(research.fuel_type_id == 1)
-				ethanol << research
+			if(fuel.fuel_type_id == 1)
+				ethanol << fuel
 
 			else
 				#do nothing
@@ -44,14 +44,14 @@ belongs_to :fuel_type
 
 	end
 
-	def self.gasoline_sorted(researches)
+	def self.gasoline_sorted(fuels)
 
 		gasoline = []
 
-		researches.each do |research|
+		fuels.each do |fuel|
 
-			if(research.fuel_type_id == 2)
-				gasoline << research
+			if(fuel.fuel_type_id == 2)
+				gasoline << fuel
 
 			else
 				#do nothing
@@ -66,14 +66,14 @@ belongs_to :fuel_type
 
 	end
 
-	def self.diesel_sorted(researches)
+	def self.diesel_sorted(fuels)
 
 		diesel = []
 
-		researches.each do |research|
+		fuels.each do |fuel|
 
-			if(research.fuel_type_id == 5)
-				diesel << research
+			if(fuel.fuel_type_id == 5)
+				diesel << fuel
 
 			else
 				#do nothing
