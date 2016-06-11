@@ -27,4 +27,20 @@ class County < ActiveRecord::Base
 
 	end
 
+	def self.researches_of_year(county_searched, year_searched)
+
+		researches_of_year = []
+
+		county_searched.fuel_researches.each do |research|
+
+			if(year_searched == research.date.year)
+				researches_of_year << research
+			end
+
+		end
+
+		return researches_of_year
+
+	end
+
 end
