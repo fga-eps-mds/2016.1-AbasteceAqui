@@ -25,6 +25,16 @@ class CountyRankController < ApplicationController
 
   end
 
+  def county_rank_by_diesel()
+
+    find_counties()
+    find_last_research_of_counties(@counties)
+    fill_fuels_last_research(@researches)
+    find_diesel_fuels_sorted(@fuels)
+    find_counties_sorted_by_fuel(@diesel_sorted)
+
+  end
+
   def find_counties
 
 		@counties = County.fill_counties()
@@ -61,6 +71,14 @@ class CountyRankController < ApplicationController
     @gasoline_sorted = Fuel.gasoline_sorted(fuels)
 
     return @gasoline_sorted
+
+  end
+
+  def find_diesel_fuels_sorted(fuels)
+
+    @diesel_sorted = Fuel.diesel_sorted(fuels)
+
+    return @diesel_sorted
 
   end
 
