@@ -37,6 +37,19 @@ class StateGraphYearController < ApplicationController
 		end
 	end
 
+	def verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
+		fuels.each do |fuel|
+
+			if fuel.fuel_type_id == 1
+				ethanol_prices << fuel
+			elsif fuel.fuel_type_id == 2
+				gas_prices << fuel
+			elsif fuel.fuel_type_id == 5
+				diesel_prices << fuel
+			end
+		end
+	end
+
 	def prices_of_fuel
 
 		#These variables stores the three mediums prices of the three types of fuels.
@@ -53,9 +66,9 @@ class StateGraphYearController < ApplicationController
 
 			verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
 
-			@gas_prices_for_year << calculate_price_fuel(@gas_prices_month, @counties_of_state)
-			@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month, @counties_of_state)
-			@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month, @counties_of_state)
+			@gas_prices_for_year << calculate_price_fuel(@gas_prices_month)
+			@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month)
+			@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month)
 
 		end
 
@@ -66,23 +79,19 @@ class StateGraphYearController < ApplicationController
 
 	def fuels_of_year
 
-		@counties_of_state.each do |counties|
-			@researches_of_county = County.find_by(name: counties).fuel_researches
-			@years_of_researches = Hash.new
+		@years_of_fuels_state = Hash.new
 
-			@years.each do |year|
+		@years.each do |year|
+			@years_of_fuels_state[year] = []
 
-					@years_of_researches[year] = Hash.new
-					@researches_of_year = []
-
-					check_year_of_research(@researches_of_county, @researches_of_year, year)
-
-					@years_of_researches[year] = @researches_of_year
-
+			@counties_of_state.each do |county|
+				researches_of_county = County.find_by(name: county).fuel_researches
+				check_year_of_research(researches_of_county, @years_of_fuels_state[year], year)
 			end
+
 		end
 
-		return @years_of_researches
+		return @years_of_fuels_state
 
 	end
 
@@ -99,43 +108,29 @@ class StateGraphYearController < ApplicationController
 	end
 
 	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
-	def calculate_price_fuel(fuel_prices_month, counties_of_state)
+	def calculate_price_fuel(fuel_prices_month)
 		sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
 		number_of_prices_researches = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
 		total_of_the_month_county = 0.0
 		total_of_the_month_state = 0.0
-
-
-		@counties_of_state = State.search_state_counties(@state_searched)
-
-		@counties_of_state.each do |counties|
 			
-			fuel_prices_month.each do |fuel|
-				sum_fuel = sum_fuel + fuel.medium_resale_price
-				if fuel.medium_resale_price != 0.0
-					number_of_prices_researches = number_of_prices_researches + 1
-				end
-				total_of_the_month_county = (sum_fuel/number_of_prices_researches).round(3)
-			end
-
-			total_of_the_month_state = (total_of_the_month_state + total_of_the_month_county)
-		end
-			total_of_the_month_state /= @counties_of_state.length
-
-		return total_of_the_month_state.round(3)
-	end
-
-	def verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
-		fuels.each do |fuel|
-
-			if fuel.fuel_type_id == 1
-				ethanol_prices << fuel
-			elsif fuel.fuel_type_id == 2
-				gas_prices << fuel
-			elsif fuel.fuel_type_id == 5
-				diesel_prices << fuel
+		fuel_prices_month.each do |fuel|
+			sum_fuel = sum_fuel + fuel.medium_resale_price
+			if fuel.medium_resale_price != 0.0
+				number_of_prices_researches = number_of_prices_researches + 1
 			end
 		end
+
+		total_of_the_year_state = (sum_fuel/number_of_prices_researches).round(3)
+		#sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
+		#number_of_prices_researches = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
+
+
+		#total_of_the_month_state = (total_of_the_month_state + total_of_the_month_county)
+			
+		#total_of_the_month_state = total_of_the_month_state/ @counties_of_state.length
+
+		return total_of_the_year_state.round(3)
 	end
 
 end #end of class
