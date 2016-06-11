@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'statistics/ranking_county' => 'county_rank#county_rank_by_date'
 
   get 'statistics/ranking_ethanol' => 'county_rank#county_rank_by_ethanol'
+  get 'statistics/ranking_gasoline' => 'county_rank#county_rank_by_gasoline'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
