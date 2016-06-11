@@ -103,6 +103,17 @@ RSpec.describe CountyRankController, type: :controller do
     end
   end
 
+  describe "#find_diesel_fuels_sorted" do
+    it "Should return one objects of fuel" do
+
+      fuels = Fuel.all
+      diesel_sorted = controller.find_diesel_fuels_sorted(fuels)
+
+      expect(diesel_sorted.count).to eq(1)
+
+    end
+  end
+
   describe "#find_counties_sorted_by_fuel" do
     it "Should return four objects of counties" do
 
@@ -124,6 +135,13 @@ RSpec.describe CountyRankController, type: :controller do
   describe "#county_rank_by_gasoline" do
 		it "Should render database html" do
 			get :county_rank_by_gasoline
+      expect(response).to have_http_status(:success)
+    end
+	end
+
+  describe "#county_rank_by_diesel" do
+		it "Should render database html" do
+			get :county_rank_by_diesel
       expect(response).to have_http_status(:success)
     end
 	end
