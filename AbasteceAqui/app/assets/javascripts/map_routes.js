@@ -1,3 +1,4 @@
+//= require map_routes
 let routeCoords = [];
 let routeCities = new Set();
 let countGeocodeAdress = 0;
