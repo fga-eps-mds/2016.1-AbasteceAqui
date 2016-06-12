@@ -1,98 +1,32 @@
-  <div id = "teste">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+  $(function () {
+    $( "#ranking-fuel-selection" ).tabs();
+  });
+</script>
 
-<h2>Rank Preços Etanol</h2>
+<div id="ranking-fuels">
+  <div class="container">
+    <div id ="ranking-fuel-selection">
+      <ul class="nav nav-tabs">
+        <li role="presentation" id="gasoline-rank-btn" ><a href="#rank-gasoline">Gasolina</a></li>
+        <li role="presentation" id="ethanol-rank-btn"><a href="#rank-ethanol">Etanol</a></li>
+        <li role="presentation" id="diesel-rank-btn"><a href="#rank-diesel">Diesel</a></li>
+      </ul>
 
-  <table id = "county-rank-by-fuel">
-    <tr>
-      <th>Rank</th>
-      <th>Municipio</th>
-      <th>Estado</th>
-      <th>Preço médio</th>
-    </tr>
-    <% for i in 0..(@counties_sorted_ethanol.length-1)%>
-    <tr>
-      <% if(i == 0) %>
-      <td><%= image_tag("gold.png", :alt => "rank")%> <%= i+1 %></td>
-      <%end%>
-      <% if(i == 1) %>
-      <td><%= image_tag("silver.png", :alt => "rank")%> <%= i+1 %></td>
-      <% end %>
-      <% if(i == 2) %>
-      <td><%= image_tag("bronze.png", :alt => "rank")%> <%= i+1 %></td>
-      <%end%>
-      <% if(i > 2) %>
-      <td><%= image_tag("honor_medal.png", :alt => "rank")%> <%= i+1 %></td>
-      <%end%>
-      <td><%= @counties_sorted_ethanol[i].name.titleize %></td>
-      <td><%= @counties_sorted_ethanol[i].state.name.titleize %></td>
-      <td><%= @ethanol_sorted[i].medium_resale_price %></td>
+        <div id="rank-gasoline">
+          <%= render 'county_ranking_gasoline' %>
+        </div>
 
-    </tr>
-    <% end %>
-  </table>
+        <div id="rank-diesel">
+          <%= render 'county_ranking_diesel' %>
+        </div>
 
+        <div id="rank-ethanol">
+          <%= render 'county_ranking_ethanol' %>
+        </div>
 
-  <h2>Rank Preços Gasolina</h2>
-
-    <table id = "county-rank-by-fuel">
-      <tr>
-        <th>Rank</th>
-        <th>Municipio</th>
-        <th>Estado</th>
-        <th>Preço médio</th>
-      </tr>
-      <% for i in 0..(@counties_sorted_gasoline.length-1)%>
-      <tr>
-        <% if(i == 0) %>
-        <td><%= image_tag("gold.png", :alt => "rank")%> <%= i+1 %></td>
-        <%end%>
-        <% if(i == 1) %>
-        <td><%= image_tag("silver.png", :alt => "rank")%> <%= i+1 %></td>
-        <% end %>
-        <% if(i == 2) %>
-        <td><%= image_tag("bronze.png", :alt => "rank")%> <%= i+1 %></td>
-        <%end%>
-        <% if(i > 2) %>
-        <td><%= image_tag("honor_medal.png", :alt => "rank")%> <%= i+1 %></td>
-        <%end%>
-        <td><%= @counties_sorted_gasoline[i].name.titleize %></td>
-        <td><%= @counties_sorted_gasoline[i].state.name.titleize %></td>
-        <td><%= @gasoline_sorted[i].medium_resale_price %></td>
-
-      </tr>
-      <% end %>
-    </table>
-
-    <h2>Rank Preços Diesel</h2>
-
-      <table id = "county-rank-by-fuel">
-        <tr>
-          <th>Rank</th>
-          <th>Municipio</th>
-          <th>Estado</th>
-          <th>Preço médio</th>
-        </tr>
-        <% for i in 0..(@counties_sorted_diesel.length-1)%>
-        <tr>
-          <% if(i == 0) %>
-          <td><%= image_tag("gold.png", :alt => "rank")%> <%= i+1 %></td>
-          <%end%>
-          <% if(i == 1) %>
-          <td><%= image_tag("silver.png", :alt => "rank")%> <%= i+1 %></td>
-          <% end %>
-          <% if(i == 2) %>
-          <td><%= image_tag("bronze.png", :alt => "rank")%> <%= i+1 %></td>
-          <%end%>
-          <% if(i > 2) %>
-          <td><%= image_tag("honor_medal.png", :alt => "rank")%> <%= i+1 %></td>
-          <%end%>
-          <td><%= @counties_sorted_diesel[i].name.titleize %></td>
-          <td><%= @counties_sorted_diesel[i].state.name.titleize %></td>
-          <td><%= @diesel_sorted[i].medium_resale_price %></td>
-
-        </tr>
-        <% end %>
-      </table>
-
-
+      </div>
   </div>
+</div>
