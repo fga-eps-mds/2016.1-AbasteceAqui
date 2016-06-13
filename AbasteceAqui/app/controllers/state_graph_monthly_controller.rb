@@ -6,7 +6,7 @@ class StateGraphMonthlyController < ApplicationController
 		@state_searched = params[:state_searched]
 		
 		find_years()
-		@year_searched = params[:years]
+		@year_searched = params[:years].to_i
 
 		if @year_searched != nil
 			all_medias = get_monthly_state_fuel_media
@@ -68,7 +68,7 @@ class StateGraphMonthlyController < ApplicationController
 		researches_of_year = []
 
 		counties.each do |county|
-
+			
 			research = County.researches_of_year(county, @year_searched)
 
 			research.each do |r|

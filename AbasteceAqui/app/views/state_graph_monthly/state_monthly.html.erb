@@ -10,12 +10,6 @@
 	</span>
 
 	<% if @year_searched != nil %>
-<!-- 		<span class="same_line">
-			Escolha o Ano Desejado:
-			<%= form_tag("/statistics/state_monthly", method: "get", remote: true) do %>
-			<% end %>
-		</span>
- -->
 		<div class="graph_state_monthly">
 			<%= render "state_monthly" %>
 		</div>
