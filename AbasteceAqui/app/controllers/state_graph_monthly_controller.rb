@@ -5,34 +5,19 @@ class StateGraphMonthlyController < ApplicationController
 		@states = State.fill_states
 		@state_searched = params[:state_searched]
 		
+		find_years()
 		@year_searched = params[:years]
 
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts "/////////////////////"
-		puts @year_searched
-		puts @state_searched
-
 		if @year_searched != nil
-			generate_monthly_graph_by_state()
+			all_medias = get_monthly_state_fuel_media
+			generate_monthly_graph_by_state(all_medias)
 		else
 			# do nothing
 		end
-		
 
-		find_years()
 	end
 
-	def generate_monthly_graph_by_state
+	def generate_monthly_graph_by_state(all_medias)
 
 		months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 				"Julho", "Agosto", "Setembro", "Outurbro", "Novembro", "Dezembro"]
@@ -42,9 +27,9 @@ class StateGraphMonthlyController < ApplicationController
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
 			f.title(text:  titulo)
 			f.xAxis(categories: months)
-			f.series(name: "Preço Da Gasolina", yAxis: 0, data: get_monthly_state_fuel_media[0])
-			f.series(name: "Preço Do Etanol", yAxis: 0, data: get_monthly_state_fuel_media[1])
-			f.series(name: "Preço Do Diesel", yAxis: 0, data: get_monthly_state_fuel_media[2])
+			f.series(name: "Preço Da Gasolina", yAxis: 0, data: all_medias[0])
+			f.series(name: "Preço Do Etanol", yAxis: 0, data: all_medias[1])
+			f.series(name: "Preço Do Diesel", yAxis: 0, data: all_medias[2])
 
 			f.yAxis [
 				{title: {text: "Preço Dos Combustíveis", margin: 70} },
@@ -73,18 +58,6 @@ class StateGraphMonthlyController < ApplicationController
 	end
 
 	def get_monthly_state_fuel_media
-
-		puts "********************"
-		puts "********************"
-		puts "********************"
-		puts "********************"
-		puts "********************"
-		puts "********************"
-		puts "********************"
-		puts "********************"
-
-
-		puts @state_searched
 
 		counties = State.find_by(name: @state_searched).counties
 		
@@ -143,9 +116,9 @@ class StateGraphMonthlyController < ApplicationController
 
 		end
 
-		@all_medias = [@gas_media, @ethanol_media, @diesel_media]
+		all_medias = [@gas_media, @ethanol_media, @diesel_media]
 
-		return @all_medias
+		return all_medias
 
 	end
 
