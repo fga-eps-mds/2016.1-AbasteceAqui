@@ -8,7 +8,8 @@ class StateGraphMonthlyController < ApplicationController
 		find_years()
 		@year_searched = params[:years].to_i
 
-		if @year_searched != nil
+		# nil.to_i == 0
+		if @year_searched != 0
 			all_medias = get_monthly_state_fuel_media
 			generate_monthly_graph_by_state(all_medias)
 		else
@@ -22,7 +23,7 @@ class StateGraphMonthlyController < ApplicationController
 		months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 				"Julho", "Agosto", "Setembro", "Outurbro", "Novembro", "Dezembro"]
 
-		titulo = "Preço do combustivel no decorrer do ano"
+		titulo = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
 			f.title(text:  titulo)
@@ -110,9 +111,9 @@ class StateGraphMonthlyController < ApplicationController
 
 		fuels.each do |month, f|
 
-			@ethanol_media << f[0].sum / f[0].size.to_f
-			@gas_media << f[1].sum / f[1].size.to_f	
-			@diesel_media << f[2].sum / f[2].size.to_f
+			@ethanol_media << (f[0].sum / f[0].size.to_f).round(3)
+			@gas_media << (f[1].sum / f[1].size.to_f).round(3)
+			@diesel_media << (f[2].sum / f[2].size.to_f).round(3)
 
 		end
 
