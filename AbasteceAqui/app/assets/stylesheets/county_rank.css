@@ -1,0 +1,55 @@
+#county-rank-by-gasoline, #county-rank-by-ethanol, #county-rank-by-diesel {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 15px;
+}
+#county-rank-by-gasoline h2, #county-rank-by-ethanol h2, #county-rank-by-diesel h2 {
+  text-align: center;
+}
+#county-rank-by-gasoline th, #county-rank-by-ethanol th, #county-rank-by-diesel th {
+  padding: 12px;
+  text-align: center;
+  background-color: #a9a3a3;
+}
+#county-rank-by-gasoline td, #county-rank-by-ethanol td, #county-rank-by-diesel td {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+#county-rank-by-gasoline tr:hover, #county-rank-by-ethanol tr:hover, #county-rank-by-diesel tr:hover{
+  background-color:#f5f5f5;
+}
+
+
+#ranking-fuels ul li {
+    float: left;
+    border-bottom: none;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+#ranking-fuels ul li.active {
+    margin-bottom: -1px;
+    padding-bottom: 6px;
+}
+#ranking-fuels #gasoline-rank-btn {
+  margin-left: 35%;
+}
+
+@media(max-width: 768px) {
+
+    .nav-tabs {
+      display: inline-block;
+    }
+}
+
+.dataTables_length {
+  display: none;
+}
+
+#county-rank-by-gasoline_filter input, #county-rank-by-ethanol_filter input, #county-rank-by-diesel_filter input {
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+s

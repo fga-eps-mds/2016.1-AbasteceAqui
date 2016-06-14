@@ -1,0 +1,43 @@
+<table id ="county-rank-by-diesel">
+  <h2>Rank Preços Diesel</h2>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Municipio</th>
+      <th>Estado</th>
+      <th>Preço médio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for i in 0..(@counties_sorted_diesel.length-1)%>
+    <tr>
+      <% if(i == 0) %>
+      <td><%= image_tag("gold.png", :alt => "rank")%> <%= i+1 %></td>
+      <%end%>
+      <% if(i == 1) %>
+      <td><%= image_tag("silver.png", :alt => "rank")%> <%= i+1 %></td>
+      <% end %>
+      <% if(i == 2) %>
+      <td><%= image_tag("bronze.png", :alt => "rank")%> <%= i+1 %></td>
+      <%end%>
+      <% if(i > 2) %>
+      <td><%= image_tag("honor_medal.png", :alt => "rank")%> <%= i+1 %></td>
+      <%end%>
+      <td><%= @counties_sorted_diesel[i].name.titleize %></td>
+      <td><%= @counties_sorted_diesel[i].state.name.titleize %></td>
+      <td><%= @diesel_sorted[i].medium_resale_price %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+$(document).ready(function() {
+    $('#county-rank-by-diesel').DataTable( {
+        "bSort": false,
+        "language": {
+          url: "//cdn.datatables.net/plug-ins/1.10.11/i18n/Portuguese-Brasil.json"
+        }
+    });
+});
+</script>

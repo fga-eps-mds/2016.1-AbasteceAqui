@@ -26,6 +26,20 @@ class County < ActiveRecord::Base
 		return counties
 
 	end
+	
+	def self.find_counties_by_fuel_sorted(fuels)
+
+		counties_sorted = []
+
+		fuels.each do |fuel|
+
+			counties_sorted << fuel.fuel_research.county
+
+		end
+
+		return counties_sorted
+
+	end
 
 	def self.researches_of_year(county_searched, year_searched)
 

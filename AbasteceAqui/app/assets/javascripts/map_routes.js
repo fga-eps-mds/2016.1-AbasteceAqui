@@ -1,3 +1,4 @@
+//= require map_routes
 let routeCoords = [];
 let routeCities = new Set();
 let countGeocodeAdress = 0;
@@ -537,6 +538,9 @@ $(document).ready(function() {
     const buttonValue = parseInt($("#"+this.id).val());
     if(buttonValue == -1) {
       location.reload(true);
+    } else {
+      changeText(fuelType[buttonValue]);
+      chosenFuel = buttonValue + 1;
     }
   });
 });

@@ -1,5 +1,7 @@
-<legend>FuelProftability</legend>
-
+<% content_for :header do -%>
+  <%= javascript_include_tag 'calculator' %>
+<% end %>
+<legend> calculator </legend>
 <!-- initializing form -->
 <%= form_tag("/calculator", method: "get", class: "form-calculate") do %>
 	<h2 id = "title-form">Calculadora de Rentabilidade</h2>
@@ -19,16 +21,16 @@
 	<button type="button" class="btn btn-secondary" id="tooltip-button" data-toggle="tooltip" data-placement="left" title="Segundo pesquisas da equipe AbasteceAqui no site da Inmetro, o etanol rende, em média, 30% a menos que a gasolina nos carros mais populares do Brasil. Ou seja, o calculo realizado para gente te dizer qual combustivel é mais rentavel é feito pela conta: etanol/gasolina = coeficiente, se o coeficiente for menor ou igual a 0.7 a gente te diz que vale a pena abastecer com etanol.">
 	  		?
 	</button>
-<% end %>	
+<% end %>
 
 <!-- choosing a image to tell user if ehtanol or gas is more profitable  -->
 <div id="profitability-message">
 	<% if @more_profitable== "A Gasolina é mais rentável" %>
-		<CENTER> 
+		<CENTER>
 			<img class="img-responsive" src="assets/gas_more_profitable.jpg" alt="">
 		</CENTER>
 	<% elsif @more_profitable == "O Etanol é mais rentável" %>
-		<CENTER> 
+		<CENTER>
 			<img class="img-responsive" src="assets/ethanol_more_profitable.jpg" alt="">
 		</CENTER>
 	<% else %>

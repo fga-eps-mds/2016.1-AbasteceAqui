@@ -1,3 +1,4 @@
+//= require jquery-confirm.js
 'use strict';
 /*!
  * jquery-confirm v1.5.1 (http://craftpip.github.io/jquery-confirm/)
@@ -17,20 +18,20 @@ var jconfirm, Jconfirm;
 (function ($) {
     $.confirm = function (options) {
         /*
-         *  Alias of jconfirm 
+         *  Alias of jconfirm
          */
         return jconfirm(options);
     };
     $.alert = function (options) {
         /*
-         *  Alias of jconfirm 
+         *  Alias of jconfirm
          */
         options.cancelButton = false;
         return jconfirm(options);
     };
     $.dialog = function (options) {
         /*
-         *  Alias of jconfirm 
+         *  Alias of jconfirm
          */
         options.cancelButton = false;
         options.confirmButton = false;
@@ -204,7 +205,7 @@ var jconfirm, Jconfirm;
         },
         reactOnKey: function key(e) {
             /*
-             * prevent keyup event if the dialog is not last! 
+             * prevent keyup event if the dialog is not last!
              */
             var a = $('.jconfirm');
             if (a.eq(a.length - 1)[0] !== this.$el[0])
