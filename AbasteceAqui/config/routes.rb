@@ -11,11 +11,7 @@ Rails.application.routes.draw do
   get '/map-routes' => 'map_routes#index'
   get '/map-routes/data' => 'map_routes#index_database'
 
-  get 'statistics/ranking_county' => 'county_rank#county_rank_by_date'
-  get 'statistics/ranking_ethanol' => 'county_rank#county_rank_by_ethanol'
-  get 'statistics/ranking_gasoline' => 'county_rank#county_rank_by_gasoline'
-  get 'statistics/ranking_diesel' => 'county_rank#county_rank_by_diesel'
-  get 'statistics/index-county' => 'county_rank#index'
+  get 'statistics/ranking_county' => 'county_ranking_fuel#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
