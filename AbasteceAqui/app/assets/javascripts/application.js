@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//require_tree .
 //= require navbar
 //= require bootstrap
 //= require bootstrap.js.coffee
 //= require bootstrap.min.js
+//= require jquery.dataTables.min.js
