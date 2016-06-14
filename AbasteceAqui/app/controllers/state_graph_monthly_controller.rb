@@ -6,11 +6,10 @@ class StateGraphMonthlyController < ApplicationController
 	# index page
 	def state_monthly()
 
-		@states = 
+		@states = get_all_states()
+		@years = get_all_years_from_researchs()
 
-		@state_searched = params[:state_searched]
-		
-		find_years()
+		@state_searched = params[:state_searched]		
 		@year_searched = params[:years].to_i
 
 		# when string is and cast to integer it becomes 0
@@ -31,6 +30,16 @@ class StateGraphMonthlyController < ApplicationController
 		states  = State.fill_states()
 
 		return states
+	end
+
+	# get all years from db
+	# needed at view to generate years dropdown
+	# return a years array with all years that we have at db
+	def get_all_years_from_researchs()
+
+		years = FuelResearch.get_all_years()
+
+		return years
 	end
 
 	# get all monthly media of the states
@@ -70,24 +79,6 @@ class StateGraphMonthlyController < ApplicationController
 			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
 			f.chart({defaultSeriesType: "line"})
 		end
-	end
-
-	# find all years of the BD
-	def find_years
-
-		@years = Set.new
-		all_researches = FuelResearch.find_all_researches
-
-		all_researches.each do |research|
-
-			@years.add(research.date.year)
-
-		end
-
-		@years = @years.to_a
-
-		return @years
-
 	end
 
 	# find all researches of an year of a state

@@ -3,7 +3,7 @@ class FuelResearch < ActiveRecord::Base
 	belongs_to :county
 	has_many :fuels
 
-	def self.search_fuels_research (id_last_research)
+	def self.search_fuels_research(id_last_research)
 
 
 		fuel_researches = FuelResearch.find_by(id: id_last_research).fuels
@@ -18,8 +18,7 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-	def self.fill_object_last_research (counties)
-
+	def self.fill_object_last_research(counties) 
 
 		last_researches  = []
 
@@ -31,7 +30,7 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-	def self.find_all_researches
+	def self.find_all_researches()
 
 		all_researches = FuelResearch.all
 
@@ -53,4 +52,25 @@ class FuelResearch < ActiveRecord::Base
 		
 	end
 
-end # end of class
+	# get all years from db
+	# return a years array with all years that we have at db
+	def self.get_all_years()
+
+		years = Set.new()
+		all_researches = FuelResearch.find_all_researches()
+
+		all_researches.each do |research|
+
+			years.add(research.date.year)
+
+		end
+
+		# convert a years set to an year array
+		years = years.to_a
+
+		return years
+
+	end
+	
+end
+
