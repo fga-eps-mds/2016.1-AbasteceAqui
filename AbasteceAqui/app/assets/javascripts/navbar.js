@@ -21,7 +21,7 @@ function main() {
         }
         else {
           $('.navbar-default').removeClass('on');
-        
+
 
           $(window).bind('scroll', function() {
             var navHeight = $(window).height() - 580;
@@ -37,7 +37,7 @@ function main() {
       }
       });
 
-      $('body').scrollspy({ 
+      $('body').scrollspy({
           target: '.navbar-default',
           offset: 80
       })

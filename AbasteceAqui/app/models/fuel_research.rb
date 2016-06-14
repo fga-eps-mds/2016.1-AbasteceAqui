@@ -46,8 +46,11 @@ class FuelResearch < ActiveRecord::Base
 				research.fuels.each do |fuel|
 					researches_of_year << fuel
 				end
+
 			end
+
 		end
+		
 	end
 
 end # end of class

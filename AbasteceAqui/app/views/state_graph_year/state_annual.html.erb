@@ -1,3 +1,7 @@
+<% content_for :header do -%>
+	<%= javascript_include_tag 'dinamic_selection.js' %>
+	<%= javascript_include_tag 'highcharts-custom.js' %>
+<% end %>
 <div class="container">
 
 	<span class="same_line">
@@ -7,7 +11,7 @@
 		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 		<% end %>
 	</span>
-	
+
 
 	<% if @state_searched!= nil %>
 			<div class="graph_state_annual">
@@ -16,5 +20,5 @@
 	<% end %>
 
 
-	
+
 </div>

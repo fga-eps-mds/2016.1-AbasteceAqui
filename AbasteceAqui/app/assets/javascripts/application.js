@@ -13,20 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//require_tree .
-//= require smooth_scroll
+//= require navbar
 //= require bootstrap
 //= require bootstrap.js.coffee
 //= require bootstrap.min.js
-//= require navbar.js
-//= require search.js
-//= require calculator.js
-//= require jquery
-//= require jquery_ujs
-//= require_tree .
-//= require turbolinks
-//= require map_routes
-//= require highcharts/highcharts
-//= require highcharts/highcharts-more
-//= require highcharts/highstock
-//= require jquery-confirm.js
+//= require jquery.dataTables.min.js
