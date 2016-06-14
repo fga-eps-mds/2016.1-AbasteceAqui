@@ -11,7 +11,7 @@ class StateGraphMonthlyController < ApplicationController
 
 		# when string is and cast to integer it becomes 0
 		if @year_searched != 0
-			all_medias = get_monthly_state_fuel_media
+			all_medias = get_monthly_state_fuel_media(@state_searched, @year_searched)
 			generate_monthly_graph_by_state(all_medias)
 		else
 			# do nothing
@@ -61,22 +61,31 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
-	# get all monthly media of the states
-	def get_monthly_state_fuel_media
+	# find all researches of an year of a state
+	def find_researches_of_year(state, year)
 
-		counties = State.find_by(name: @state_searched).counties
+		counties = State.search_state_counties(state, "object")
 		
 		researches_of_year = []
 
 		counties.each do |county|
 			
-			research = County.researches_of_year(county, @year_searched)
+			research = County.researches_of_year(county, year)
 
 			research.each do |r|
 				researches_of_year << r
 			end
 
 		end
+
+		return researches_of_year
+
+	end
+
+	# get all monthly media of the states
+	def get_monthly_state_fuel_media(state, year)
+
+		researches_of_year = find_researches_of_year(state, year)
 
 		fuels = Hash.new
 
