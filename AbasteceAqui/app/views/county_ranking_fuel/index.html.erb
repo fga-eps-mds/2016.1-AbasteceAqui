@@ -1,0 +1,54 @@
+<div id="ranking-fuels">
+  <div class="container">
+    <div id ="ranking-fuel-selection" class="ranking-fuel-selection">
+      <div class="nav-center">
+        <ul class="nav nav-tabs">
+          <li role="presentation" id="gasoline-rank-btn" class="active"><a href="#">Gasolina</a></li>
+          <li role="presentation" id="ethanol-rank-btn"><a href="#">Etanol</a></li>
+          <li role="presentation" id="diesel-rank-btn"><a href="#">Diesel</a></li>
+        </ul>
+      </div>
+
+        <div class="ranking-information">
+        </div>
+
+        <div class="rank-gasoline">
+          <%= render 'county_ranking_gasoline' %>
+        </div>
+
+        <div class="rank-ethanol">
+        </div>
+
+        <div class="rank-diesel">
+        </div>
+
+      </div>
+  </div>
+</div>
+
+<% content_for :header do -%>
+  <%= javascript_include_tag 'county_rank.js' %>
+<% end %>
+
+<script>
+  $(document ).ready(function(){
+
+    var gasoline_btn = document.getElementById("gasoline-rank-btn");
+    var ethanol_btn = document.getElementById("ethanol-rank-btn");
+    var diesel_btn = document.getElementById("diesel-rank-btn");
+
+    $(ethanol_btn).click(function () {
+
+      $('.rank-ethanol').html("<%= escape_javascript(render("county_ranking_ethanol")) %>");
+    });
+
+    $(gasoline_btn).on('click', function () {
+      $('.rank-gasoline').html("<%= escape_javascript(render("county_ranking_gasoline")) %>");
+    });
+
+    $(diesel_btn).click(function () {
+
+      $('.rank-diesel').html("<%= escape_javascript(render("county_ranking_diesel")) %>");
+    });
+  });
+</script>
