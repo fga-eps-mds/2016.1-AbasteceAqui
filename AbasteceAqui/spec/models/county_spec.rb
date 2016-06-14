@@ -10,6 +10,10 @@ RSpec.describe County, type: :model do
 		fuel_research2 = FuelResearch.new(id: 2, date: "2016-02-01", county_id: 1)
 		fuel_research3 = FuelResearch.new(id: 3, date: "2016-03-01", county_id: 1)
 
+
+		state2 = State.new(id: 2, name: "ALAGOAS", region_id: 1)
+
+
 		@fuel1 = Fuel.new(id: 1, number_of_gas_station: 4,
          min_resale_price: 2.199, medium_resale_price: 2.199,
          max_resale_price: 2.199, resale_standard_deviation: 0.0,
@@ -38,6 +42,8 @@ RSpec.describe County, type: :model do
 		@fuel1.save
     @fuel2.save
     @fuel3.save
+
+		state2.save
 
 	end
 
@@ -71,5 +77,18 @@ RSpec.describe County, type: :model do
 		end
 	end
 
+	describe "#fuels_of_year" do
+		it "should return a hash of years" do
+			years = [2013,2014,2015]
+			years_of_researches = Hash.new
+
+			years_of_researches[2013] = Hash.new
+			years_of_researches[2014] = Hash.new
+			years_of_researches[2015] = Hash.new
+
+			expect(years_of_researches.count).to eq(3)
+
+		end
+	end
 
 end

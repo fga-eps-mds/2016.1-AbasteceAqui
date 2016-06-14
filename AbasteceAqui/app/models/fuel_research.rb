@@ -31,4 +31,26 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-end
+	def self.find_all_researches
+
+		all_researches = FuelResearch.all
+
+		return all_researches
+	end
+
+	def self.check_year_of_research(researches_of_county, researches_of_year, year)
+		researches_of_county.each do |research|
+
+			if research.date.strftime("%Y").to_i == year
+
+				research.fuels.each do |fuel|
+					researches_of_year << fuel
+				end
+
+			end
+
+		end
+		
+	end
+
+end # end of class
