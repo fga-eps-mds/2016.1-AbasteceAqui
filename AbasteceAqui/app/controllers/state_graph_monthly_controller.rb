@@ -22,6 +22,21 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
+	# get all monthly media of the states
+	def get_monthly_state_fuel_media(state, year)
+
+		researches_of_year = find_researches_of_year(state, year)
+
+		fuels = create_fuels_hash()
+
+		fuels = fill_fuels_hash(researches_of_year, fuels)
+		
+		all_medias = calculate_media(fuels)
+
+		return all_medias
+
+	end
+
 	# generate the chart of state monthly
 	def generate_monthly_graph_by_state(all_medias)
 
@@ -100,12 +115,8 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
-	# get all monthly media of the states
-	def get_monthly_state_fuel_media(state, year)
-
-		researches_of_year = find_researches_of_year(state, year)
-
-		fuels = create_fuels_hash()
+	# fill fuels hash
+	def fill_fuels_hash(researches_of_year, fuels)
 
 		researches_of_year.each do |research|
 
@@ -122,20 +133,25 @@ class StateGraphMonthlyController < ApplicationController
 			end		
 		end
 
+		return fuels
 
-		@ethanol_media = []
-		@gas_media = []
-		@diesel_media = []
+	end
+
+	def calculate_media(fuels)
+
+		ethanol_media = []
+		gas_media = []
+		diesel_media = []
 
 		fuels.each do |month, f|
 
-			@ethanol_media << (f[0].sum / f[0].size.to_f).round(3)
-			@gas_media << (f[1].sum / f[1].size.to_f).round(3)
-			@diesel_media << (f[2].sum / f[2].size.to_f).round(3)
+			ethanol_media << (f[0].sum / f[0].size.to_f).round(3)
+			gas_media << (f[1].sum / f[1].size.to_f).round(3)
+			diesel_media << (f[2].sum / f[2].size.to_f).round(3)
 
 		end
 
-		all_medias = [@gas_media, @ethanol_media, @diesel_media]
+		all_medias = [gas_media, ethanol_media, diesel_media]
 
 		return all_medias
 
