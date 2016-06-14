@@ -1,0 +1,19 @@
+<div class="container">
+
+	<span class="same_line">
+		Escolha o Estado Desejado:
+		<%= form_tag("/statistics/state_monthly", method: "get", remote: false) do %>
+		<%= select_tag 'state_searched', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag43"%>
+		<%= select_tag 'years', options_for_select([""""] + @years, :selected => params[:years]), id: "select_tag1" %>
+		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
+		<% end %>
+	</span>
+
+	<% if @year_searched != nil %>
+		<div class="graph_state_monthly">
+			<%= render "state_monthly" %>
+		</div>
+
+	<% end %>
+
+</div>
