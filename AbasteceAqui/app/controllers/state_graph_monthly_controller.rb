@@ -1,5 +1,8 @@
 class StateGraphMonthlyController < ApplicationController
 
+	MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
 	# index page
 	def state_monthly
 
@@ -22,14 +25,11 @@ class StateGraphMonthlyController < ApplicationController
 	# generate the chart of state monthly
 	def generate_monthly_graph_by_state(all_medias)
 
-		months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-
 		titulo = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
 			f.title(text:  titulo)
-			f.xAxis(categories: months)
+			f.xAxis(categories: MONTHS)
 			f.series(name: "Preço Da Gasolina", yAxis: 0, data: all_medias[0])
 			f.series(name: "Preço Do Etanol", yAxis: 0, data: all_medias[1])
 			f.series(name: "Preço Do Diesel", yAxis: 0, data: all_medias[2])
@@ -82,25 +82,30 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
+	# create fuels hash
+	def create_fuels_hash
+
+		fuels = Hash.new
+
+		(1..12).each do |month|
+
+			gas = []
+			diesel = []
+			ethanol = []
+			fuels[month] = [ethanol, gas, diesel]
+		
+		end
+
+		return fuels
+
+	end
+
 	# get all monthly media of the states
 	def get_monthly_state_fuel_media(state, year)
 
 		researches_of_year = find_researches_of_year(state, year)
 
-		fuels = Hash.new
-
-		diesel_prices = []
-		ethanol_prices = []
-		gas_prices = []
-
-		researches_of_year.each do |research|
-
-			gas = []
-			diesel = []
-			ethanol = []
-			fuels[research.date.month] = [ethanol, gas, diesel]
-		
-		end
+		fuels = create_fuels_hash()
 
 		researches_of_year.each do |research|
 
