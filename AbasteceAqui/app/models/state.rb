@@ -1,5 +1,5 @@
 class State < ActiveRecord::Base
-	
+
 	belongs_to :region
 	has_many :counties
 
@@ -32,11 +32,11 @@ class State < ActiveRecord::Base
 
 		state_counties.each do |counties|
 			if (type == "name")
-				counties_of_state << counties.name	
+				counties_of_state << counties.name
 			elsif (type == "object")
 				counties_of_state << counties
-			else 
-				puts "invalid type"
+			else
+				#do nothing
 			end
 		end
 
