@@ -1,4 +1,4 @@
-class CountyRankController < ApplicationController
+class CountyRankingFuelController < ApplicationController
 
   def index
 
