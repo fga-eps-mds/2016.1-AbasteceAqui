@@ -22,6 +22,13 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
 
   end
 
+  describe "GET #state_monthly" do
+    it "returns http success when state_searched != nil" do
+      get :state_monthly, {:state_searched => @state1.name}
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe "#find_years" do
     it "should return all years" do 
       years = controller.find_years()
