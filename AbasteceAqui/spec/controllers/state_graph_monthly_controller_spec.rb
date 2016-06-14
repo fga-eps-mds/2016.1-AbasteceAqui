@@ -37,9 +37,17 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
   end  
 
   describe "#create_fuels_hash" do
-    it "shuld return hash of fuels" do
+    it "should return hash of fuels" do
       fuels = controller.create_fuels_hash
       expect(fuels.count).to eq(12)
+    end
+  end
+
+  describe "#calculate_media" do
+    it "should return the array of medias" do
+      fuels = controller.create_fuels_hash
+      medias = controller.calculate_media(fuels)
+      expect(medias.count).to eq(3)
     end
   end
 
