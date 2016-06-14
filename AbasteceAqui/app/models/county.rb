@@ -27,6 +27,22 @@ class County < ActiveRecord::Base
 
 	end
 
+	def self.researches_of_year(county_searched, year_searched)
+
+		researches_of_year = []
+
+		county_searched.fuel_researches.each do |research|
+
+			if(year_searched == research.date.year)
+				researches_of_year << research
+			end
+		end
+
+		return researches_of_year
+
+	end
+
+
 	def self.fuels_of_year (years, counties_of_state)
 
 		state_fuels_by_year = Hash.new
@@ -38,11 +54,10 @@ class County < ActiveRecord::Base
 				researches_of_county = County.find_by(name: county).fuel_researches
 				FuelResearch.check_year_of_research(researches_of_county, state_fuels_by_year[year], year)
 			end
-
 		end
 
 		return state_fuels_by_year
 
 	end
 
-end
+end # end of class

@@ -5,7 +5,7 @@ class FuelResearch < ActiveRecord::Base
 
 	def self.search_fuels_research (id_last_research)
 
-	
+
 		fuel_researches = FuelResearch.find_by(id: id_last_research).fuels
 
 		researches_of_fuels = []
@@ -18,7 +18,7 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-	def self.fill_object_last_research (counties) 
+	def self.fill_object_last_research (counties)
 
 
 		last_researches  = []
@@ -29,6 +29,13 @@ class FuelResearch < ActiveRecord::Base
 
 		return last_researches
 
+	end
+
+	def self.find_all_researches
+
+		all_researches = FuelResearch.all
+
+		return all_researches
 	end
 
 	def self.check_year_of_research(researches_of_county, researches_of_year, year)
@@ -42,5 +49,5 @@ class FuelResearch < ActiveRecord::Base
 			end
 		end
 	end
-	
-end
+
+end # end of class

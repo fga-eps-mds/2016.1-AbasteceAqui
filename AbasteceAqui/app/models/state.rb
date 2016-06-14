@@ -1,5 +1,5 @@
 class State < ActiveRecord::Base
-	
+
 	belongs_to :region
 	has_many :counties
 
@@ -24,18 +24,23 @@ class State < ActiveRecord::Base
 
 	end
 
-	def self.search_state_counties(state_searched)
+	def self.search_state_counties(state_searched, type = "name")
 
 		state_counties = State.find_by(name: state_searched).counties
 
 		counties_of_state = []
 
 		state_counties.each do |counties|
-			counties_of_state << counties.name
+			if (type == "name")
+				counties_of_state << counties.name
+			elsif (type == "object")
+				counties_of_state << counties
+			else
+				#do nothing
+			end
 		end
 
 		return counties_of_state
 
 	end
-
 end
