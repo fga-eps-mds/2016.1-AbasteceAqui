@@ -4,9 +4,10 @@ class StateGraphMonthlyController < ApplicationController
 				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
 	# index page
-	def state_monthly
+	def state_monthly()
 
-		@states = State.fill_states
+		@states = 
+
 		@state_searched = params[:state_searched]
 		
 		find_years()
@@ -20,6 +21,16 @@ class StateGraphMonthlyController < ApplicationController
 			# do nothing
 		end
 
+	end
+
+	# get all states from db
+	# needed at view to generate states dropdown
+	# return a state array with all states
+	def get_all_states()
+
+		states  = State.fill_states()
+
+		return states
 	end
 
 	# get all monthly media of the states
@@ -40,17 +51,20 @@ class StateGraphMonthlyController < ApplicationController
 	# generate the chart of state monthly
 	def generate_monthly_graph_by_state(all_medias)
 
-		titulo = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
+		title = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(text:  titulo)
+			f.title(text:  title)
 			f.xAxis(categories: MONTHS)
 			f.series(name: "Preço Da Gasolina", yAxis: 0, data: all_medias[0])
 			f.series(name: "Preço Do Etanol", yAxis: 0, data: all_medias[1])
 			f.series(name: "Preço Do Diesel", yAxis: 0, data: all_medias[2])
 
-			f.yAxis [
-				{title: {text: "Preço Dos Combustíveis", margin: 70} },
+			f.yAxis[{
+				title: {
+						text: "Preço Dos Combustíveis", margin: 70
+					} 
+				},
 			]
 
 			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
