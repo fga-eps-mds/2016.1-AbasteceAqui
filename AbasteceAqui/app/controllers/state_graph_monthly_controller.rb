@@ -9,13 +9,13 @@ class StateGraphMonthlyController < ApplicationController
 		@states = get_all_states()
 		@years = get_all_years_from_researchs()
 
-		@state_searched = params[:state_searched]		
-		@year_searched = params[:years].to_i
+		state_searched = params[:state_searched]		
+		year_searched = params[:years].to_i
 
 		# when string is and cast to integer it becomes 0
-		if @year_searched != 0
-			all_medias = get_monthly_state_fuel_media(@state_searched, @year_searched)
-			generate_monthly_graph_by_state(all_medias)
+		if year_searched != 0
+			all_medias = get_monthly_state_fuel_media(state_searched, year_searched)
+			generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
 		else
 			# do nothing
 		end
@@ -58,9 +58,9 @@ class StateGraphMonthlyController < ApplicationController
 	end
 
 	# generate the chart of state monthly
-	def generate_monthly_graph_by_state(all_medias)
+	def generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
 
-		title = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
+		title = "Preço do combustivel no decorrer do ano - #{state_searched} #year_searched}"
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
 			f.title(text:  title)
