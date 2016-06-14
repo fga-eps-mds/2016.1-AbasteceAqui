@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CountyRankController, type: :controller do
+RSpec.describe CountyRankingFuelController, type: :controller do
   before do
     @state1 = State.new(id: 1, name: "PARA", region_id: 1)
     @state2 = State.new(id: 2, name: "MARANHAO", region_id: 2)
@@ -114,36 +114,47 @@ RSpec.describe CountyRankController, type: :controller do
     end
   end
 
-  describe "#find_counties_sorted_by_fuel" do
+  describe "#find_counties_sorted_by_ethanol" do
     it "Should return four objects of counties" do
 
-      fuels = Fuel.all
-      counties = controller.find_counties_sorted_by_fuel(fuels)
+      fuels = Fuel.ethanol_sorted(Fuel.all)
+      counties = controller.find_counties_sorted_by_ethanol(fuels)
 
-      expect(counties.count).to eq(4)
+      expect(counties.count).to eq(1)
 
     end
   end
 
-  describe "#county_rank_by_ethanol" do
-		it "Should render database html" do
-			get :county_rank_by_ethanol
-      expect(response).to have_http_status(:success)
-    end
-	end
+  describe "#find_counties_sorted_by_gasoline" do
+    it "Should return four objects of counties" do
 
-  describe "#county_rank_by_gasoline" do
-		it "Should render database html" do
-			get :county_rank_by_gasoline
-      expect(response).to have_http_status(:success)
-    end
-	end
+      fuels = Fuel.gasoline_sorted(Fuel.all)
+      counties = controller.find_counties_sorted_by_gasoline(fuels)
 
-  describe "#county_rank_by_diesel" do
-		it "Should render database html" do
-			get :county_rank_by_diesel
-      expect(response).to have_http_status(:success)
+      expect(counties.count).to eq(1)
+
     end
-	end
+  end
+
+  describe "#find_counties_sorted_by_diesel" do
+    it "Should return four objects of counties" do
+
+      fuels = Fuel.diesel_sorted(Fuel.all)
+      counties = controller.find_counties_sorted_by_diesel(fuels)
+
+      expect(counties.count).to eq(1)
+
+    end
+  end
+
+  describe "#index" do
+    it "Should render county_ranking page" do
+
+      get :index
+      expect(response).to have_http_status(:success)
+
+    end
+  end
+
 
 end
