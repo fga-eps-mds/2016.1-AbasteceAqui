@@ -1,5 +1,6 @@
 class StateGraphMonthlyController < ApplicationController
 
+	# index page
 	def state_monthly
 
 		@states = State.fill_states
@@ -8,7 +9,7 @@ class StateGraphMonthlyController < ApplicationController
 		find_years()
 		@year_searched = params[:years].to_i
 
-		# nil.to_i == 0
+		# when string is and cast to integer it becomes 0
 		if @year_searched != 0
 			all_medias = get_monthly_state_fuel_media
 			generate_monthly_graph_by_state(all_medias)
@@ -18,10 +19,11 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
+	# generate the chart of state monthly
 	def generate_monthly_graph_by_state(all_medias)
 
 		months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-				"Julho", "Agosto", "Setembro", "Outurbro", "Novembro", "Dezembro"]
+				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
 		titulo = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
 
@@ -41,6 +43,7 @@ class StateGraphMonthlyController < ApplicationController
 		end
 	end
 
+	# find all years of the BD
 	def find_years
 
 		@years = Set.new
@@ -58,14 +61,11 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
+	# get all monthly media of the states
 	def get_monthly_state_fuel_media
 
 		counties = State.find_by(name: @state_searched).counties
 		
-		diesel_prices = []
-		ethanol_prices = []
-		gas_prices = []
-
 		researches_of_year = []
 
 		counties.each do |county|
@@ -79,6 +79,10 @@ class StateGraphMonthlyController < ApplicationController
 		end
 
 		fuels = Hash.new
+
+		diesel_prices = []
+		ethanol_prices = []
+		gas_prices = []
 
 		researches_of_year.each do |research|
 
