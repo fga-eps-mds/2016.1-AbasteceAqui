@@ -9,17 +9,16 @@
         </ul>
       </div>
 
-        <div class="ranking-information">
-        </div>
-
-        <div class="rank-gasoline">
+        <div class="rank-gasoline" id="rank-gasoline">
           <%= render 'county_ranking_gasoline' %>
         </div>
 
-        <div class="rank-ethanol">
+        <div class="rank-ethanol" id="rank-ethanol">
+          <%= render 'county_ranking_ethanol' %>
         </div>
 
-        <div class="rank-diesel">
+        <div class="rank-diesel" id="rank-diesel">
+          <%= render 'county_ranking_diesel' %>
         </div>
 
       </div>
@@ -29,26 +28,3 @@
 <% content_for :header do -%>
   <%= javascript_include_tag 'county_rank.js' %>
 <% end %>
-
-<script>
-  $(document ).ready(function(){
-
-    var gasoline_btn = document.getElementById("gasoline-rank-btn");
-    var ethanol_btn = document.getElementById("ethanol-rank-btn");
-    var diesel_btn = document.getElementById("diesel-rank-btn");
-
-    $(ethanol_btn).click(function () {
-
-      $('.rank-ethanol').html("<%= escape_javascript(render("county_ranking_ethanol")) %>");
-    });
-
-    $(gasoline_btn).on('click', function () {
-      $('.rank-gasoline').html("<%= escape_javascript(render("county_ranking_gasoline")) %>");
-    });
-
-    $(diesel_btn).click(function () {
-
-      $('.rank-diesel').html("<%= escape_javascript(render("county_ranking_diesel")) %>");
-    });
-  });
-</script>
