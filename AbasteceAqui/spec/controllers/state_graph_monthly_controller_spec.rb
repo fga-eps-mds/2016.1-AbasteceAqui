@@ -59,6 +59,15 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
+  describe "#fill_fuels_hash" do
+    it "should fill the hash" do
+      fuels = controller.create_fuels_hash
+      researches = controller.find_researches_of_year(@state1.name, 2015)
+      fuels = controller.fill_fuels_hash(researches, fuels)
+      expect(fuels[4][1][0]).to eq(5.0) 
+    end
+  end
+
   describe "#calculate_media" do
     it "should return the array of medias" do
       fuels = controller.create_fuels_hash
