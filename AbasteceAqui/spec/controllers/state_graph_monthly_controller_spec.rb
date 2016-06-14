@@ -22,6 +22,13 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
 
   end
 
+  describe "#find_years" do
+    it "should return all years" do 
+      years = controller.find_years()
+      expect(years.count).to eq(2)
+    end
+  end  
+
 
 end
 
