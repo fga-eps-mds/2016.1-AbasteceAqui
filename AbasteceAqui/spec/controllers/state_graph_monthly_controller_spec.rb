@@ -31,6 +31,13 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
+  describe "#get_monthly_state_fuel_media" do
+    it "should return all medias" do 
+      medias = controller.get_monthly_state_fuel_media(@state1.name, 2015)
+      expect(medias.count).to eq(3)
+    end
+  end
+
   describe "#find_years" do
     it "should return all years" do 
       years = controller.find_years()
