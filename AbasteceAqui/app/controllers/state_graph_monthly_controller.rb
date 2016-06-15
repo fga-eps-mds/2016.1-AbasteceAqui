@@ -79,9 +79,7 @@ class StateGraphMonthlyController < ApplicationController
 
 		researches_of_year = find_researches_of_year(state, year)
 
-		fuels = create_fuels_hash()
-
-		fuels = fill_fuels_hash(researches_of_year, fuels)
+		fuels = separete_fuels_of_researches(researches_of_year)
 		
 		all_medias = calculate_media(fuels)
 
@@ -101,6 +99,14 @@ class StateGraphMonthlyController < ApplicationController
 	# create fuels hash
 	def create_fuels_hash
 
+		# fuels == {
+		# 	1 => ['ethanol data for month 1']['gas data month 1']['disel data month 1']
+		# 	2 => ['ethanol data for month 2']['gas data month 2']['disel data month 2']	
+		# 	3 => [][][]		    
+		# 	4 => [][][]				
+		# 		...
+		# }
+
 		fuels = Hash.new
 
 		(1..12).each do |month|
@@ -117,7 +123,9 @@ class StateGraphMonthlyController < ApplicationController
 	end
 
 	# fill fuels hash
-	def fill_fuels_hash(researches_of_year, fuels)
+	def separete_fuels_of_researches(researches_of_year)
+
+		fuels = create_fuels_hash()
 
 		researches_of_year.each do |research|
 
@@ -138,6 +146,7 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
+	# calculate media for each month of each fuel
 	def calculate_media(fuels)
 
 		ethanol_media = []
