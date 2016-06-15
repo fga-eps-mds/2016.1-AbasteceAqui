@@ -32,11 +32,11 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
   end
 
   describe "#get_all_states" do
-    it "all states name" do
+    it "return all states name" do
       states = controller.get_all_states()
 
       states_name = []
-
+      # get all states name
       for state in State.all
         
         states_name << state.name
@@ -46,6 +46,15 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
       expect(states).to eq(states_name)
     end
   end
+
+  describe "#get_all_years_from_researchs" do
+    it "return all db years" do
+      years = controller.get_all_years_from_researchs()
+      expect(years).to eq([2015,2014])
+    end
+  end
+
+  
 
   describe "#get_monthly_state_fuel_media" do
     it "should return all medias" do
