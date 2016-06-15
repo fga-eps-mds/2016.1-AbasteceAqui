@@ -43,4 +43,24 @@ class State < ActiveRecord::Base
 		return counties_of_state
 
 	end
+
+	# find researches of an year for all counties
+	def self.find_all_conty_year_researches(state, year)
+
+		counties = State.search_state_counties(state, "object")
+		counties_year_researches = []
+
+
+		counties.each do |county|
+
+			research = County.researches_of_year(county, year)
+
+			counties_year_researches += research
+
+		end
+
+		return counties_year_researches
+
+	end
+
 end

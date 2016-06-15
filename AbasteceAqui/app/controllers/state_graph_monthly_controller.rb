@@ -1,7 +1,10 @@
 class StateGraphMonthlyController < ApplicationController
 
+	# Month constant with all month years
 	MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
+	
 
 	# index page
 	def state_monthly()
@@ -10,9 +13,11 @@ class StateGraphMonthlyController < ApplicationController
 		@years = get_all_years_from_researchs()
 
 		state_searched = params[:state_searched]		
-		year_searched = params[:years].to_i
+		year_searched = params[:years]
 
-		# when string is and cast to integer it becomes 0
+		# convert year_searched string to int, if it's nil  it become 0
+		year_searched = year_searched.to_i()
+
 		if year_searched != 0
 			all_medias = get_monthly_state_fuel_media(state_searched, year_searched)
 			generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
@@ -30,6 +35,7 @@ class StateGraphMonthlyController < ApplicationController
 		states  = State.fill_states()
 
 		return states
+
 	end
 
 	# get all years from db
@@ -40,27 +46,13 @@ class StateGraphMonthlyController < ApplicationController
 		years = FuelResearch.get_all_years()
 
 		return years
-	end
-
-	# get all monthly media of the states
-	def get_monthly_state_fuel_media(state, year)
-
-		researches_of_year = find_researches_of_year(state, year)
-
-		fuels = create_fuels_hash()
-
-		fuels = fill_fuels_hash(researches_of_year, fuels)
-		
-		all_medias = calculate_media(fuels)
-
-		return all_medias
 
 	end
 
 	# generate the chart of state monthly
 	def generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
 
-		title = "Preço do combustivel no decorrer do ano - #{state_searched} #year_searched}"
+		title = "Preço do combustivel no decorrer do ano - #{state_searched} #{year_searched}"
 
 		@chart = LazyHighCharts::HighChart.new('graph') do |f|
 			f.title(text:  title)
@@ -79,26 +71,30 @@ class StateGraphMonthlyController < ApplicationController
 			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
 			f.chart({defaultSeriesType: "line"})
 		end
+
+	end
+
+	# get all monthly media of the states
+	def get_monthly_state_fuel_media(state, year)
+
+		researches_of_year = find_researches_of_year(state, year)
+
+		fuels = create_fuels_hash()
+
+		fuels = fill_fuels_hash(researches_of_year, fuels)
+		
+		all_medias = calculate_media(fuels)
+
+		return all_medias
+
 	end
 
 	# find all researches of an year of a state
 	def find_researches_of_year(state, year)
-
-		counties = State.search_state_counties(state, "object")
 		
-		researches_of_year = []
+		counties_year_researches = State.find_all_conty_year_researches(state, year)
 
-		counties.each do |county|
-			
-			research = County.researches_of_year(county, year)
-
-			research.each do |r|
-				researches_of_year << r
-			end
-
-		end
-
-		return researches_of_year
+		return counties_year_researches
 
 	end
 
