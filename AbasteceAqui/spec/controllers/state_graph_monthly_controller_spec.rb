@@ -54,8 +54,6 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
-  
-
   describe "#get_monthly_state_fuel_media" do
     it "should return all medias" do
       medias = controller.get_monthly_state_fuel_media(@state1.name, 2015)
@@ -65,7 +63,7 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
 
   describe "#find_years" do
     it "should return all years" do
-      years = controller.find_years()
+      years = controller.get_all_years_from_researchs()
       expect(years.count).to eq(2)
     end
   end
@@ -84,12 +82,11 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#fill_fuels_hash" do
-    it "should fill the hash" do
-      fuels = controller.create_fuels_hash
+  describe "#separete_fuels_of_researches" do
+    it "separate the researches's fuels" do
       researches = controller.find_researches_of_year(@state1.name, 2015)
-      fuels = controller.fill_fuels_hash(researches, fuels)
-      expect(fuels[4][1][0]).to eq(5.0)
+      fuels = controller.separete_fuels_of_researches(researches)
+      expect(fuels[4][1][0]).to eq(5.0) 
     end
   end
 

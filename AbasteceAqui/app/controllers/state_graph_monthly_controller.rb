@@ -20,7 +20,7 @@ class StateGraphMonthlyController < ApplicationController
 
 		if year_searched != 0
 			all_medias = get_monthly_state_fuel_media(state_searched, year_searched)
-			generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
+			@chart = generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
 		else
 			# do nothing
 		end
@@ -54,7 +54,7 @@ class StateGraphMonthlyController < ApplicationController
 
 		title = "Preço do combustivel no decorrer do ano - #{state_searched} #{year_searched}"
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
+		chart = LazyHighCharts::HighChart.new('graph') do |f|
 			f.title(text:  title)
 			f.xAxis(categories: MONTHS)
 			f.series(name: "Preço Da Gasolina", yAxis: 0, data: all_medias[0])
@@ -71,6 +71,8 @@ class StateGraphMonthlyController < ApplicationController
 			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
 			f.chart({defaultSeriesType: "line"})
 		end
+
+		return chart
 
 	end
 
