@@ -4,17 +4,19 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 	before do
 
-	    @fuel_research1 = FuelResearch.new(id: 1, date: "2015-04-01", county_id: 1)
-	    @fuel_research2 = FuelResearch.new(id: 2, date: "2014-05-01", county_id: 1)
-	    @fuel1 = Fuel.new(id: 1, medium_resale_price: 3.0, fuel_type_id: 1, fuel_research_id: 1)
-	    @fuel2 = Fuel.new(id: 2, medium_resale_price: 5.0, fuel_type_id: 2, fuel_research_id: 1)
-	    @fuel3 = Fuel.new(id: 3, medium_resale_price: 4.0, fuel_type_id: 5, fuel_research_id: 2)
+	    fuel_research1 = FuelResearch.new(id: 1, date: "2015-04-01", county_id: 1)
+	    fuel_research2 = FuelResearch.new(id: 2, date: "2014-05-01", county_id: 1)
+	    fuel1 = Fuel.new(id: 1, medium_resale_price: 3.0, fuel_type_id: 1, fuel_research_id: 1)
+	    fuel2 = Fuel.new(id: 2, medium_resale_price: 5.0, fuel_type_id: 2, fuel_research_id: 1)
+			fuel3 = Fuel.new(id: 4, medium_resale_price: 6.0, fuel_type_id: 5, fuel_research_id: 1)
+	    fuel4 = Fuel.new(id: 3, medium_resale_price: 4.0, fuel_type_id: 5, fuel_research_id: 2)
 
-		@fuel_research1.save
-		@fuel_research2.save
-		@fuel1.save
-		@fuel2.save
-		@fuel3.save
+			fuel_research1.save
+			fuel_research2.save
+			fuel1.save
+			fuel2.save
+			fuel3.save
+			fuel4.save
 
 	end
 
@@ -76,6 +78,17 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			all_researches_selected_year = controller.find_researches_of_selected_year("2014", all_researches)
 			expect(all_researches_selected_year[0].id).to eq(2)
+
+		end
+	end
+
+	describe "#find_fuels_of_researches_of_year comparing array size" do
+		it "shold return fuels of selected year" do
+			all_researches = controller.find_all_researches()
+			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
+			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
+
+			expect(fuels.count).to eq(3)
 
 		end
 	end
