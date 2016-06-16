@@ -40,14 +40,14 @@ class StandardDeviationRankController < ApplicationController
 
 	def find_ethanol_fuels_sorted(fuels)
 
-    @ethanol_sorted = Fuel.ethanol_sorted(fuels)
+    @ethanol_sorted = Fuel.ethanol_sorted_by_standard_deviation(fuels)
 
     return @ethanol_sorted
   end
 
   def find_gasoline_fuels_sorted(fuels)
 
-    @gasoline_sorted = Fuel.gasoline_sorted(fuels)
+    @gasoline_sorted = Fuel.gasoline_sorted_by_standard_deviation(fuels)
 
   	return @gasoline_sorted
 
