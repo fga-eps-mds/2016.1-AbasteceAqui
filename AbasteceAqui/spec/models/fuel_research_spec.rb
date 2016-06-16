@@ -59,4 +59,18 @@ RSpec.describe FuelResearch, type: :model do
       end
     end
 
+
+	describe "#find_years_of_researches" do
+		it "should the year of all researches" do
+			
+			researches = FuelResearch.all
+
+			years = FuelResearch.find_years_of_researches(researches)
+
+			expect(years).to eq([2015, 2016])
+			
+		end
+
+	end
+
 end

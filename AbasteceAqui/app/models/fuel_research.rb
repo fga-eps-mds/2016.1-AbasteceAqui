@@ -62,7 +62,9 @@ class FuelResearch < ActiveRecord::Base
 
 			end
 
-			return year.uniq!
+			year.uniq!
+
+			return year
 
 	end
 
