@@ -66,7 +66,7 @@ class FuelResearch < ActiveRecord::Base
 
 		end
 
-		return reserches_of_selected_year
+		return reserches_of_year
 
 	end
 
