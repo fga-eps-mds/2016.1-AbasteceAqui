@@ -45,8 +45,17 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			expect(all_years.count).to eq(2)
 		
 		end
-
 	end
 
+	describe "#find_all_years comparing years" do
+		it "should return all years" do
+			all_researches = controller.find_all_researches()
+			all_years = controller.find_all_years(all_researches)
+
+			expect(all_years[0]).to eq(2015)
+			expect(all_years[1]).to eq(2014)
+		
+		end
+	end
 
 end
