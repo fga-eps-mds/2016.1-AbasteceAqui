@@ -46,5 +46,12 @@ class StandardDeviationRankController < ApplicationController
 
   end
 
+  def find_diesel_fuels_sorted(fuels)
+
+    @diesel_sorted = Fuel.diesel_sorted(fuels)
+
+  return @diesel_sorted
+
+  end
 
 end
