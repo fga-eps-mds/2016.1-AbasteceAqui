@@ -7,12 +7,11 @@ class StandardDeviationRankController < ApplicationController
 
 	end
 
-	def self.find_states
+	def find_counties
 
-		#states = State.fill_object_states()
-		states = State.fill_states()
+		@counties = County.fill_counties()
 
-		return states
+		return @counties
 
 	end
 
