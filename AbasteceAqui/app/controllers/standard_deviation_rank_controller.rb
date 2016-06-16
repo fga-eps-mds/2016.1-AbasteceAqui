@@ -42,7 +42,7 @@ class StandardDeviationRankController < ApplicationController
 
     @gasoline_sorted = Fuel.gasoline_sorted(fuels)
 
-  return @gasoline_sorted
+  	return @gasoline_sorted
 
   end
 
@@ -50,8 +50,15 @@ class StandardDeviationRankController < ApplicationController
 
     @diesel_sorted = Fuel.diesel_sorted(fuels)
 
-  return @diesel_sorted
+  	return @diesel_sorted
 
+  end
+
+  def find_counties_sorted_by_ethanol(fuels)
+
+    @counties_sorted_ethanol = County.find_counties_by_fuel_sorted(fuels)
+
+    return @counties_sorted_ethanol
   end
 
 end
