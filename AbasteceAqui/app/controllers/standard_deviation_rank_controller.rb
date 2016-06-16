@@ -1,7 +1,7 @@
-class StandarDeviantionRankController < ApplicationController
+class StandardDeviationRankController < ApplicationController
 
 	def index
 
-		
 	end
+
 end
