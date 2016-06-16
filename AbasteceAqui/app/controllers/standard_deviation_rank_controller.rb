@@ -2,8 +2,15 @@ class StandardDeviationRankController < ApplicationController
 
 	def index
 
-		@states = find_states()
-		@researches = find_last_research_of_counties
+		find_counties()
+    find_last_research_of_counties(@counties)
+    fill_fuels_last_research(@researches)
+    find_ethanol_fuels_sorted(@fuels)
+    find_gasoline_fuels_sorted(@fuels)
+    find_diesel_fuels_sorted(@fuels)
+    find_counties_sorted_by_ethanol(@ethanol_sorted)
+    find_counties_sorted_by_gasoline(@gasoline_sorted)
+    find_counties_sorted_by_diesel(@diesel_sorted)
 
 	end
 
