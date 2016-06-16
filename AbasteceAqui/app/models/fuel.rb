@@ -132,6 +132,28 @@ belongs_to :fuel_type
 
 	end
 
+	def self.diesel_sorted_by_standard_deviation(fuels)
+
+		diesel = []
+
+		fuels.each do |fuel|
+
+			if(fuel.fuel_type_id == 5)
+				diesel << fuel
+
+			else
+				#do nothing
+
+			end
+
+		end
+
+		diesel.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
+
+		return diesel
+
+	end
+
 	def self.verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
 		fuels.each do |fuel|
 
