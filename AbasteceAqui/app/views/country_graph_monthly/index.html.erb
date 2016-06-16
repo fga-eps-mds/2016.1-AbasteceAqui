@@ -1,0 +1,22 @@
+<% content_for :header do -%>
+	<%= javascript_include_tag 'dinamic_selection.js' %>
+	<%= javascript_include_tag 'highcharts-custom.js' %>
+<% end %>
+<div class="container">
+
+	<span class="same_line">
+		Escolha o ano Desejado:
+		<%= form_tag("/statistics/country_monthly", method: "get", remote: false) do %>
+		<%= select_tag 'years', options_for_select([""""] + @years, :selected => params[:years]), id: "select_tag" %>
+		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
+		<% end %>
+	</span>
+
+	<% if @year_searched != nil %>
+		<div class="graph_country_monthly">
+			<%= render "country_monthly" %>
+		</div>
+
+	<% end %>
+
+</div>
