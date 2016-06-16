@@ -44,6 +44,28 @@ belongs_to :fuel_type
 
 	end
 
+	def self.ethanol_sorted_standard_deviation(fuels)
+
+		ethanol = []
+
+		fuels.each do |fuel|
+
+			if(fuel.fuel_type_id == 1)
+				ethanol << fuel
+
+			else
+				#do nothing
+
+			end
+
+		end
+
+		ethanol.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
+
+		return ethanol
+
+	end
+
 	def self.gasoline_sorted(fuels)
 
 		gasoline = []
