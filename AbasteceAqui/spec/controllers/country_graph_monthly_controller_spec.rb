@@ -9,7 +9,7 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 	    @fuel1 = Fuel.new(id: 1, medium_resale_price: 3.0, fuel_type_id: 1, fuel_research_id: 1)
 	    @fuel2 = Fuel.new(id: 2, medium_resale_price: 5.0, fuel_type_id: 2, fuel_research_id: 1)
 	    @fuel3 = Fuel.new(id: 3, medium_resale_price: 4.0, fuel_type_id: 5, fuel_research_id: 2)
-	
+
 		@fuel_research1.save
 		@fuel_research2.save
 		@fuel1.save
@@ -43,7 +43,7 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			all_years = controller.find_all_years(all_researches)
 
 			expect(all_years.count).to eq(2)
-		
+
 		end
 	end
 
@@ -54,7 +54,17 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			expect(all_years[0]).to eq(2015)
 			expect(all_years[1]).to eq(2014)
-		
+
+		end
+	end
+
+	describe "#find_researches_of_selected_year comparing array size" do
+		it "shold return all researches of selected year" do
+			all_researches = controller.find_all_researches()
+			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
+
+			expect(all_researches_selected_year.count).to eq(1)
+
 		end
 	end
 
