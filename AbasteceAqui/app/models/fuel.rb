@@ -127,5 +127,33 @@ belongs_to :fuel_type
 		return total_of_the_year_state.round(3)
 	end
 
+	def self.find_fuels_by_month(fuels)
+
+		fuels_month = []
+		ethanol_prices = []
+		gas_prices = []
+		diesel_prices = []
+
+		fuels.each do |fuel|
+
+			if fuel.fuel_type_id == 1
+
+				fuels_month[fuel.date.month-1] << ethanol_prices << fuel
+
+			elsif fuel.fuel_type_id == 2
+
+				fuels_month[fuel.date.month-1] << gas_prices << fuel
+
+			elsif fuel.fuel_type_id == 5
+
+				fuels_month[fuel.date.month-1] << diesel_prices << fuel
+
+			end
+
+		end
+
+		return fuels_month
+
+	end
 
 end #end of class
