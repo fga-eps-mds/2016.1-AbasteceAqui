@@ -29,11 +29,49 @@ class CountryGraphMonthlyController < ApplicationController
 
 	def find_fuels_by_type(fuels)
 
-		@gasoline = []
-		@ethanol = []
-		@diesel = []
+		@fuels_month = Fuel.find_fuels_by_month(fuels)
 
-		Fuel.verify_type_of_fuel(fuels, @gasoline, @ethanol, @diesel)
+	end
+
+	def calculate_average_of_gasoline(fuels_month)
+
+		@average_gasoline = []
+
+		fuels_month.each do |fuel_month|
+
+			@average_gasoline << fuel_month["GASOLINE"].inject{|number_1, number_2| number_1 + number_2}
+
+		end
+
+		return @average_gasoline
+
+	end
+
+	def calculate_average_of_ethanol(fuels_month)
+
+		@average_ethanol = []
+
+		fuels_month.each do |fuel_month|
+
+			@average_ethanol << sum(fuel_month["ETHANOL"].inject{|number_1, number_2| number_1 + number_2}
+			
+		end
+
+		return @average_ethanol
+
+	end
+
+	def calculate_average_of_diesel(fuels_month)
+
+		@average_diesel = []
+
+		fuels_month.each do |fuel_month|
+
+			@average_diesel << sum(fuel_month["DIESEL"].inject{|number_1, number_2| number_1 + number_2}
+			
+		end
+
+		return @average_diesel
 
 	end
 

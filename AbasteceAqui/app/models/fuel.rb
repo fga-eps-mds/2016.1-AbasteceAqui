@@ -129,24 +129,30 @@ belongs_to :fuel_type
 
 	def self.find_fuels_by_month(fuels)
 
-		fuels_month = []
+		fuels_month = [0,1,2,3,4,5,6,7,8,9,10,11]
 		ethanol_prices = []
 		gas_prices = []
 		diesel_prices = []
+
+		for i in 0..11
+
+			fuels_month[i] = Hash.new
+
+		end
 
 		fuels.each do |fuel|
 
 			if fuel.fuel_type_id == 1
 
-				fuels_month[fuel.date.month-1] << ethanol_prices << fuel
+				fuels_month[fuel.date.month-1]["ETHANOL"] << ethanol_prices << fuel.medium_resale_price
 
 			elsif fuel.fuel_type_id == 2
 
-				fuels_month[fuel.date.month-1] << gas_prices << fuel
+				fuels_month[fuel.date.month-1]["GASOLINE"] << gas_prices << fuel.medium_resale_price
 
 			elsif fuel.fuel_type_id == 5
 
-				fuels_month[fuel.date.month-1] << diesel_prices << fuel
+				fuels_month[fuel.date.month-1]["DIESEL"] << diesel_prices << fuel.medium_resale_price
 
 			end
 
