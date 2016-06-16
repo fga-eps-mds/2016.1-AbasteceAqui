@@ -22,11 +22,11 @@ class StandardDeviationRankController < ApplicationController
 
 	end
 
-	def self.find_last_research_of_counties(counties)
+	def find_last_research_of_counties(counties)
 
-		researches = FuelResearch.fill_object_last_research(counties)
+		@researches = FuelResearch.fill_object_last_research(counties)
 
-		return researches
+		return @researches
 
 	end
 
@@ -55,7 +55,7 @@ class StandardDeviationRankController < ApplicationController
 
   def find_diesel_fuels_sorted(fuels)
 
-    @diesel_sorted = Fuel.diesel_sorted(fuels)
+    @diesel_sorted = Fuel.diesel_sorted_by_standard_deviation(fuels)
 
   	return @diesel_sorted
 
