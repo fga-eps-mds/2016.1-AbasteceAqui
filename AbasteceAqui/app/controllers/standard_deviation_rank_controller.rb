@@ -16,7 +16,15 @@ class StandardDeviationRankController < ApplicationController
 
 	end
 
-	def find_last_research_of_counties(counties)
+	def fill_fuels_last_research(researches)
+
+    @fuels = Fuel.fuels_latest_researches_counties(researches)
+
+    return @fuels
+
+  end
+
+	def self.find_last_research_of_counties(counties)
 
 		researches = FuelResearch.fill_object_last_research(counties)
 
