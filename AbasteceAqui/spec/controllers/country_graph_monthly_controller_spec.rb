@@ -68,4 +68,16 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 		end
 	end
 
+	describe "#find_researches_of_selected_year comparing id" do
+		it "shold return all researches of selected year" do
+			all_researches = controller.find_all_researches()
+			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
+			expect(all_researches_selected_year[0].id).to eq(1)
+
+			all_researches_selected_year = controller.find_researches_of_selected_year("2014", all_researches)
+			expect(all_researches_selected_year[0].id).to eq(2)
+
+		end
+	end
+
 end
