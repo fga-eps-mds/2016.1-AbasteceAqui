@@ -50,7 +50,7 @@ belongs_to :fuel_type
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 1)
+			if(fuel.fuel_type_id == 1 && fuel.distribuition_standard_deviation != 0.0)
 				ethanol << fuel
 
 			else
@@ -94,7 +94,7 @@ belongs_to :fuel_type
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 2)
+			if(fuel.fuel_type_id == 2 && fuel.distribuition_standard_deviation != 0.0)
 				gasoline << fuel
 
 			else
@@ -138,7 +138,7 @@ belongs_to :fuel_type
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 5)
+			if(fuel.fuel_type_id == 5 && fuel.distribuition_standard_deviation != 0.0)
 				diesel << fuel
 
 			else
