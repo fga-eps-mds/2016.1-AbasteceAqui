@@ -18,7 +18,7 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 	end
 
-	describe "#find_all_researches" do
+	describe "#find_all_researches comparing array size" do
 		it "should return all researches" do
 			all_researches = controller.find_all_researches()
 
@@ -26,5 +26,16 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 		end
 
 	end
+
+	describe "#find_all_researches comparing id" do
+		it "should return all researches " do
+			all_researches = controller.find_all_researches()
+
+			expect(all_researches[0].id).to eq(1)
+			expect(all_researches[1].id).to eq(2)
+		end
+
+	end
+
 
 end
