@@ -44,7 +44,7 @@ belongs_to :fuel_type
 
 	end
 
-	def self.ethanol_sorted_standard_deviation(fuels)
+	def self.ethanol_sorted_by_standard_deviation(fuels)
 
 		ethanol = []
 
@@ -83,6 +83,28 @@ belongs_to :fuel_type
 		end
 
 		gasoline.sort_by! {|const_sort| const_sort.medium_resale_price}
+
+		return gasoline
+
+	end
+
+	def self.gasoline_sorted_by_standard_deviation(fuels)
+
+		gasoline = []
+
+		fuels.each do |fuel|
+
+			if(fuel.fuel_type_id == 2)
+				gasoline << fuel
+
+			else
+				#do nothing
+
+			end
+
+		end
+
+		gasoline.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
 
 		return gasoline
 
