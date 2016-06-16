@@ -127,4 +127,5 @@ belongs_to :fuel_type
 		return total_of_the_year_state.round(3)
 	end
 
-end
+
+end #end of class

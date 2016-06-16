@@ -53,4 +53,21 @@ class FuelResearch < ActiveRecord::Base
 		
 	end
 
+	#This method returns fuels of the choosen year by month.
+	def self.fuels_of_year_by_month (year, researches)
+
+		reserches_of_year = []
+
+		researches.each do |reserches_of_selected_year|
+			
+			if reserches_of_selected_year.date.year == year
+				reserches_of_year << reserches_of_selected_year
+			end
+
+		end
+
+		return reserches_of_selected_year
+
+	end
+
 end # end of class
