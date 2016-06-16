@@ -38,6 +38,13 @@ class StandardDeviationRankController < ApplicationController
     return @ethanol_sorted
   end
 
+  def find_gasoline_fuels_sorted(fuels)
+
+    @gasoline_sorted = Fuel.gasoline_sorted(fuels)
+
+  return @gasoline_sorted
+
+  end
 
 
 end
