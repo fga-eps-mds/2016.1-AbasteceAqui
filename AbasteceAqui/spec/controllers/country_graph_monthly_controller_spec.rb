@@ -118,4 +118,22 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 		end
 	end
 
+	describe "#find_fuels_by_type comparing price" do
+		it "shold return all months, with gasoline, ethanol and diesel of selected year" do
+			all_researches = controller.find_all_researches()
+			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
+			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
+			fuels_month = controller.find_fuels_by_type(fuels)
+
+			expect(fuels_month[0]["GASOLINE"]).to eq([])
+			expect(fuels_month[0]["ETHANOL"]).to eq([])
+			expect(fuels_month[0]["DIESEL"]).to eq([])
+
+			expect(fuels_month[3]["GASOLINE"]).to eq([5.0])
+			expect(fuels_month[3]["ETHANOL"]).to eq([3.0])
+			expect(fuels_month[3]["DIESEL"]).to eq([6.0])
+
+		end
+	end
+
 end
