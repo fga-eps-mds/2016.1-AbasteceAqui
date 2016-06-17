@@ -2,6 +2,30 @@ class CountyGraphMonthlyController < ApplicationController
 
 	def index
 
+		find_all_states()
+		if params[:states] != nil
+			find_all_counties_of_state_searched(params[:states])
+			find_all_researches_of_county(state_searched)
+		else
+			#do nothing
+		end
+
+		if params[:counties] != nil
+			find_all_researches_of_county_searched(params[:counties])
+			find_all_years_of_researches(@all_researches_of_county)
+		else
+			#do nothing
+		end
+
+		if params[:years] != nil
+			find_all_fuels_of_county(@all_researches_of_county, params[:years])
+			find_fuels_of_county_by_month(@all_fuels)
+			sorting_fuels_of_county(@month_fuels)
+			generate_monthly_graph_county(@sorted_fuels)
+		else
+			#do nothing
+		end
+		
 	end
 
 	def find_all_states()
