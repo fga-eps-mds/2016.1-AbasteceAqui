@@ -20,3 +20,12 @@ end
 Then(/^the page ranking by diesel is loaded deviation$/) do
   page.should have_content('Rank Preços Diesel')
 end
+	
+#Scenario 3
+Given(/^I click on "Gasolina Tab"$/) do
+  click_link('Gasolina')
+end
+
+Then(/^the page ranking by gasolina is loaded deviation$/) do
+  page.should have_content('Rank Preços Gasolina')
+end
