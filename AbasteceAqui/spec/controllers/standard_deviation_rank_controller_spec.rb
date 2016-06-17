@@ -19,22 +19,22 @@ RSpec.describe StandardDeviationRankController, type: :controller do
     @fuel1 = Fuel.new(id: 1, number_of_gas_station: 4, min_resale_price: 2.199,
       medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
-      distribuition_standard_deviation: 0.0, fuel_research_id: 1, fuel_type_id: 1)
+      distribuition_standard_deviation: 0.01, fuel_research_id: 1, fuel_type_id: 1)
 
     @fuel2 = Fuel.new(id: 2, number_of_gas_station: 4, min_resale_price: 2.199,
       medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
-      distribuition_standard_deviation: 0.0, fuel_research_id: 2, fuel_type_id: 2)
+      distribuition_standard_deviation: 0.02, fuel_research_id: 2, fuel_type_id: 2)
 
     @fuel3 = Fuel.new(id: 3, number_of_gas_station: 4, min_resale_price: 2.199,
       medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
-      distribuition_standard_deviation: 0.0, fuel_research_id: 3, fuel_type_id: 3)
+      distribuition_standard_deviation: 0.03, fuel_research_id: 3, fuel_type_id: 3)
 
     @fuel4 = Fuel.new(id: 4, number_of_gas_station: 4, min_resale_price: 2.199,
       medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
-      distribuition_standard_deviation: 0.0, fuel_research_id: 4, fuel_type_id: 5)
+      distribuition_standard_deviation: 0.04, fuel_research_id: 4, fuel_type_id: 5)
 
 
     @county1.save
@@ -97,6 +97,17 @@ RSpec.describe StandardDeviationRankController, type: :controller do
       ethanol_sorted = controller.find_ethanol_fuels_sorted(fuels)
 
       expect(ethanol_sorted.count).to eq(1)
+
+    end
+  end
+
+  describe "#find_gasoline_fuels_sorted" do
+    it "Should return one objects of fuel" do
+
+      fuels = Fuel.all
+      gasoline_sorted = controller.find_gasoline_fuels_sorted(fuels)
+
+      expect(gasoline_sorted.count).to eq(1)
 
     end
   end
