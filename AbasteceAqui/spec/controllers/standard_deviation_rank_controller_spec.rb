@@ -60,4 +60,13 @@ RSpec.describe StandardDeviationRankController, type: :controller do
 
     end
   end
+
+  describe "#find_counties" do
+    it "Should return two objects of counties" do
+
+      counties = controller.find_counties
+      expect(counties.count).to eq(2)
+
+    end
+  end
 end
