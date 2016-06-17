@@ -59,4 +59,30 @@ RSpec.describe FuelResearch, type: :model do
       end
     end
 
+
+	describe "#find_years_of_researches" do
+		it "should the year of all researches" do
+			
+			researches = FuelResearch.all
+
+			years = FuelResearch.find_years_of_researches(researches)
+
+			expect(years).to eq([2015, 2016])
+			
+		end
+
+	end
+
+	describe "#fuels_of_year_by_month" do
+		it "should return the researches of the selected year" do
+
+			researches = FuelResearch.all
+			year = 2015
+			researches_year = FuelResearch.fuels_of_year_by_month(year,researches)
+
+			expect(researches_year[0].id).to eq(1)
+		end
+
+	end
+
 end

@@ -78,4 +78,30 @@ RSpec.describe Fuel,  type: :model do
     end
   end
 
+  describe "#find_fuels_by_month" do
+    it "should return an array with medium resale prices organized by fuel type" do
+
+      fuels = Fuel.all()
+
+      fuels_type_array = Fuel.find_fuels_by_month(fuels)
+
+      expect(fuels_type_array.count).to eq(12)
+
+    end
+  end
+
+  describe "#find_fuels_by_month" do
+    it "should return an array with medium resale prices organized by gasoline, diesel and ethanol" do
+
+      fuels = Fuel.all()
+
+      fuels_type_array = Fuel.find_fuels_by_month(fuels)
+
+      expect(fuels_type_array[1]["GASOLINE"].count).to eq(1)
+      expect(fuels_type_array[1]["DIESEL"].count).to eq(1)
+      expect(fuels_type_array[1]["ETHANOL"].count).to eq(1)
+
+    end
+  end
+
 end

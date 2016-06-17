@@ -107,7 +107,7 @@ belongs_to :fuel_type
 		number_of_prices_researches = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
 		total_of_the_month_county = 0.0
 		total_of_the_month_state = 0.0
-			
+
 		fuel_prices_month.each do |fuel|
 			sum_fuel = sum_fuel + fuel.medium_resale_price
 			if fuel.medium_resale_price != 0.0
@@ -121,10 +121,49 @@ belongs_to :fuel_type
 
 
 		#total_of_the_month_state = (total_of_the_month_state + total_of_the_month_county)
-			
+
 		#total_of_the_month_state = total_of_the_month_state/ @counties_of_state.length
 
 		return total_of_the_year_state.round(3)
 	end
 
-end
+	def self.find_fuels_by_month(fuels)
+
+		fuels_month = [0,1,2,3,4,5,6,7,8,9,10,11]
+		ethanol_prices = []
+		gas_prices = []
+		diesel_prices = []
+
+		for i in 0..11
+
+			fuels_month[i] = Hash.new
+			fuels_month[i]["ETHANOL"] = []
+			fuels_month[i]["GASOLINE"] = []
+			fuels_month[i]["DIESEL"] = []
+
+		end
+
+		fuels.each do |fuel|
+
+
+			if fuel.fuel_type_id == 1
+
+				fuels_month[fuel.fuel_research.date.month-1]["ETHANOL"] << fuel.medium_resale_price
+
+			elsif fuel.fuel_type_id == 2
+
+				fuels_month[fuel.fuel_research.date.month-1]["GASOLINE"] << fuel.medium_resale_price
+
+			elsif fuel.fuel_type_id == 5
+
+				fuels_month[fuel.fuel_research.date.month-1]["DIESEL"] << fuel.medium_resale_price
+
+			end
+
+		end
+
+		return fuels_month
+
+	end
+
+end #end of class
