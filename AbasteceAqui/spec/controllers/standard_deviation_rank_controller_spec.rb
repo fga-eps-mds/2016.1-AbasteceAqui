@@ -133,4 +133,15 @@ RSpec.describe StandardDeviationRankController, type: :controller do
 
     end
   end
+
+  describe "#find_counties_sorted_by_gasoline" do
+    it "Should return four objects of counties" do
+
+      fuels = Fuel.gasoline_sorted(Fuel.all)
+      counties = controller.find_counties_sorted_by_gasoline(fuels)
+
+      expect(counties.count).to eq(1)
+
+    end
+  end
 end
