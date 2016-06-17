@@ -69,4 +69,13 @@ RSpec.describe StandardDeviationRankController, type: :controller do
 
     end
   end
+
+  describe "#find_last_research_of_counties" do
+    it "Should return two objects of last research" do
+
+      last_research = controller.find_last_research_of_counties(County.all)
+      expect(last_research.count).to eq(2)
+
+    end
+  end
 end
