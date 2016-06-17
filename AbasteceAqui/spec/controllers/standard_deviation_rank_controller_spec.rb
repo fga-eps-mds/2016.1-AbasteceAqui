@@ -111,4 +111,15 @@ RSpec.describe StandardDeviationRankController, type: :controller do
 
     end
   end
+
+  describe "#find_diesel_fuels_sorted" do
+    it "Should return one objects of fuel" do
+
+      fuels = Fuel.all
+      diesel_sorted = controller.find_diesel_fuels_sorted(fuels)
+
+      expect(diesel_sorted.count).to eq(1)
+
+    end
+  end
 end
