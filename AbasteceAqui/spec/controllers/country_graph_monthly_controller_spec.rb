@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 	before do
-
 	    fuel_research1 = FuelResearch.new(id: 1, date: "2015-04-01", county_id: 1)
 	    fuel_research2 = FuelResearch.new(id: 2, date: "2014-05-01", county_id: 1)
 	    fuel1 = Fuel.new(id: 1, medium_resale_price: 3.0, fuel_type_id: 1, fuel_research_id: 1)
@@ -17,7 +16,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			fuel2.save
 			fuel3.save
 			fuel4.save
-
 	end
 
 	describe "#find_all_researches comparing array size" do
@@ -26,7 +24,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			expect(all_researches.count).to eq(2)
 		end
-
 	end
 
 	describe "#find_all_researches comparing id" do
@@ -36,7 +33,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			expect(all_researches[0].id).to eq(1)
 			expect(all_researches[1].id).to eq(2)
 		end
-
 	end
 
 	describe "#find_all_years comparing array size" do
@@ -45,7 +41,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			all_years = controller.find_all_years(all_researches)
 
 			expect(all_years.count).to eq(2)
-
 		end
 	end
 
@@ -56,7 +51,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			expect(all_years[0]).to eq(2015)
 			expect(all_years[1]).to eq(2014)
-
 		end
 	end
 
@@ -66,19 +60,17 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 
 			expect(all_researches_selected_year.count).to eq(1)
-
 		end
 	end
 
 	describe "#find_researches_of_selected_year comparing id" do
 		it "shold return all researches of selected year" do
 			all_researches = controller.find_all_researches()
-			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
-			expect(all_researches_selected_year[0].id).to eq(1)
+			all_researches_selected_year_2015 = controller.find_researches_of_selected_year("2015", all_researches)
+			all_researches_selected_year_2014 = controller.find_researches_of_selected_year("2014", all_researches)
 
-			all_researches_selected_year = controller.find_researches_of_selected_year("2014", all_researches)
-			expect(all_researches_selected_year[0].id).to eq(2)
-
+			expect(all_researches_selected_year_2015[0].id).to eq(1)
+			expect(all_researches_selected_year_2014[0].id).to eq(2)
 		end
 	end
 
@@ -89,7 +81,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 
 			expect(fuels.count).to eq(3)
-
 		end
 	end
 
@@ -102,7 +93,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			expect(fuels[0].id).to eq(1)
 			expect(fuels[1].id).to eq(2)
 			expect(fuels[2].id).to eq(3)
-
 		end
 	end
 
@@ -114,7 +104,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			fuels_month = controller.find_fuels_by_type(fuels)
 
 			expect(fuels_month.count).to eq(12)
-
 		end
 	end
 
@@ -132,7 +121,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			expect(fuels_month[3]["GASOLINE"]).to eq([5.0])
 			expect(fuels_month[3]["ETHANOL"]).to eq([3.0])
 			expect(fuels_month[3]["DIESEL"]).to eq([6.0])
-
 		end
 	end
 
@@ -145,7 +133,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			average_gasoline = controller.calculate_average_of_gasoline(fuels_month)
 
 			expect(average_gasoline.count).to eq(12)
-
 		end
 	end
 
@@ -159,7 +146,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			expect(average_gasoline[0]).to eq(nil)
 			expect(average_gasoline[3]).to eq(5.0)
-
 		end
 	end
 
@@ -174,7 +160,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			average_ethanol = controller.calculate_average_of_ethanol(fuels_month)
 
 			expect(average_ethanol.count).to eq(12)
-
 		end
 	end
 
@@ -188,7 +173,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			expect(average_ethanol[0]).to eq(nil)
 			expect(average_ethanol[3]).to eq(3.0)
-
 		end
 	end
 
@@ -201,7 +185,6 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 			average_diesel = controller.calculate_average_of_diesel(fuels_month)
 
 			expect(average_diesel.count).to eq(12)
-
 		end
 	end
 
@@ -215,7 +198,14 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 			expect(average_diesel[0]).to eq(nil)
 			expect(average_diesel[3]).to eq(6.0)
+		end
+	end
 
+	describe "#index" do
+		it "Should render country_graph_monthly page" do
+			get :index, {:years => "2015"}
+
+			expect(response).to have_http_status(:success)
 		end
 	end
 
