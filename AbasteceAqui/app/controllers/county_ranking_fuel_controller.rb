@@ -56,7 +56,7 @@ class CountyRankingFuelController < ApplicationController
 
   def find_diesel_fuels_sorted(fuels)
 
-    @diesel_sorted = Fuel.diesel_sorted_by_standard_deviation(fuels)
+    @diesel_sorted = Fuel.diesel_sorted(fuels)
 
     return @diesel_sorted
 

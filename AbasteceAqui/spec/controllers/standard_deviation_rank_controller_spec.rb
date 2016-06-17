@@ -51,4 +51,13 @@ RSpec.describe StandardDeviationRankController, type: :controller do
     @fuel4.save
 
   end
+
+  describe "#index" do
+    it "Should render county_ranking page" do
+
+      get :index
+      expect(response).to have_http_status(:success)
+
+    end
+  end
 end
