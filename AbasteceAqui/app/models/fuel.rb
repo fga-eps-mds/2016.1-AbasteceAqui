@@ -166,4 +166,20 @@ belongs_to :fuel_type
 
 	end
 
+	def self.find_all_fuels_of_county_of_selected_year(all_researches, year)
+
+		fuels = []
+
+		all_researches.each do |research|
+
+			if research.date.year == year.to_i
+				fuels << research.fuels
+			end
+
+		end
+
+		return fuels
+	
+	end
+
 end #end of class
