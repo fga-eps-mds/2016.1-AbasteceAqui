@@ -87,4 +87,12 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
+	def self.find_all_researches_of_county(county_searched)
+
+		all_researches_of_county = county_searched.fuel_researches
+
+		return all_researches_of_county
+		
+	end
+
 end # end of class
