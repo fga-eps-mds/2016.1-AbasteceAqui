@@ -47,7 +47,7 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
   describe "#find_all_states comparing by array size" do
     it "should return all states of database" do
 
-      states= controller.find_all_states()
+      states = controller.find_all_states()
 
       expect(states.count).to eq(2)
 
@@ -57,7 +57,7 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
   describe "#find_all_states comparing by array content value" do
     it "should return all states of database" do
 
-      states= controller.find_all_states()
+      states = controller.find_all_states()
 
       expect(states[0]).to eq("DISTRITO FEDERAL")
       expect(states[1]).to eq("RIO DE JANEIRO")
@@ -68,7 +68,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
   describe "#find_all_counties_of_state_searched comparing by array size" do
     it "should return all counties of state searched" do
 
-      states= controller.find_all_states()
+      states = controller.find_all_states()
+
       counties_states_0 = controller.find_all_counties_of_state_searched(states[0])
       counties_states_1 = controller.find_all_counties_of_state_searched(states[1])
 
@@ -81,7 +82,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
   describe "#find_all_counties_of_state_searched comparing by array content value" do
     it "should return all counties  of state searched" do
 
-      states= controller.find_all_states()
+      states = controller.find_all_states()
+
       counties_states_0 = controller.find_all_counties_of_state_searched(states[0])
       counties_states_1 = controller.find_all_counties_of_state_searched(states[1])
 
@@ -96,6 +98,7 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
 
@@ -110,6 +113,7 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
 
@@ -124,8 +128,10 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+
       years_research_brasilia = controller.find_all_years_of_researches(researches_county_brasilia)
       years_research_rio_de_janeiro = controller.find_all_years_of_researches(researches_county_rio_de_janeiro)
 
@@ -140,8 +146,10 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+
       years_research_brasilia = controller.find_all_years_of_researches(researches_county_brasilia)
       years_research_rio_de_janeiro = controller.find_all_years_of_researches(researches_county_rio_de_janeiro)
 
@@ -156,13 +164,15 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
-      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
-      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
 
-      expect(researches_brasilia.count).to eq(1)
-      expect(researches_rio_de_janeiro.count).to eq(1)
+      researches_brasilia_year = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro_year = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      expect(researches_brasilia_year.count).to eq(1)
+      expect(researches_rio_de_janeiro_year.count).to eq(1)
 
     end
   end
@@ -172,19 +182,21 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
-      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
-      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
 
-      expect(researches_brasilia[0].id).to eq(1)
-      expect(researches_rio_de_janeiro[0].id).to eq(2)
+      researches_brasilia_year = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro_year = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      expect(researches_brasilia_year[0].id).to eq(1)
+      expect(researches_rio_de_janeiro_year[0].id).to eq(2)
 
     end
   end
 
   describe "#find_all_fuels_of_county comparing by array size" do
-    it "should return all fuels of research of selected year" do
+    it "should return all fuels of research's conty of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
@@ -202,7 +214,7 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
   end
 
   describe "#find_all_fuels_of_county comparing by id" do
-    it "should return all fuels of research of selected year" do
+    it "should return all fuels of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
@@ -216,6 +228,29 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       expect(fuels_brasilia[0].id).to eq(1)
       expect(fuels_brasilia[1].id).to eq(2)
       expect(fuels_rio_de_janeiro[0].id).to eq(3)
+
+    end
+  end
+
+  describe "#find_fuels_of_county_by_month comparing by array size" do
+    it "should return all fuels sorted by month of research's county of selected year" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      fuels_brasilia = controller.find_all_fuels_of_county(researches_brasilia)
+      fuels_rio_de_janeiro = controller.find_all_fuels_of_county(researches_rio_de_janeiro)
+
+      fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
+      fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
+
+      expect(fuels_month_brasilia.count).to eq(12)
+      expect(fuels_month_rio_de_janeiro.count).to eq(12)
 
     end
   end
