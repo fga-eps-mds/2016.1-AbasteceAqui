@@ -45,36 +45,14 @@ RSpec.describe Fuel,  type: :model do
     end
   end
 
-  describe "#ethanol_sorted" do
-    it "should returns an array with 1 elements" do
+  describe "#sort_fuel_by_type" do
+    it "should returns an array of choosen type" do
 
       fuels = Fuel.all
-      ethanol_sorted = Fuel.ethanol_sorted(fuels)
+      sorted_fuel = Fuel.sort_fuel_by_type(fuels,2)
 
-      expect(ethanol_sorted.count).to eq(1)
-
-    end
-  end
-
-  describe "#gasoline_sorted" do
-    it "should returns an array with 1 elements" do
-
-      fuels = Fuel.all
-      gasoline_sorted = Fuel.gasoline_sorted(fuels)
-
-      expect(gasoline_sorted.count).to eq(1)
-
-    end
-  end
-
-  describe "#diesel_sorted" do
-    it "should returns an array with 1 elements" do
-
-      fuels = Fuel.all
-      diesel_sorted = Fuel.diesel_sorted(fuels)
-
-      expect(diesel_sorted.count).to eq(1)
-
+        expect(sorted_fuel.count).to eq(1)      
+        expect(sorted_fuel[0].fuel_type_id).to eq(2)
     end
   end
 
