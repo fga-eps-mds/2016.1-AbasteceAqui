@@ -97,4 +97,18 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 		end
 	end
 
+  describe "#find_all_researches_of_county_searched comparing by id" do
+		it "should return all counties of state searched" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+
+    	expect(researches_county_brasilia[0].id).to eq(1)
+      expect(researches_county_rio_de_janeiro[0].id).to eq(2)
+
+		end
+	end
+
 end
