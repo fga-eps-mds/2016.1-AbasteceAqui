@@ -6,11 +6,11 @@
 
 	<span class="same_line">
 		<%= form_tag("/statistics/county_monthly", method: "get", remote: false) do %>
-  		<%= select_tag 'state_searched', options_for_select(["Selecione um Estado"] + @states, :selected => params[:state_searched]), id: "select_tag"%>
+  		<%= select_tag 'state_searched', options_for_select(["Selecione um Estado"] + @states, :selected => params[:state_searched]), id: "state_county_graph_monthly_select_tag"%>
 			<%if params[:state_searched] != nil %>
-      	<%= select_tag 'county_searched', options_for_select(["Selecione um Município"] + @counties_of_state ,:selected => params[:county_searched]) , id: "select_tag1"%>
+      	<%= select_tag 'county_searched', options_for_select(["Selecione um Município"] + @counties_of_state ,:selected => params[:county_searched]) , id: "county_county_graph_monthly_select_tag"%>
       	<% if params[:county_searched] != nil %>
-      		<%= select_tag 'year_selected', options_for_select(["Selecione um ano"] + @years ,:selected => params[:year_selected]) , id: "select_tag2" %>
+      		<%= select_tag 'year_selected', options_for_select(["Selecione um ano"] + @years ,:selected => params[:year_selected]) , id: "year_county_graph_monthly_select_tag" %>
       	<% end %>
       <% end %>
       <%= submit_tag "Confirmar", name: nil, id: "select_button"%>

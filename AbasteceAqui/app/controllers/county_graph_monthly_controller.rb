@@ -146,7 +146,7 @@ class CountyGraphMonthlyController < ApplicationController
 			months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 						"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
-			titulo = "Preço do combustivel no decorrer do ano de #{params[:year_selected]} - #{params[:county_searched].titleize}"
+			titulo = "Preço do combustivel no decorrer do ano de #{params[:year_selected]}, #{params[:county_searched].titleize} - #{params[:state_searched].titleize}"
 
 			@chart = LazyHighCharts::HighChart.new('graph') do |graph|
 				graph.title(text:  titulo)
