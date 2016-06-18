@@ -24,16 +24,24 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     max_resale_price: 2.199, resale_standard_deviation: 0.0,
     min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
     max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
-    fuel_research_id: 1, fuel_type_id: 6)
+    fuel_research_id: 1, fuel_type_id: 1)
     fuel2 = Fuel.new(id: 2, number_of_gas_station: 4,
     min_resale_price: 2.199, medium_resale_price: 2.199,
     max_resale_price: 2.199, resale_standard_deviation: 0.0,
     min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
     max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
-    fuel_research_id: 1, fuel_type_id: 6)
+    fuel_research_id: 1, fuel_type_id: 2)
+
+    fuel3 = Fuel.new(id: 3, number_of_gas_station: 4,
+         min_resale_price: 2.199, medium_resale_price: 2.199,
+         max_resale_price: 2.199, resale_standard_deviation: 0.0,
+         min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
+         max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
+         fuel_research_id: 2, fuel_type_id: 5)
 
     fuel1.save
     fuel2.save
+    fuel3.save
   end
 
   describe "#find_all_states comparing by array size" do
@@ -155,6 +163,22 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 
       expect(researches_brasilia.count).to eq(1)
       expect(researches_rio_de_janeiro.count).to eq(1)
+
+    end
+  end
+
+  describe "#find_researches_of_selected_year comparing by id" do
+    it "should return all researches of selected year" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      expect(researches_brasilia[0].id).to eq(1)
+      expect(researches_rio_de_janeiro[0].id).to eq(2)
 
     end
   end
