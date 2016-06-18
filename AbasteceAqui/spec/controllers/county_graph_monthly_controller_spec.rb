@@ -304,5 +304,86 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
+  describe "#sorting_gasoline_of_county comparing by array size" do
+    it "should return gasoline array without hash sorted by month of research's county of selected year" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      fuels_brasilia = controller.find_all_fuels_of_county(researches_brasilia)
+      fuels_rio_de_janeiro = controller.find_all_fuels_of_county(researches_rio_de_janeiro)
+
+      fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
+      fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
+
+      gasoline_month_brasilia = controller.sorting_gasoline_of_county(fuels_month_brasilia)
+      gasoline_month_rio_de_janeiro = controller.sorting_gasoline_of_county(fuels_month_rio_de_janeiro)
+
+      expect(gasoline_month_brasilia.count).to eq(12)
+
+      expect(gasoline_month_rio_de_janeiro.count).to eq(12)
+
+    end
+  end
+
+  describe "#sorting_ethanol_of_county comparing by array size" do
+    it "should return ethanol array without hash sorted by month of research's county of selected year" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      fuels_brasilia = controller.find_all_fuels_of_county(researches_brasilia)
+      fuels_rio_de_janeiro = controller.find_all_fuels_of_county(researches_rio_de_janeiro)
+
+      fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
+      fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
+
+      ethanol_month_brasilia = controller.sorting_ethanol_of_county(fuels_month_brasilia)
+      ethanol_month_rio_de_janeiro = controller.sorting_ethanol_of_county(fuels_month_rio_de_janeiro)
+
+      expect(ethanol_month_brasilia.count).to eq(12)
+
+      expect(ethanol_month_rio_de_janeiro.count).to eq(12)
+
+    end
+  end
+
+  describe "#sorting_diesel_of_county comparing by array size" do
+    it "should return diesel array without hash sorted by month of research's county of selected year" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      fuels_brasilia = controller.find_all_fuels_of_county(researches_brasilia)
+      fuels_rio_de_janeiro = controller.find_all_fuels_of_county(researches_rio_de_janeiro)
+
+      fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
+      fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
+
+      diesel_month_brasilia = controller.sorting_diesel_of_county(fuels_month_brasilia)
+      diesel_month_rio_de_janeiro = controller.sorting_diesel_of_county(fuels_month_rio_de_janeiro)
+
+      expect(diesel_month_brasilia.count).to eq(12)
+
+      expect(diesel_month_rio_de_janeiro.count).to eq(12)
+
+    end
+  end
+
 
 end
