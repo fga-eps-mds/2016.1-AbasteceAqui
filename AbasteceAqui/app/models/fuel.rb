@@ -200,24 +200,31 @@ belongs_to :fuel_type
 
 		fuels.each do |fuel|
 
-
-			if fuel.fuel_type_id == 1
-
-				fuels_month[fuel.fuel_research.date.month-1]["ETHANOL"] << fuel.medium_resale_price
-
-			elsif fuel.fuel_type_id == 2
-
-				fuels_month[fuel.fuel_research.date.month-1]["GASOLINE"] << fuel.medium_resale_price
-
-			elsif fuel.fuel_type_id == 5
-
-				fuels_month[fuel.fuel_research.date.month-1]["DIESEL"] << fuel.medium_resale_price
-
-			end
+			put_fuel_price_in_fuels_month!(fuels_month, fuel)
 
 		end
 
 		return fuels_month
+
+	end
+
+	def self.put_fuel_price_in_fuels_month!(fuels_month, fuel)
+
+		fuel_type_id = fuel.fuel_type_id
+
+		if fuel_type_id == 1
+
+			fuels_month[fuel.fuel_research.date.month-1]["ETHANOL"] << fuel.medium_resale_price
+
+		elsif fuel_type_id == 2
+
+			fuels_month[fuel.fuel_research.date.month-1]["GASOLINE"] << fuel.medium_resale_price
+
+		elsif fuel_type_id == 5
+
+			fuels_month[fuel.fuel_research.date.month-1]["DIESEL"] << fuel.medium_resale_price
+
+		end
 
 	end
 
