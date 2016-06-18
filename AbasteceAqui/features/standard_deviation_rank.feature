@@ -13,7 +13,7 @@ Feature: County ranking by standard deviation
 	Scenario: Success in see gasoline rank
 	Given I am in the standard deviation rank page
     And I click on "Gasolina Tab"
-    Then the page ranking by gasolina is loaded
+    Then the page ranking by gasolina deviation is loaded
 
 	@javascript
   	Scenario: Success in see diesel rank
