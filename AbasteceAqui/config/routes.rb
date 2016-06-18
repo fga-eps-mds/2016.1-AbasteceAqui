@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'statistics/state_monthly' => 'state_graph_monthly#state_monthly'
   get 'statistics/state_annual' => 'state_graph_year#state_annual'
   get 'statistics/country_monthly' => 'country_graph_monthly#index'
+  get 'statistics/county_monthly' => 'county_graph_monthly#index'
 
   get '/calculator' => 'calculator#index'
   get '/searcher' => 'search#index'
