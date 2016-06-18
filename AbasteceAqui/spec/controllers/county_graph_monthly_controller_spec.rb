@@ -143,4 +143,20 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
+  describe "#find_researches_of_selected_year comparing by array size" do
+    it "should return all researches of selected year" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      researches_brasilia = controller.find_researches_of_selected_year("2015", researches_county_brasilia)
+      researches_rio_de_janeiro = controller.find_researches_of_selected_year("2016", researches_county_rio_de_janeiro)
+
+      expect(researches_brasilia.count).to eq(1)
+      expect(researches_rio_de_janeiro.count).to eq(1)
+
+    end
+  end
+
 end
