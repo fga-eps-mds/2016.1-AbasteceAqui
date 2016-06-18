@@ -9,106 +9,122 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     state2.save
 
     county1 = County.new(id: 1, name: "BRASILIA", state_id: 1)
-		county2= County.new(id: 2, name: "RIO DE JANEIRO", state_id:2)
-		county1.save
-		county2.save
+    county2= County.new(id: 2, name: "RIO DE JANEIRO", state_id:2)
+    county1.save
+    county2.save
 
-		fuel_research1 = FuelResearch.new(id: 1, date: "2015-02-01", county_id: 1)
-		fuel_research2 = FuelResearch.new(id: 2, date: "2016-02-01", county_id: 2)
-		fuel_research1.save
-		fuel_research2.save
+    fuel_research1 = FuelResearch.new(id: 1, date: "2015-02-01", county_id: 1)
+    fuel_research2 = FuelResearch.new(id: 2, date: "2016-02-01", county_id: 2)
+    fuel_research1.save
+    fuel_research2.save
 
 
-		fuel1 = Fuel.new(id: 1, number_of_gas_station: 4,
-				 min_resale_price: 2.199, medium_resale_price: 2.199,
-				 max_resale_price: 2.199, resale_standard_deviation: 0.0,
-				 min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
-				 max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
-				 fuel_research_id: 1, fuel_type_id: 6)
-		fuel2 = Fuel.new(id: 2, number_of_gas_station: 4,
-				 min_resale_price: 2.199, medium_resale_price: 2.199,
-				 max_resale_price: 2.199, resale_standard_deviation: 0.0,
-				 min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
-				 max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
-				 fuel_research_id: 1, fuel_type_id: 6)
+    fuel1 = Fuel.new(id: 1, number_of_gas_station: 4,
+    min_resale_price: 2.199, medium_resale_price: 2.199,
+    max_resale_price: 2.199, resale_standard_deviation: 0.0,
+    min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
+    max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
+    fuel_research_id: 1, fuel_type_id: 6)
+    fuel2 = Fuel.new(id: 2, number_of_gas_station: 4,
+    min_resale_price: 2.199, medium_resale_price: 2.199,
+    max_resale_price: 2.199, resale_standard_deviation: 0.0,
+    min_distribuition_price: 0.0, medium_distribuition_price: 0.0,
+    max_distribuition_price: 0.0, distribuition_standard_deviation: 0.0,
+    fuel_research_id: 1, fuel_type_id: 6)
 
-		fuel1.save
-		fuel2.save
-	end
+    fuel1.save
+    fuel2.save
+  end
 
   describe "#find_all_states comparing by array size" do
-		it "should return all states of database" do
+    it "should return all states of database" do
 
-    	states= controller.find_all_states()
+      states= controller.find_all_states()
 
-			expect(states.count).to eq(2)
+      expect(states.count).to eq(2)
 
-		end
-	end
+    end
+  end
 
   describe "#find_all_states comparing by array content value" do
-		it "should return all states of database" do
+    it "should return all states of database" do
 
-    	states= controller.find_all_states()
+      states= controller.find_all_states()
 
-			expect(states[0]).to eq("DISTRITO FEDERAL")
+      expect(states[0]).to eq("DISTRITO FEDERAL")
       expect(states[1]).to eq("RIO DE JANEIRO")
 
-		end
-	end
+    end
+  end
 
   describe "#find_all_counties_of_state_searched comparing by array size" do
-		it "should return all counties of state searched" do
+    it "should return all counties of state searched" do
 
-    	states= controller.find_all_states()
+      states= controller.find_all_states()
       counties_states_0 = controller.find_all_counties_of_state_searched(states[0])
       counties_states_1 = controller.find_all_counties_of_state_searched(states[1])
 
-			expect(counties_states_0.count).to eq(1)
+      expect(counties_states_0.count).to eq(1)
       expect(counties_states_1.count).to eq(1)
 
-		end
-	end
+    end
+  end
 
   describe "#find_all_counties_of_state_searched comparing by array content value" do
-		it "should return all counties of state searched" do
+    it "should return all counties  of state searched" do
 
-    	states= controller.find_all_states()
+      states= controller.find_all_states()
       counties_states_0 = controller.find_all_counties_of_state_searched(states[0])
       counties_states_1 = controller.find_all_counties_of_state_searched(states[1])
 
-			expect(counties_states_0[0]).to eq("BRASILIA")
+      expect(counties_states_0[0]).to eq("BRASILIA")
       expect(counties_states_1[0]).to eq("RIO DE JANEIRO")
 
-		end
-	end
+    end
+  end
 
   describe "#find_all_researches_of_county_searched comparing by array size" do
-		it "should return all counties of state searched" do
+    it "should return all research of county searched" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
 
-    	expect(researches_county_brasilia.count).to eq(1)
+      expect(researches_county_brasilia.count).to eq(1)
       expect(researches_county_rio_de_janeiro.count).to eq(1)
 
-		end
-	end
+    end
+  end
 
   describe "#find_all_researches_of_county_searched comparing by id" do
-		it "should return all counties of state searched" do
+    it "should return all research of county searched" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
 
-    	expect(researches_county_brasilia[0].id).to eq(1)
+      expect(researches_county_brasilia[0].id).to eq(1)
       expect(researches_county_rio_de_janeiro[0].id).to eq(2)
 
-		end
-	end
+    end
+  end
+
+  describe "#find_all_years_of_researches comparing by array size" do
+    it "should return all years of researches" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      years_research_brasilia = controller.find_all_years_of_researches(researches_county_brasilia)
+      years_research_rio_de_janeiro = controller.find_all_years_of_researches(researches_county_rio_de_janeiro)
+
+      expect(years_research_brasilia.count).to eq(1)
+      expect(years_research_rio_de_janeiro.count).to eq(1)
+
+    end
+  end
 
 end
