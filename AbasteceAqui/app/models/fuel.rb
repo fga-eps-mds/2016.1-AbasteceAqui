@@ -154,20 +154,26 @@ belongs_to :fuel_type
 
 	end
 
-	def self.verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
+	# receive a array of fuels and separate it by type
+	def self.separate_fuels_by_type!(fuels, ethanol, gas, diesel)
 		fuels.each do |fuel|
 
-			if fuel.fuel_type_id == 1
-				ethanol_prices << fuel
-			elsif fuel.fuel_type_id == 2
-				gas_prices << fuel
-			elsif fuel.fuel_type_id == 5
-				diesel_prices << fuel
-			end
+			put_fuel_in_rigth_array_type(fuel, ethanol, gas, diesel)
+
 		end
 	end
 
-		# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
+	def self.put_fuel_in_rigth_array_type(fuel, ethanol, gas, diesel)
+			if fuel.fuel_type_id == 1
+				ethanol << fuel
+			elsif fuel.fuel_type_id == 2
+				gas << fuel
+			elsif fuel.fuel_type_id == 5
+				diesel << fuel
+			end
+	end
+
+	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
 	def self.calculate_price_fuel(fuel_prices_month)
 		sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
 		number_of_prices_researches = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
