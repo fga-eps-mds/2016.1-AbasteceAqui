@@ -33,7 +33,7 @@ class CountyRankingFuelController < ApplicationController
 
   def fill_fuels_last_research(researches)
 
-    @fuels = Fuel.fuels_latest_researches_counties(researches)
+    @fuels = Fuel.get_fuels_of_researchs(researches)
 
     return @fuels
 

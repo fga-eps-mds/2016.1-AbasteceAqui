@@ -72,7 +72,7 @@ class CountyGraphMonthlyController < ApplicationController
 
 	def find_all_fuels_of_county(researches_of_year)
 
-		@all_fuels = Fuel.fuels_latest_researches_counties(researches_of_year)
+		@all_fuels = Fuel.get_fuels_of_researchs(researches_of_year)
 
 		return @all_fuels
 

@@ -3,7 +3,8 @@ class Fuel < ActiveRecord::Base
 belongs_to :fuel_research
 belongs_to :fuel_type
 
-	def self.fuels_latest_researches_counties(researches)
+	# receive a array of researches and return all fuels of each one
+	def self.get_fuels_of_researchs(researches)
 
 		fuels = []
 

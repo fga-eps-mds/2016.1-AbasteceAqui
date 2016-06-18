@@ -44,7 +44,7 @@ class CountryGraphMonthlyController < ApplicationController
 
 	def find_fuels_of_research_of_year(researches_of_year)
 
-		@fuels = Fuel.fuels_latest_researches_counties(researches_of_year)
+		@fuels = Fuel.get_fuels_of_researchs(researches_of_year)
 
 		return @fuels
 

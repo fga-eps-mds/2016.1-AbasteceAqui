@@ -34,11 +34,11 @@ RSpec.describe Fuel,  type: :model do
     fuel3.save
   end
 
-  describe "#fuels_latest_researches_counties" do
+  describe "#get_fuels_of_researchs" do
     it "should returns an array with 3 elements" do
 
       researches = FuelResearch.all
-      fuels = Fuel.fuels_latest_researches_counties(researches)
+      fuels = Fuel.get_fuels_of_researchs(researches)
 
       expect(fuels.count).to eq(3)
 
