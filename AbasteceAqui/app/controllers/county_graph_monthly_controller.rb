@@ -61,6 +61,7 @@ class CountyGraphMonthlyController < ApplicationController
 		return @years
 
 	end
+	
 	def find_researches_of_selected_year(selected_years,all_researches_of_county)
 
 		@researches_of_year = FuelResearch.fuels_of_year_by_month(selected_years, all_researches_of_county)

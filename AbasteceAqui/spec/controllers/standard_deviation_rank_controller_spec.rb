@@ -126,7 +126,7 @@ RSpec.describe StandardDeviationRankController, type: :controller do
   describe "#find_counties_sorted_by_ethanol" do
     it "Should return four objects of counties" do
 
-      fuels = Fuel.ethanol_sorted(Fuel.all)
+      fuels = Fuel.sort_fuel_by_type(Fuel.all, 1)
       counties = controller.find_counties_sorted_by_ethanol(fuels)
 
       expect(counties.count).to eq(1)
@@ -137,7 +137,7 @@ RSpec.describe StandardDeviationRankController, type: :controller do
   describe "#find_counties_sorted_by_gasoline" do
     it "Should return four objects of counties" do
 
-      fuels = Fuel.gasoline_sorted(Fuel.all)
+      fuels = Fuel.sort_fuel_by_type(Fuel.all, 2)
       counties = controller.find_counties_sorted_by_gasoline(fuels)
 
       expect(counties.count).to eq(1)
@@ -148,7 +148,7 @@ RSpec.describe StandardDeviationRankController, type: :controller do
   describe "#find_counties_sorted_by_diesel" do
     it "Should return four objects of counties" do
 
-      fuels = Fuel.diesel_sorted(Fuel.all)
+      fuels = Fuel.sort_fuel_by_type(Fuel.all, 5)
       counties = controller.find_counties_sorted_by_diesel(fuels)
 
       expect(counties.count).to eq(1)

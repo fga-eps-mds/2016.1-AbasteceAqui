@@ -52,7 +52,7 @@ class StateGraphYearController < ApplicationController
 			@ethanol_prices_month = []
 			@diesel_prices_month =[]
 
-			Fuel.verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
+			Fuel.separate_fuels_by_type!(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
 
 			@gas_prices_for_year << Fuel.calculate_price_fuel(@gas_prices_month)
 			@ethanol_prices_for_year << Fuel.calculate_price_fuel(@ethanol_prices_month)
