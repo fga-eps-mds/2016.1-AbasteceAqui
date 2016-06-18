@@ -22,7 +22,8 @@ belongs_to :fuel_type
 
 	end
 
-
+	# receive a fuels array and a fuel type
+	# returns a sorted array of given type 
 	def self.sort_fuel_by_type(fuels, type)
 
 		sorted_fuel = []
@@ -32,7 +33,7 @@ belongs_to :fuel_type
 			if fuel.fuel_type_id == type
 				sorted_fuel << fuel
 			else
-				#do nothing
+				# do nothing
 			end
 
 		end
@@ -43,6 +44,8 @@ belongs_to :fuel_type
 
 	end
 
+	# receive a fuels array and a fuel type
+	# returns a sorted array with distribution standard deviation of given type 
 	def self.sort_fuel_by_standard_deviation(fuels, type)
 
 		sorted_fuel = []
@@ -76,6 +79,7 @@ belongs_to :fuel_type
 
 	end
 
+	# receive a fuel and a array, if fuel is of given array type concatenate it to the array
 	def self.get_ethanol(fuel, ethanol)
 
 		if fuel.fuel_type_id == 1
@@ -85,6 +89,7 @@ belongs_to :fuel_type
 
 	end
 
+	# receive a fuel and a array, if fuel is of given array type concatenate it to the array
 	def self.get_gas(fuel, gas)
 
 		if fuel.fuel_type_id == 2
@@ -96,6 +101,7 @@ belongs_to :fuel_type
 
 	end
 
+	# receive a fuel and a array, if fuel is of given array type concatenate it to the array
 	def self.get_diesel(fuel, diesel)
 
 		if fuel.fuel_type_id == 5
@@ -147,6 +153,8 @@ belongs_to :fuel_type
 
 	end
 
+	# receive a fuel_month array and a fuel
+	# separate that fuel to the right position
 	def self.put_fuel_price_in_fuels_month!(fuels_month, fuel)
 
 		fuel_type_id = fuel.fuel_type_id
@@ -191,6 +199,8 @@ belongs_to :fuel_type
 		return months
 	end
 
+	# receive all researches and a year
+	# returns all researches of a the given year
 	def self.find_all_fuels_of_county_of_selected_year(all_researches, year)
 
 		fuels = []
