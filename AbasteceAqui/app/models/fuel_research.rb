@@ -49,7 +49,50 @@ class FuelResearch < ActiveRecord::Base
 			end
 
 		end
-		
+
+	end
+
+	def self.find_years_of_researches(researches)
+			year = []
+
+			researches.each do |research|
+
+				year << research.date.year
+
+			end
+
+			year.uniq!
+
+			return year
+
+	end
+
+	#This method returns fuels of the choosen year by month.
+	def self.fuels_of_year_by_month (year, researches)
+
+		researches_of_year = []
+
+		researches.each do |researches_of_selected_year|
+
+			if researches_of_selected_year.date.year == year.to_i
+
+				researches_of_year << researches_of_selected_year
+
+			end
+
+		end
+
+		return researches_of_year
+
+	end
+
+	def self.find_all_researches_of_county(county_searched)
+
+		county = County.find_by(name: county_searched)
+		all_researches_of_county = county.fuel_researches
+
+		return all_researches_of_county
+
 	end
 
 	# get all years from db
