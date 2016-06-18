@@ -52,9 +52,9 @@ RSpec.describe FuelResearch, type: :model do
       it "should return an array with 2 elelements, when the year of research = 2015" do
         researches_of_county = @county1.fuel_researches
         researches_of_year = []
-  
+
   		FuelResearch.check_year_of_research(researches_of_county, researches_of_year, 2015)
-  
+
         expect(researches_of_year.count).to eq(2)
       end
     end
@@ -62,13 +62,13 @@ RSpec.describe FuelResearch, type: :model do
 
 	describe "#find_years_of_researches" do
 		it "should the year of all researches" do
-			
+
 			researches = FuelResearch.all
 
 			years = FuelResearch.find_years_of_researches(researches)
 
 			expect(years).to eq([2015, 2016])
-			
+
 		end
 
 	end
@@ -83,6 +83,17 @@ RSpec.describe FuelResearch, type: :model do
 			expect(researches_year[0].id).to eq(1)
 		end
 
+	end
+
+	describe "#find_all_researches_of_county comparing by array size" do
+		it "should return the researches of the selected county" do
+
+			county_name = "BRASILIA"
+			researches_of_county = FuelResearch.find_all_researches_of_county(county_name)
+
+			expect(researches_of_county.count).to eq(1)
+			
+		end
 	end
 
 end
