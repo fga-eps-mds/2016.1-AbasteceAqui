@@ -46,7 +46,16 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 		end
 	end
 
-  
+  describe "#find_all_states comparing by name" do
+		it "should return all states of database" do
+
+    	states= controller.find_all_states()
+
+			expect(states[0]).to eq("DISTRITO FEDERAL")
+      expect(states[1]).to eq("RIO DE JANEIRO")
+
+		end
+	end
 
 
 end
