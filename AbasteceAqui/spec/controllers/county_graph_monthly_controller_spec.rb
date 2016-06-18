@@ -70,4 +70,17 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 		end
 	end
 
+  describe "#find_all_counties_of_state_searched comparing by array content value" do
+		it "should return all counties of state searched" do
+
+    	states= controller.find_all_states()
+      counties_states_0 = controller.find_all_counties_of_state_searched(states[0])
+      counties_states_1 = controller.find_all_counties_of_state_searched(states[1])
+
+			expect(counties_states_0[0]).to eq("BRASILIA")
+      expect(counties_states_1[0]).to eq("RIO DE JANEIRO")
+
+		end
+	end
+
 end
