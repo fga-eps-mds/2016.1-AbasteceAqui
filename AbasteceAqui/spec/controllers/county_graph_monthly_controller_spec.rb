@@ -46,7 +46,7 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 		end
 	end
 
-  describe "#find_all_states comparing by name" do
+  describe "#find_all_states comparing by array content value" do
 		it "should return all states of database" do
 
     	states= controller.find_all_states()
@@ -57,5 +57,17 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
 		end
 	end
 
+  describe "#find_all_counties_of_state_searched comparing by array size" do
+		it "should return all counties of state searched" do
+
+    	states= controller.find_all_states()
+      counties_states_0 = controller.find_all_counties_of_state_searched(states[0])
+      counties_states_1 = controller.find_all_counties_of_state_searched(states[1])
+
+			expect(counties_states_0.count).to eq(1)
+      expect(counties_states_1.count).to eq(1)
+
+		end
+	end
 
 end
