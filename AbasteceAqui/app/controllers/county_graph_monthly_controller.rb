@@ -16,7 +16,7 @@ class CountyGraphMonthlyController < ApplicationController
 			#do nothing
 		end
 
-		if params[:years] != "Selecione um ano" && params[:year_selected] != nil
+		if params[:year_selected] != "Selecione um ano" && params[:year_selected] != nil
 			find_researches_of_selected_year(params[:year_selected], @all_researches_of_county)
 			find_all_fuels_of_county(@researches_of_year)
 			find_fuels_of_county_by_month(@all_fuels)
