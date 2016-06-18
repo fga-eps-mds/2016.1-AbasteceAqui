@@ -22,25 +22,23 @@ belongs_to :fuel_type
 	end
 
 
-	def self.ethanol_sorted(fuels)
+	def self.sort_fuel_by_type(fuels, type)
 
-		ethanol = []
+		sorted_fuel = []
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 1)
-				ethanol << fuel
-
+			if fuel.fuel_type_id == type
+				sorted_fuel << fuel
 			else
 				#do nothing
-
 			end
 
 		end
 
-		ethanol.sort_by! {|const_sort| const_sort.medium_resale_price}
+		sorted_fuel.sort_by! {|const_sort| const_sort.medium_resale_price}
 
-		return ethanol
+		return sorted_fuel
 
 	end
 
@@ -66,28 +64,6 @@ belongs_to :fuel_type
 
 	end
 
-	def self.gasoline_sorted(fuels)
-
-		gasoline = []
-
-		fuels.each do |fuel|
-
-			if(fuel.fuel_type_id == 2)
-				gasoline << fuel
-
-			else
-				#do nothing
-
-			end
-
-		end
-
-		gasoline.sort_by! {|const_sort| const_sort.medium_resale_price}
-
-		return gasoline
-
-	end
-
 	def self.gasoline_sorted_by_standard_deviation(fuels)
 
 		gasoline = []
@@ -107,28 +83,6 @@ belongs_to :fuel_type
 		gasoline.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
 
 		return gasoline
-
-	end
-
-	def self.diesel_sorted(fuels)
-
-		diesel = []
-
-		fuels.each do |fuel|
-
-			if(fuel.fuel_type_id == 5)
-				diesel << fuel
-
-			else
-				#do nothing
-
-			end
-
-		end
-
-		diesel.sort_by! {|const_sort| const_sort.medium_resale_price}
-
-		return diesel
 
 	end
 
@@ -156,21 +110,46 @@ belongs_to :fuel_type
 
 	# receive a array of fuels and separate it by type
 	def self.separate_fuels_by_type!(fuels, ethanol, gas, diesel)
+
 		fuels.each do |fuel|
 
-			put_fuel_in_rigth_array_type(fuel, ethanol, gas, diesel)
+			self.get_ethanol(fuel,ethanol)
+			self.get_gas(fuel, gas)
+			self.get_diesel(fuel, diesel)
 
 		end
+
 	end
 
-	def self.put_fuel_in_rigth_array_type(fuel, ethanol, gas, diesel)
-			if fuel.fuel_type_id == 1
-				ethanol << fuel
-			elsif fuel.fuel_type_id == 2
-				gas << fuel
-			elsif fuel.fuel_type_id == 5
-				diesel << fuel
-			end
+	def self.get_ethanol(fuel, ethanol)
+
+		if fuel.fuel_type_id == 1
+			ethanol << fuel
+		else
+			# do nothing
+		end
+
+	end
+
+	def self.get_gas(fuel, gas)
+
+		if fuel.fuel_type_id == 2
+			gas << fuel
+
+		else
+			# do nothing
+		end
+
+	end
+
+	def self.get_diesel(fuel, diesel)
+
+		if fuel.fuel_type_id == 5
+			diesel << fuel
+		else
+			# do nothing
+		end
+
 	end
 
 	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
