@@ -469,5 +469,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
+  describe "GET #index" do
+    it "Should render county_graph_monthly page" do
+      get :index, {:state_searched => "DISTRITO FEDERAL", :county_searched => "BRASILIA", :year_selected => "2015"}
+      expect(response).to have_http_status(:success)
+
+    end
+  end
 
 end
