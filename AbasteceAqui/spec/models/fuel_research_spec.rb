@@ -92,7 +92,21 @@ RSpec.describe FuelResearch, type: :model do
 			researches_of_county = FuelResearch.find_all_researches_of_county(county_name)
 
 			expect(researches_of_county.count).to eq(1)
-			
+
+		end
+	end
+
+	describe "#find_all_researches_of_county comparing by id" do
+		it "should return the researches of the selected county" do
+
+			county_name_brasilia = "BRASILIA"
+			county_name_rio_de_janeiro = "RIO DE JANEIRO"
+			researches_of_brasilia = FuelResearch.find_all_researches_of_county(county_name_brasilia)
+			researches_of_rio_de_janeiro = FuelResearch.find_all_researches_of_county(county_name_rio_de_janeiro)
+
+			expect(researches_of_brasilia[0].id).to eq(1)
+			expect(researches_of_rio_de_janeiro[0].id).to eq(2)
+
 		end
 	end
 
