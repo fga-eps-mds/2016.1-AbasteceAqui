@@ -78,12 +78,21 @@ class FuelResearch < ActiveRecord::Base
 			if researches_of_selected_year.date.year == year.to_i
 
 				researches_of_year << researches_of_selected_year
-				
+
 			end
 
 		end
 
 		return researches_of_year
+
+	end
+
+	def self.find_all_researches_of_county(county_searched)
+
+		county = County.find_by(name: county_searched)
+		all_researches_of_county = county.fuel_researches
+
+		return all_researches_of_county
 
 	end
 
