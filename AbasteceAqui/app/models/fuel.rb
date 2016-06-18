@@ -193,21 +193,10 @@ belongs_to :fuel_type
 		return total_of_the_year_state.round(3)
 	end
 
+	# separate fuels by medium resale price by type and by month
 	def self.find_fuels_by_month(fuels)
 
-		fuels_month = [0,1,2,3,4,5,6,7,8,9,10,11]
-		ethanol_prices = []
-		gas_prices = []
-		diesel_prices = []
-
-		for i in 0..11
-
-			fuels_month[i] = Hash.new
-			fuels_month[i]["ETHANOL"] = []
-			fuels_month[i]["GASOLINE"] = []
-			fuels_month[i]["DIESEL"] = []
-
-		end
+		fuels_month = self.create_struct_for_separetaded_fuels()
 
 		fuels.each do |fuel|
 
@@ -230,6 +219,30 @@ belongs_to :fuel_type
 
 		return fuels_month
 
+	end
+
+	# create a struct that can receive separatad fuels by type
+	def self.create_struct_for_separetaded_fuels()
+
+		months = []
+
+		# months[] == [
+		# 	1 = {"ETHANOL" => [...]},{"GASOLINE" => [...]},{"DIESEL" => [...]},
+		# 	2 = {"ETHANOL" => [...]},{"GASOLINE" => [...]},{"DIESEL" => [...]},
+		# 	3 = {"ETHANOL" => [...]},{"GASOLINE" => [...]},{"DIESEL" => [...]},
+		# 	...
+		# ]
+
+		for i in (0..11)
+
+			months[i] = Hash.new
+			months[i]["ETHANOL"] = []
+			months[i]["GASOLINE"] = []
+			months[i]["DIESEL"] = []
+
+		end
+
+		return months
 	end
 
 	def self.find_all_fuels_of_county_of_selected_year(all_researches, year)
