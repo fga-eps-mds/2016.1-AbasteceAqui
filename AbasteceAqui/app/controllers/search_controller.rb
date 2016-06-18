@@ -12,19 +12,19 @@ class SearchController < ApplicationController
 
 	end
 
-	def map_brazil 
+	def map_brazil
 		render :_map
 	end
 
 	def find_states
 
-		@states = State.fill_states
-		
+		@states = State.get_state_names
+
 	end
 
 	def find_counties_of_state(state_searched)
-		
-		@counties_of_state = State.search_state_counties(state_searched)
+
+		@counties_of_state = State.search_state_counties_by_name(state_searched)
 
 	end
 
@@ -34,11 +34,11 @@ class SearchController < ApplicationController
 
 	end
 
-	def find_date_last_research(id_last_research, county_searched) 
+	def find_date_last_research(id_last_research, county_searched)
 
 		if county_searched != nil
 			@date = FuelResearch.find_by(id: id_last_research).date
-		else 
+		else
 			#do nothing
 		end
 
@@ -48,7 +48,7 @@ class SearchController < ApplicationController
 
 		if county_searched != nil
 			@fuel = FuelResearch.search_fuels_research(id_last_research)
-		else 
+		else
 			#do nothing
 		end
 

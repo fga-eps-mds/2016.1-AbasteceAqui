@@ -2,11 +2,11 @@ class StateGraphYearController < ApplicationController
 
 	def state_annual
 
-		@states = State.fill_states
+		@states = State.get_state_names()
 		@state_searched = params[:state_searched]
 
 		if @state_searched != nil
-			@counties_of_state = State.search_state_counties(@state_searched)
+			@counties_of_state = State.search_state_counties_by_name(@state_searched)
 			generate_annual_graph_by_state()
 		else
 			# do nothing

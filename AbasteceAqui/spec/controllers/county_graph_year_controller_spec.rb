@@ -25,12 +25,7 @@ RSpec.describe CountyGraphYearController, type: :controller do
 
   describe "GET #county_anual" do
     it "returns http success when state_searched != nil" do
-      get :county_anual, {:state_searched => @state1.name}
-      expect(response).to have_http_status(:success)
-    end
-
-    it "returns http success when county_searched != nil" do
-      get :county_anual, {:county_searched => @county1.name}
+      get :county_anual, {:state_searched => @state1.name, :county_searched => @county1.name}
       expect(response).to have_http_status(:success)
     end
   end

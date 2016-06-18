@@ -4,7 +4,7 @@ class StateGraphMonthlyController < ApplicationController
 	MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
 
-	
+
 
 	# index page
 	def state_monthly()
@@ -12,7 +12,7 @@ class StateGraphMonthlyController < ApplicationController
 		@states = get_all_states()
 		@years = get_all_years_from_researchs()
 
-		state_searched = params[:state_searched]		
+		state_searched = params[:state_searched]
 		year_searched = params[:years]
 
 		# convert year_searched string to int, if it's nil  it become 0
@@ -32,7 +32,7 @@ class StateGraphMonthlyController < ApplicationController
 	# return a state array with all states
 	def get_all_states()
 
-		states  = State.fill_states()
+		states  = State.get_state_names()
 
 		return states
 
@@ -64,7 +64,7 @@ class StateGraphMonthlyController < ApplicationController
 			f.yAxis[{
 				title: {
 						text: "Preço Dos Combustíveis", margin: 70
-					} 
+					}
 				},
 			]
 
@@ -82,7 +82,7 @@ class StateGraphMonthlyController < ApplicationController
 		researches_of_year = find_researches_of_year(state, year)
 
 		fuels = separete_fuels_of_researches(researches_of_year)
-		
+
 		all_medias = calculate_media(fuels)
 
 		return all_medias
@@ -91,8 +91,9 @@ class StateGraphMonthlyController < ApplicationController
 
 	# find all researches of an year of a state
 	def find_researches_of_year(state, year)
-		
-		counties_year_researches = State.find_all_conty_year_researches(state, year)
+
+		counties = State.search_state_counties_by_object(state)
+		counties_year_researches = State.find_all_researches_of_counties_by_year(counties, year)
 
 		return counties_year_researches
 
@@ -103,9 +104,9 @@ class StateGraphMonthlyController < ApplicationController
 
 		# fuels == {
 		# 	1 => ['ethanol data for month 1']['gas data month 1']['disel data month 1']
-		# 	2 => ['ethanol data for month 2']['gas data month 2']['disel data month 2']	
-		# 	3 => [][][]		    
-		# 	4 => [][][]				
+		# 	2 => ['ethanol data for month 2']['gas data month 2']['disel data month 2']
+		# 	3 => [][][]
+		# 	4 => [][][]
 		# 		...
 		# }
 
@@ -117,7 +118,7 @@ class StateGraphMonthlyController < ApplicationController
 			diesel = []
 			ethanol = []
 			fuels[month] = [ethanol, gas, diesel]
-		
+
 		end
 
 		return fuels
@@ -141,7 +142,7 @@ class StateGraphMonthlyController < ApplicationController
 						fuels[research.date.month][2] << f.medium_resale_price
 					end
 				end
-			end		
+			end
 		end
 
 		return fuels

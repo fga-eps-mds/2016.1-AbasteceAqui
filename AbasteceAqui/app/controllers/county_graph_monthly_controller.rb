@@ -32,7 +32,7 @@ class CountyGraphMonthlyController < ApplicationController
 
 	def find_all_states()
 
-		@states = State.fill_states()
+		@states = State.get_state_names()
 
 		return @states
 
@@ -40,7 +40,7 @@ class CountyGraphMonthlyController < ApplicationController
 
 	def find_all_counties_of_state_searched(state_searched)
 
-		@counties_of_state = State.search_state_counties(state_searched, "name")
+		@counties_of_state = State.search_state_counties_by_name(state_searched)
 
 		return @counties_of_state
 
