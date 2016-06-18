@@ -41,14 +41,16 @@ class CountyRankingFuelController < ApplicationController
 
   def find_ethanol_fuels_sorted(fuels)
 
-    @ethanol_sorted = Fuel.ethanol_sorted(fuels)
+    ethanol_type = 1
+    @ethanol_sorted = Fuel.sort_fuel_by_type(fuels, ethanol_type)
 
     return @ethanol_sorted
   end
 
   def find_gasoline_fuels_sorted(fuels)
 
-    @gasoline_sorted = Fuel.gasoline_sorted(fuels)
+    gasoline_type = 2
+    @gasoline_sorted = Fuel.sort_fuel_by_type(fuels, gasoline_type)
 
     return @gasoline_sorted
 
@@ -56,7 +58,8 @@ class CountyRankingFuelController < ApplicationController
 
   def find_diesel_fuels_sorted(fuels)
 
-    @diesel_sorted = Fuel.diesel_sorted(fuels)
+    diesel_type = 5
+    @diesel_sorted = Fuel.sort_fuel_by_type(fuels, diesel_type)
 
     return @diesel_sorted
 
