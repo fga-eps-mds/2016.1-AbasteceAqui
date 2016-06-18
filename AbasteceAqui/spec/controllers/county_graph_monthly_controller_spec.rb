@@ -127,4 +127,20 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
+  describe "#find_all_years_of_researches comparing by content value" do
+    it "should return all years of researches" do
+
+      county_searched_brasilia = "BRASILIA"
+      county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
+      researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
+      years_research_brasilia = controller.find_all_years_of_researches(researches_county_brasilia)
+      years_research_rio_de_janeiro = controller.find_all_years_of_researches(researches_county_rio_de_janeiro)
+
+      expect(years_research_brasilia[0]).to eq(2015)
+      expect(years_research_rio_de_janeiro[0]).to eq(2016)
+
+    end
+  end
+
 end
