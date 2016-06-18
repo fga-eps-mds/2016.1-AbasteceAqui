@@ -104,4 +104,34 @@ RSpec.describe Fuel,  type: :model do
     end
   end
 
+  describe "#find_all_fuels_of_county_of_selected_year comparing by array size" do
+    it "should return an array with fuels by year selected" do
+
+      researches = FuelResearch.all()
+
+      fuels_selected_year_2015 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2015")
+      fuels_selected_year_2016 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2016")
+      fuels_selected_year_2013 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2013")
+
+      expect(fuels_selected_year_2015.count).to eq(1)
+      expect(fuels_selected_year_2016.count).to eq(1)
+      expect(fuels_selected_year_2013.count).to eq(0)
+
+    end
+  end
+
+  describe "#find_all_fuels_of_county_of_selected_year comparing array in array size" do
+    it "should return an array with fuels by year selected" do
+
+      researches = FuelResearch.all()
+
+      fuels_selected_year_2015 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2015")
+      fuels_selected_year_2016 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2016")
+
+      expect(fuels_selected_year_2015[0].count).to eq(2)
+      expect(fuels_selected_year_2016[0].count).to eq(1)
+
+    end
+  end
+
 end
