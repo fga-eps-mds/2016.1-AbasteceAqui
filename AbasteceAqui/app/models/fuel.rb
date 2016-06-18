@@ -42,69 +42,23 @@ belongs_to :fuel_type
 
 	end
 
-	def self.ethanol_sorted_by_standard_deviation(fuels)
+	def self.sort_fuel_by_standard_deviation(fuels, type)
 
-		ethanol = []
+		sorted_fuel = []
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 1 && fuel.distribuition_standard_deviation != 0.0)
-				ethanol << fuel
-
+			if(fuel.fuel_type_id == type && fuel.distribuition_standard_deviation != 0.0)
+				sorted_fuel << fuel
 			else
-				#do nothing
-
+				# do nothing
 			end
 
 		end
 
-		ethanol.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
+		sorted_fuel.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
 
-		return ethanol
-
-	end
-
-	def self.gasoline_sorted_by_standard_deviation(fuels)
-
-		gasoline = []
-
-		fuels.each do |fuel|
-
-			if(fuel.fuel_type_id == 2 && fuel.distribuition_standard_deviation != 0.0)
-				gasoline << fuel
-
-			else
-				#do nothing
-
-			end
-
-		end
-
-		gasoline.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
-
-		return gasoline
-
-	end
-
-	def self.diesel_sorted_by_standard_deviation(fuels)
-
-		diesel = []
-
-		fuels.each do |fuel|
-
-			if(fuel.fuel_type_id == 5 && fuel.distribuition_standard_deviation != 0.0)
-				diesel << fuel
-
-			else
-				#do nothing
-
-			end
-
-		end
-
-		diesel.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
-
-		return diesel
+		return sorted_fuel
 
 	end
 
@@ -125,8 +79,7 @@ belongs_to :fuel_type
 
 		if fuel.fuel_type_id == 1
 			ethanol << fuel
-		else
-			# do nothing
+
 		end
 
 	end
