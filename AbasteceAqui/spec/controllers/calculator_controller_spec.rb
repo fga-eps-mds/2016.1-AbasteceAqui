@@ -39,6 +39,14 @@ RSpec.describe CalculatorController, type: :controller do
 
       expect(more_profitable_fuel).to eq("O Etanol é mais rentável")
     end
+
+    it "Should return gas as more profitable" do 
+      gas_price = 2
+      ethanol_price = 10
+
+      more_profitable_fuel = controller.calculate_fuel_profitability(ethanol_price, gas_price)
+      expect(more_profitable_fuel).to eq("A Gasolina é mais rentável")
+    end
   end
 
 end 
