@@ -52,18 +52,20 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
+	# get all years from a research array
+	# return a years array with all years that we found at research array
 	def self.find_years_of_researches(researches)
-			year = []
+		year = []
 
-			researches.each do |research|
+		researches.each do |research|
 
-				year << research.date.year
+			year << research.date.year
 
-			end
+		end
 
-			year.uniq!
+		year.uniq!
 
-			return year
+		return year
 
 	end
 
@@ -92,26 +94,6 @@ class FuelResearch < ActiveRecord::Base
 		all_researches_of_county = county.fuel_researches
 
 		return all_researches_of_county
-
-	end
-
-	# get all years from db
-	# return a years array with all years that we have at db
-	def self.get_all_years()
-
-		years = Set.new()
-		all_researches = FuelResearch.find_all_researches()
-
-		all_researches.each do |research|
-
-			years.add(research.date.year)
-
-		end
-
-		# convert a years set to an year array
-		years = years.to_a
-
-		return years
 
 	end
 	

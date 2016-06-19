@@ -43,7 +43,8 @@ class StateGraphMonthlyController < ApplicationController
 	# return a years array with all years that we have at db
 	def get_all_years_from_researchs()
 
-		years = FuelResearch.get_all_years()
+		all_researches = FuelResearch.find_all_researches()
+		years = FuelResearch.find_years_of_researches(all_researches)
 
 		return years
 
