@@ -12,6 +12,16 @@ class ApplicationController < ActionController::Base
 		if xAxis == "months"
 			xAxis = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
 					"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
+
+			remove_needless_values!(gas)
+			remove_needless_values!(ethanol)
+			remove_needless_values!(diesel)
+
+			# get the greater array length and sum 1 to know how mutch months are used
+			used_months = [gas.length, ethanol.length, diesel.length].max + 1
+			xAxis = xAxis.take(used_months)
+
 		else
 			# if xAxis != months, xAxis is an array with all years, so we do nothing
 		end
@@ -35,5 +45,24 @@ class ApplicationController < ActionController::Base
 		end
 
 	end
-	
+
+	# remove needless values from the given array
+	# we use it to remove all nil values that we doesn't need at graph
+	def remove_needless_values!(fuel)
+
+		last_valid_value = 0
+
+		for i in 0..11
+
+			if fuel[i] != nil
+				last_valid_value = i
+			end
+
+		end
+
+		# remove all values from last_valid_value + 1 until the end o array
+		fuel.slice!((last_valid_value + 1)..(fuel.length - 1))
+
+	end
+
 end
