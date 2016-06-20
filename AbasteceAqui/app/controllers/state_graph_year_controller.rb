@@ -18,23 +18,10 @@ class StateGraphYearController < ApplicationController
 
 		@years = [2013, 2014, 2015]
 
-		titulo = "Preço do combustível no decorrer dos anos"
+		title = "Preço do combustível no decorrer dos anos"
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(text:  titulo + " - " + @state_searched)
-			f.xAxis(categories: @years)
-			f.series(name: "Preço Da Gasolina", yAxis: 0, data: prices_of_fuel[0])
-			f.series(name: "Preço Do Etanol", yAxis: 0, data: prices_of_fuel[1])
-			f.series(name: "Preço Do Diesel", yAxis: 0, data: prices_of_fuel[2])
+		return generate_graph(prices_of_fuel[0], prices_of_fuel[1], prices_of_fuel[2], title, @years)
 
-			f.yAxis [
-				{title: {text: "Preço Dos Combustíveis", margin: 70} },
-
-			]
-
-			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-			f.chart({defaultSeriesType: "line"})
-		end
 	end
 
 

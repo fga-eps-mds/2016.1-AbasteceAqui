@@ -140,31 +140,13 @@ class CountyGraphMonthlyController < ApplicationController
 
 	end
 
-		#Generate the graph of county monthly
-		#Generate the graph of country monthly
-		def generate_monthly_graph_county(average_gasoline, average_ethanol, average_diesel)
+	#Generate the graph of county monthly
+	def generate_monthly_graph_county(average_gasoline, average_ethanol, average_diesel)
 
-			months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-						"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-
-			titulo = "Preço do combustivel no decorrer do ano de #{params[:year_selected]}, #{params[:county_searched].titleize} - #{params[:state_searched].titleize}"
-
-			@chart = LazyHighCharts::HighChart.new('graph') do |graph|
-				graph.title(text:  titulo)
-				graph.xAxis(categories: months)
-				graph.series(name: "Preço Da Gasolina", yAxis: 0, data: average_gasoline)
-				graph.series(name: "Preço Do Etanol", yAxis: 0, data: average_ethanol)
-				graph.series(name: "Preço Do Diesel", yAxis: 0, data: average_diesel)
-
-				graph.yAxis [
-					{title: {text: "Preço Dos Combustíveis", margin: 70} },
-				]
-				graph.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-				graph.chart({defaultSeriesType: 'line'})
-
-
-			end
-
-		end
+		title = "Preço do combustivel no decorrer do ano de #{params[:year_selected]}, 
+				#{params[:county_searched].titleize} - #{params[:state_searched].titleize}"
+				
+		return generate_graph(average_gasoline, average_ethanol, average_diesel, title)
+	end
 
 end #end of class

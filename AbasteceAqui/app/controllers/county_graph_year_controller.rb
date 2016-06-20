@@ -14,7 +14,7 @@ class CountyGraphYearController < ApplicationController
 		@county_searched = params[:county_searched]
 
 		if @county_searched != nil
-		generate_annual_graph_by_county()
+			generate_annual_graph_by_county()
 		else
 			# do nothing
 		end
@@ -25,23 +25,10 @@ class CountyGraphYearController < ApplicationController
 
 		@years = [2013, 2014, 2015]
 
-		titulo = "Preço do combustivel no decorrer dos anos"
+		title = "Preço do combustivel no decorrer dos anos" + " - " + @county_searched
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(text:  titulo + " - " + @county_searched)
-			f.xAxis(categories: @years)
-			f.series(name: "Preço Da Gasolina", yAxis: 0, data: prices_of_fuel[0])
-			f.series(name: "Preço Do Etanol", yAxis: 0, data: prices_of_fuel[1])
-			f.series(name: "Preço Do Diesel", yAxis: 0, data: prices_of_fuel[2])
+		return generate_graph(prices_of_fuel[0], prices_of_fuel[1], prices_of_fuel[2], title, @years)
 
-			f.yAxis [
-				{title: {text: "Preço Dos Combustíveis", margin: 70} },
-
-			]
-
-			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-			f.chart({defaultSeriesType: "line"})
-		end
 	end
 
 	def check_year_of_research(researches_of_county, researches_of_year, year)

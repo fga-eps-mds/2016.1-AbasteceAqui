@@ -126,7 +126,7 @@ class CountryGraphMonthlyController < ApplicationController
 	def generate_monthly_graph_country(average_gasoline, average_ethanol, average_diesel)
 
 		title = "Preço do combustivel no decorrer do ano - Brasil #{@year_searched}"
-		generate_graph(average_gasoline, average_ethanol, average_diesel, title)
+		return generate_graph(average_gasoline, average_ethanol, average_diesel, title)
 
 	end
 
