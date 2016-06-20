@@ -31,7 +31,7 @@ $(document ).ready(function ( ) {
       $(this).closest('form').trigger('submit');
     });
 
-    $(state_county_graph_monthly_select_tag).click(function() {
+    $(state_county_graph_monthly_select_tag).change(function() {
       if($(state_county_graph_monthly_select_tag).val() !== string_state_county_graph_monthly) {
         $(location).attr('href', window.location.origin + '/statistics/county_monthly?utf8=%E2%9C%93&state_searched=' + $(this).val());}
     });

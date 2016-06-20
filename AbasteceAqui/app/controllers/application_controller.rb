@@ -25,9 +25,7 @@ class ApplicationController < ActionController::Base
 		else
 			# if xAxis != months, xAxis is an array with all years, so we do nothing
 		end
-
-		titulo = "Preço do combustivel no decorrer do ano - Brasil #{@year_searched}"
-
+		
 		@chart = LazyHighCharts::HighChart.new('graph') do |graph|
 			graph.title(text:  title)
 			graph.xAxis(categories: xAxis)
