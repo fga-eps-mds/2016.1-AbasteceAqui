@@ -12,16 +12,22 @@
     <% for i in 0..(@counties_sorted_diesel.length-1)%>
     <tr>
       <% if(i == 0) %>
-      <td><%= image_tag("gold.png", :alt => "rank")%> <%= i+1 %></td>
+      <td><%= image_tag("more_atention.png", :alt => "rank")%> <%= i+1 %></td>
       <%end%>
       <% if(i == 1) %>
-      <td><%= image_tag("silver.png", :alt => "rank")%> <%= i+1 %></td>
+      <td><%= image_tag("more_atention.png", :alt => "rank")%> <%= i+1 %></td>
       <% end %>
       <% if(i == 2) %>
-      <td><%= image_tag("bronze.png", :alt => "rank")%> <%= i+1 %></td>
+      <td><%= image_tag("more_atention.png", :alt => "rank")%> <%= i+1 %></td>
       <%end%>
-      <% if(i > 2) %>
-      <td><%= image_tag("honor_medal.png", :alt => "rank")%> <%= i+1 %></td>
+      <% if(i == 3) %>
+      <td><%= image_tag("more_atention.png", :alt => "rank")%> <%= i+1 %></td>
+      <%end%>
+      <% if(i == 4) %>
+      <td><%= image_tag("more_atention.png", :alt => "rank")%> <%= i+1 %></td>
+      <%end%>
+      <% if(i > 4) %>
+      <td><%= image_tag("less_atention.png", :alt => "rank")%> <%= i+1 %></td>
       <%end%>
       <td><%= @counties_sorted_diesel[i].name.titleize %></td>
       <td><%= @counties_sorted_diesel[i].state.name.titleize %></td>
