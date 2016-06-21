@@ -12,7 +12,7 @@ Rails.application.config.assets.precompile += %w( dinamic_selection.js )
 Rails.application.config.assets.precompile += %w( county_anual.js.erb )
 Rails.application.config.assets.precompile += %w( highcharts-custom.js )
 Rails.application.config.assets.precompile += %w( county_rank.js )
-Rails.application.config.assets.precompile += %w( traslate_data_table.js )
+Rails.application.config.assets.precompile += %w( data_table_options.js )
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 
