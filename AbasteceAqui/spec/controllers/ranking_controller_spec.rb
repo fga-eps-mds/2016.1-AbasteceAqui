@@ -52,10 +52,10 @@ RSpec.describe StandardDeviationRankController, type: :controller do
 
   end
 
-  describe "#index" do
+  describe "#standard_deviation_index" do
     it "Should render county_ranking page" do
 
-      get :index
+      get :standard_deviation_index
       expect(response).to have_http_status(:success)
 
     end
