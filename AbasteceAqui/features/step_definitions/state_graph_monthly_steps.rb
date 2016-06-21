@@ -3,8 +3,8 @@ Given(/^I am in the monthly state chart page$/) do
   visit '/statistics/state_monthly'
 end
 
-When (/^I fill "Escolha o Estado Desejado" with "ALAGOAS"$/) do
-  	select('ACRE', :from => 'select_tag43')
+When (/^I fill "Escolha o Estado Desejado" with "ACRE "$/) do
+  	select('ACRE', :from => 'select_tag')
 end
 
 
