@@ -3,7 +3,7 @@
 <% end %>
 
 <div id="ranking-fuels">
-   <div class="container">
+  <div class="container">
     <div id ="ranking-fuel-selection" class="ranking-fuel-selection">
       <div class="nav-center">
         <ul class="nav nav-tabs">
@@ -29,4 +29,6 @@
   </div>
 </div>
 
-
+<% content_for :javascript do -%>
+    <%= javascript_include_tag 'data_table_options.js' %>
+<% end %>
