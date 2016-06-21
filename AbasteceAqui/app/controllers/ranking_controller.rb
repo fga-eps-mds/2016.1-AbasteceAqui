@@ -1,10 +1,16 @@
 class RankingController < ApplicationController
 
-	def standard_deviation_index
+  def index
 
-		find_counties()
+    find_counties()
     find_last_research_of_counties(@counties)
     fill_fuels_last_research(@researches)
+
+  end
+
+	def standard_deviation_index
+
+    index()
     find_ethanol_fuels_sorted_by_standard_deviation(@fuels)
     find_gasoline_fuels_sorted_by_standard_deviation(@fuels)
     find_diesel_fuels_sorted_by_standard_deviation(@fuels)
@@ -16,9 +22,7 @@ class RankingController < ApplicationController
 
   def resale_price_index
 
-    find_counties()
-    find_last_research_of_counties(@counties)
-    fill_fuels_last_research(@researches)
+    index()
     find_ethanol_fuels_sorted(@fuels)
     find_gasoline_fuels_sorted(@fuels)
     find_diesel_fuels_sorted(@fuels)
