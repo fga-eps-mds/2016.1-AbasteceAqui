@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StandardDeviationRankController, type: :controller do
+RSpec.describe RankingController, type: :controller do
 	before do
     @state1 = State.new(id: 1, name: "PARA", region_id: 1)
     @state2 = State.new(id: 2, name: "MARANHAO", region_id: 2)
@@ -60,7 +60,7 @@ RSpec.describe StandardDeviationRankController, type: :controller do
 
     end
   end
-  
+
   describe "#resale_price_index" do
     it "Should render resale_price_index page" do
 
@@ -128,6 +128,18 @@ RSpec.describe StandardDeviationRankController, type: :controller do
       diesel_sorted = controller.find_diesel_fuels_sorted(fuels)
 
       expect(diesel_sorted.count).to eq(1)
+
+    end
+  end
+
+
+  describe "#find_ethanol_fuels_sorted_by_standard_deviation" do
+    it "Should return one objects of fuel" do
+
+      fuels = Fuel.all
+      ethanol_sorted = controller.find_ethanol_fuels_sorted_by_standard_deviation(fuels)
+
+      expect(ethanol_sorted.count).to eq(1)
 
     end
   end
