@@ -185,44 +185,79 @@ RSpec.describe CountyGraphYearController, type: :controller do
       end
     end
 
-    describe "#calculate_sum_of_fuels comparing by array size" do
-      it "should return all sum of fuel's price of selected year of researches of county searched separated by year" do
+    describe "#calculate_fuel_price_averages comparing by array size" do
+      it "should return the averages of ethanol's price of selected year of researches of county searched separated by year" do
 
         researches_of_county = controller.find_all_researches_of_county_searched("BRASILIA")
         years = controller.find_all_years_of_researches(researches_of_county)
         fuels_by_year = controller.fuels_of_year(years, researches_of_county)
         all_fuels = controller.find_all_fuels_of_county(fuels_by_year)
         fuels_price = controller.get_prices_of_fuel(all_fuels)
+        
         ethanol = Hash.new
-        gas = Hash.new
-        diesel = Hash.new
         ethanol["2015"] = [2.0, 1.0, 3.0]
-        gas["2015"] = [2.0, 1.0, 3.0]
-        diesel["2015"] = [2.0, 1.0, 3.0]
-        sum_fuels = controller.calculate_sum_of_fuels(ethanol, gas, diesel)
+        
+        sum_fuels = controller.calculate_fuel_price_averages(ethanol)
 
-        expect(sum_fuels.count).to eq(3)
+        expect(sum_fuels.count).to eq(1)
 
       end
     end
 
-    describe "#calculate_sum_of_fuels comparing by content value" do
-      it "should return all sum of fuel's price of selected year of researches of county searched separated by year" do
+    describe "#calculate_fuel_price_averages comparing by content value" do
+      it "should return the averages of ethanol's of selected year of researches of county searched separated by year" do
 
         researches_of_county = controller.find_all_researches_of_county_searched("BRASILIA")
         years = controller.find_all_years_of_researches(researches_of_county)
         fuels_by_year = controller.fuels_of_year(years, researches_of_county)
         all_fuels = controller.find_all_fuels_of_county(fuels_by_year)
         fuels_price = controller.get_prices_of_fuel(all_fuels)
+        
         ethanol = Hash.new
-        gas = Hash.new
-        diesel = Hash.new
         ethanol["2015"] = [2.0, 1.0, 3.0]
-        gas["2015"] = [2.0, 1.0, 9.0]
-        diesel["2015"] = [2.0, 1.0, 6.0]
-        sum_fuels = controller.calculate_sum_of_fuels(ethanol, gas, diesel)
 
-        expect(sum_fuels).to eq([[2.0],[4.0],[3.0]])
+        sum_fuels = controller.calculate_fuel_price_averages(ethanol)
+
+        expect(sum_fuels).to eq([2.0])
+
+      end
+    end
+
+    describe "#calculate_fuel_price_averages comparing by content value" do
+      it "should return the averages of gas's of selected year of researches of county searched separated by year" do
+
+        researches_of_county = controller.find_all_researches_of_county_searched("BRASILIA")
+        years = controller.find_all_years_of_researches(researches_of_county)
+        fuels_by_year = controller.fuels_of_year(years, researches_of_county)
+        all_fuels = controller.find_all_fuels_of_county(fuels_by_year)
+        fuels_price = controller.get_prices_of_fuel(all_fuels)
+        
+        gas = Hash.new
+        gas["2015"] = [2.0, 1.0, 9.0]
+
+        sum_fuels = controller.calculate_fuel_price_averages(gas)
+
+        expect(sum_fuels).to eq([4.0])
+
+      end
+    end
+
+    describe "#calculate_fuel_price_averages comparing by content value" do
+      it "should return the averages of diesel's of selected year of researches of county searched separated by year" do
+
+        researches_of_county = controller.find_all_researches_of_county_searched("BRASILIA")
+        years = controller.find_all_years_of_researches(researches_of_county)
+        fuels_by_year = controller.fuels_of_year(years, researches_of_county)
+        all_fuels = controller.find_all_fuels_of_county(fuels_by_year)
+        fuels_price = controller.get_prices_of_fuel(all_fuels)
+        
+
+        diesel = Hash.new
+        diesel["2015"] = [2.0, 1.0, 6.0]
+
+        sum_fuels = controller.calculate_fuel_price_averages(diesel)
+
+        expect(sum_fuels).to eq([3.0])
 
       end
     end
