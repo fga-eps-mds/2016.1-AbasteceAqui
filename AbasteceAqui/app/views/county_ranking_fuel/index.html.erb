@@ -10,15 +10,15 @@
       </div>
 
         <div class="rank-gasoline" id="rank-gasoline">
-          <%= render 'county_ranking_gasoline' %>
+          <%= render partial: 'ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted} %>
         </div>
 
         <div class="rank-ethanol" id="rank-ethanol">
-          <%= render 'county_ranking_ethanol' %>
+          <%= render partial: 'ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted} %>
         </div>
 
         <div class="rank-diesel" id="rank-diesel">
-          <%= render 'county_ranking_diesel' %>
+          <%= render partial: 'ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted} %>
         </div>
 
       </div>
