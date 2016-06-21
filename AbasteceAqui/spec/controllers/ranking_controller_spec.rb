@@ -53,9 +53,18 @@ RSpec.describe StandardDeviationRankController, type: :controller do
   end
 
   describe "#standard_deviation_index" do
-    it "Should render county_ranking page" do
+    it "Should render standard_deviation_index page" do
 
       get :standard_deviation_index
+      expect(response).to have_http_status(:success)
+
+    end
+  end
+  
+  describe "#resale_price_index" do
+    it "Should render resale_price_index page" do
+
+      get :resale_price_index
       expect(response).to have_http_status(:success)
 
     end
