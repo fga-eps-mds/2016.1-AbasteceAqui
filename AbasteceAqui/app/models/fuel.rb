@@ -23,7 +23,7 @@ belongs_to :fuel_type
 	end
 
 	# receive a fuels array and a fuel type
-	# returns a sorted array of given type 
+	# returns a sorted array of given type
 	def self.sort_fuel_by_type(fuels, type)
 
 		sorted_fuel = []
@@ -45,7 +45,7 @@ belongs_to :fuel_type
 	end
 
 	# receive a fuels array and a fuel type
-	# returns a sorted array with distribution standard deviation of given type 
+	# returns a sorted array with distribution standard deviation of given type
 	def self.sort_fuel_by_standard_deviation(fuels, type)
 
 		sorted_fuel = []
@@ -67,33 +67,25 @@ belongs_to :fuel_type
 	end
 
 	# receive a array of fuels and separate it by type
-	def self.separate_fuels_by_type!(fuels, ethanol, gas, diesel)
+	def self.separate_fuels_by_type!(fuels, ethanol, gas, diesel, atribute_type = "none")
 
 		fuels.each do |fuel|
 
-			self.get_ethanol(fuel,ethanol)
-			self.get_gas(fuel, gas)
-			self.get_diesel(fuel, diesel)
+			self.get_ethanol(fuel,ethanol,atribute_type)
+			self.get_gas(fuel, gas,atribute_type)
+			self.get_diesel(fuel, diesel,atribute_type)
 
 		end
 
 	end
 
-	# receive a fuel and a array, if fuel is of given array type concatenate it to the array
-	def self.get_ethanol(fuel, ethanol)
+	def self.get_ethanol(fuel, ethanol, atribute_type)
 
-		if fuel.fuel_type_id == 1
+		if fuel.fuel_type_id == 1 && atribute_type == "none"
 			ethanol << fuel
 
-		end
-
-	end
-
-	# receive a fuel and a array, if fuel is of given array type concatenate it to the array
-	def self.get_gas(fuel, gas)
-
-		if fuel.fuel_type_id == 2
-			gas << fuel
+		elsif fuel.fuel_type_id == 1
+			ethanol << fuel.medium_resale_price
 
 		else
 			# do nothing
@@ -101,11 +93,28 @@ belongs_to :fuel_type
 
 	end
 
-	# receive a fuel and a array, if fuel is of given array type concatenate it to the array
-	def self.get_diesel(fuel, diesel)
+	def self.get_gas(fuel, gas, atribute_type)
 
-		if fuel.fuel_type_id == 5
+		if fuel.fuel_type_id == 2 && atribute_type == "none"
+			gas << fuel
+
+		elsif fuel.fuel_type_id == 2
+			gas << fuel.medium_resale_price
+
+		else
+			# do nothing
+		end
+
+	end
+
+	def self.get_diesel(fuel, diesel, atribute_type)
+
+		if fuel.fuel_type_id == 5 && atribute_type == "none"
 			diesel << fuel
+
+		elsif fuel.fuel_type_id == 5
+			diesel << fuel.medium_resale_price
+
 		else
 			# do nothing
 		end
@@ -214,7 +223,7 @@ belongs_to :fuel_type
 		end
 
 		return fuels
-	
+
 	end
 
 end #end of class
