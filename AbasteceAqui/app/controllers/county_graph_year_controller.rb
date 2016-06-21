@@ -16,8 +16,12 @@ class CountyGraphYearController < ApplicationController
 			fuels_of_year(@years, @all_researches_of_county)
 			find_all_fuels_of_county(@researches_of_year_separeted)
 			get_prices_of_fuel(@all_fuels)
-			calculate_sum_of_fuels(@gas, @ethanol, @diesel)
-			generate_annual_graph_by_county(@sum_diesel,@sum_ethanol,@sum_gas, @years)
+
+			@gas_price_averages = calculate_fuel_price_averages(@gas)
+			@ethanol_price_averages = calculate_fuel_price_averages(@ethanol)
+			@diesel_price_averages = calculate_fuel_price_averages(@diesel)
+
+			generate_annual_graph_by_county(@diesel_price_averages, @ethanol_price_averages, @gas_price_averages, @years)
 
 		else
 			# do nothing
@@ -108,41 +112,28 @@ class CountyGraphYearController < ApplicationController
 
 	end
 
-	def calculate_sum_of_fuels(gas, ethanol, diesel)
 
-		@sum_gas = []
-		@sum_ethanol = []
-		@sum_diesel = []
+	# recive a fuel and calculate the average price of a fuel in the years
+	def calculate_fuel_price_averages(fuel)
 
-		gas.each do |year,gas_of_year|
-			if(gas_of_year != [])
-				@sum_gas << (gas_of_year.inject{|number_1,number_2| number_1 + number_2}/gas_of_year.length).round(3)
-			end
+		averages_price = []
 
-		end
-		ethanol.each do |year,ethanol_of_year|
-
-			if(ethanol_of_year != [])
-				@sum_ethanol << (ethanol_of_year.inject{|number_1,number_2| number_1 + number_2}/ethanol_of_year.length).round(3)
-			end
-
-		end
-		diesel.each do |year,diesel_of_year|
-			if(diesel_of_year != [])
-				@sum_diesel << (diesel_of_year.inject{|number_1,number_2| number_1 + number_2}/diesel_of_year.length).round(3)
+		fuel.each do |year,fuel_of_year|
+			if(fuel_of_year != [])
+				averages_price << (fuel_of_year.inject{|number_1,number_2| number_1 + number_2}/fuel_of_year.length).round(3)
 			end
 
 		end
 
-		return [@sum_gas, @sum_ethanol, @sum_diesel]
-
+		return averages_price
 	end
 
-	def generate_annual_graph_by_county(sum_diesel,sum_ethanol,sum_gas, years)
+
+	def generate_annual_graph_by_county(diesel_price_averages, ethanol_price_averages, gas_price_averages, years)
 
 		title = "Preço do combustivel no decorrer dos anos - #{params[:county_searched].titleize}"
 
-		return generate_graph(sum_gas, sum_ethanol, sum_diesel, title,years)
+		return generate_graph(gas_price_averages, ethanol_price_averages, diesel_price_averages, title,years)
 	end
 
 end #end of class
