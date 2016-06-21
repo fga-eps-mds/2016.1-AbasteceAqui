@@ -11,9 +11,11 @@ class CountryGraphMonthlyController < ApplicationController
 			find_researches_of_selected_year(@year_searched, @all_researches)
 			find_fuels_of_research_of_year(@researches_of_year)
 			find_fuels_by_type(@fuels)
-			calculate_average_of_gasoline(@fuels_month)
-			calculate_average_of_ethanol(@fuels_month)
-			calculate_average_of_diesel(@fuels_month)
+
+			@average_gasoline = calculate_average_of_fuel(@fuels_month, "GASOLINE")
+			@average_ethanol = calculate_average_of_fuel(@fuels_month, "ETHANOL")
+			@average_diesel = calculate_average_of_fuel(@fuels_month, "DIESEL")
+
 			generate_monthly_graph_country(@average_gasoline, @average_ethanol, @average_diesel)
 		end
 
@@ -65,61 +67,22 @@ class CountryGraphMonthlyController < ApplicationController
 
 	end
 
-	# calculate the averege of gasoline
-	def calculate_average_of_gasoline(fuels_month)
+	# calculate the averege of a fuel
+	def calculate_average_of_fuel(fuels_month, fuel_name)
 
-		@average_gasoline = []
+		average_of_fuel = []
 		for i in 0..(fuels_month.length-1)
 
-			@average_gasoline[i] = fuels_month[i]["GASOLINE"].inject{|number_1,number_2| number_1 + number_2}
-			if @average_gasoline[i] != nil
-				@average_gasoline[i] = (@average_gasoline[i]/fuels_month[i]["GASOLINE"].length).round(3)
+			average_of_fuel[i] = fuels_month[i][fuel_name].inject{|number_1,number_2| number_1 + number_2}
+			if average_of_fuel[i] != nil
+				average_of_fuel[i] = (average_of_fuel[i]/fuels_month[i][fuel_name].length).round(3)
 			else
 				#do nothing
 			end
 
 		end
 
-		return @average_gasoline
-	end
-
-	# calculate the averege of ethanol
-	def calculate_average_of_ethanol(fuels_month)
-
-		@average_ethanol = []
-
-		for i in 0..(fuels_month.length-1)
-
-			@average_ethanol[i] = fuels_month[i]["ETHANOL"].inject{|number_1,number_2| number_1 + number_2}
-			if @average_ethanol[i] != nil
-				@average_ethanol[i] = (@average_ethanol[i]/fuels_month[i]["ETHANOL"].length).round(3)
-			else
-				#do nothing
-			end
-		end
-
-		return @average_ethanol
-
-	end
-
-	# calculate the averege of diesel
-	def calculate_average_of_diesel(fuels_month)
-
-		@average_diesel = []
-
-		for i in 0..(fuels_month.length-1)
-
-			@average_diesel[i] = fuels_month[i]["DIESEL"].inject{|number_1,number_2| number_1 + number_2}
-			if @average_diesel[i] != nil
-				@average_diesel[i] = (@average_diesel[i]/fuels_month[i]["DIESEL"].length).round(3)
-			else
-				#do nothing
-			end
-
-		end
-
-		return @average_diesel
-
+		return average_of_fuel
 	end
 
 	# generate the graph of country monthly

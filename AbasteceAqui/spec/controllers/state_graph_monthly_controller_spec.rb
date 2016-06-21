@@ -38,7 +38,7 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
       states_name = []
       # get all states name
       for state in State.all
-        
+
         states_name << state.name
 
       end
@@ -47,9 +47,9 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#get_all_years_from_researchs" do
+  describe "#get_all_years_from_researches" do
     it "return all db years" do
-      years = controller.get_all_years_from_researchs()
+      years = controller.get_all_years_from_researches()
       expect(years).to eq([2015,2014])
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
 
   describe "#find_years" do
     it "should return all years" do
-      years = controller.get_all_years_from_researchs()
+      years = controller.get_all_years_from_researches()
       expect(years.count).to eq(2)
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     it "separate the researches's fuels" do
       researches = controller.find_researches_of_year(@state1.name, 2015)
       fuels = controller.separete_fuels_of_researches(researches)
-      expect(fuels[4][1][0]).to eq(5.0) 
+      expect(fuels[4][1][0]).to eq(5.0)
     end
   end
 

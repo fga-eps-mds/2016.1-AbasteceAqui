@@ -27,6 +27,9 @@
 		<div class= "padding-page-top">
 			<%= yield %>
 		</div>
+
+		<%= yield(:javascript) %>
+		
 		<%= render '/shared/footer' %>
 	</body>
 </html>

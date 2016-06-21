@@ -4,7 +4,7 @@ class StateGraphMonthlyController < ApplicationController
 	def state_monthly()
 
 		@states = get_all_states()
-		@years = get_all_years_from_researchs()
+		@years = get_all_years_from_researches()
 
 		state_searched = params[:state_searched]
 		year_searched = params[:years]
@@ -35,7 +35,7 @@ class StateGraphMonthlyController < ApplicationController
 	# get all years from db
 	# needed at view to generate years dropdown
 	# return a years array with all years that we have at db
-	def get_all_years_from_researchs()
+	def get_all_years_from_researches()
 
 		all_researches = FuelResearch.find_all_researches()
 		years = FuelResearch.find_years_of_researches(all_researches)
@@ -108,23 +108,38 @@ class StateGraphMonthlyController < ApplicationController
 		fuels = create_fuels_hash()
 
 		researches_of_year.each do |research|
-
-			research.fuels.each do |f|
-				if f.medium_resale_price != 0.0
-					if f.fuel_type_id == 1
-						fuels[research.date.month][0] << f.medium_resale_price
-					elsif f.fuel_type_id == 2
-						fuels[research.date.month][1] << f.medium_resale_price
-					elsif f.fuel_type_id == 5
-						fuels[research.date.month][2] << f.medium_resale_price
-					end
-				end
-			end
+			separete_prices_by_fuel_type(fuels, research)
 		end
 
 		return fuels
 
 	end
+
+	def separete_prices_by_fuel_type(fuels, research)
+
+		research.fuels.each do |f|
+			if f.medium_resale_price != 0.0
+				add_medium_resale_price_to_its_fuels(f, fuels, research)
+			else
+				# do nothing
+			end
+
+		end
+
+	end
+
+	def add_medium_resale_price_to_its_fuels(f, fuels, research)
+
+		if f.fuel_type_id == 1
+			fuels[research.date.month][0] << f.medium_resale_price
+		elsif f.fuel_type_id == 2
+			fuels[research.date.month][1] << f.medium_resale_price
+		elsif f.fuel_type_id == 5
+			fuels[research.date.month][2] << f.medium_resale_price
+		end
+
+	end
+
 
 	# calculate media for each month of each fuel
 	def calculate_media(fuels)
