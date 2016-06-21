@@ -6,7 +6,7 @@
 
 	<%= form_tag("/statistics/state_monthly", method: "get", remote: false) do %>
 		<%= label_tag("Escolha o estado desejado:") %>
-		<%= select_tag 'state_searched', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag" %>
+		<%= select_tag 'state_searched', options_for_select(@states, :selected => params[:state_searched],  id: "select_tag") %>
 		<%= label_tag("Escolha o ano desejado:") %>
 		<%= select_tag 'years', options_for_select([""""] + @years, :selected => params[:years]), id: "select_tag1" %>
 		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
@@ -17,3 +17,15 @@
 	</div>
 
 </div>
+<script>
+	$(function ( ) {
+		$("select").selectBoxIt({
+
+			showEffect: "fadeIn",
+	    showEffectSpeed: 600,
+
+	    hideEffect: "fadeOut",
+	    hideEffectSpeed: 400
+	  });
+	});
+</script>
