@@ -1,6 +1,6 @@
 class CountyGraphYearController < ApplicationController
 
-	def county_anual
+	def index
 
 		get_all_state_names()
 
@@ -70,7 +70,6 @@ class CountyGraphYearController < ApplicationController
 		end
 
 		return @researches_of_year_separeted
-
 	end
 
 
@@ -116,21 +115,27 @@ class CountyGraphYearController < ApplicationController
 		@sum_diesel = []
 
 		gas.each do |year,gas_of_year|
-
-			@sum_gas << (gas_of_year.inject{|number_1,number_2| number_1 + number_2}/gas_of_year.length).round(3)
+			if(gas_of_year != [])
+				@sum_gas << (gas_of_year.inject{|number_1,number_2| number_1 + number_2}/gas_of_year.length).round(3)
+			end
 
 		end
 		ethanol.each do |year,ethanol_of_year|
 
-			@sum_ethanol << (ethanol_of_year.inject{|number_1,number_2| number_1 + number_2}/ethanol_of_year.length).round(3)
+			if(ethanol_of_year != [])
+				@sum_ethanol << (ethanol_of_year.inject{|number_1,number_2| number_1 + number_2}/ethanol_of_year.length).round(3)
+			end
 
 		end
 		diesel.each do |year,diesel_of_year|
-
-			@sum_diesel << (diesel_of_year.inject{|number_1,number_2| number_1 + number_2}/diesel_of_year.length).round(3)
+			if(diesel_of_year != [])
+				@sum_diesel << (diesel_of_year.inject{|number_1,number_2| number_1 + number_2}/diesel_of_year.length).round(3)
+			end
 
 		end
-		
+
+		return [@sum_gas, @sum_ethanol, @sum_diesel]
+
 	end
 
 	def generate_annual_graph_by_county(sum_diesel,sum_ethanol,sum_gas, years)
