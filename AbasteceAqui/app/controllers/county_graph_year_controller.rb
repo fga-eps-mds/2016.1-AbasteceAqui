@@ -2,121 +2,142 @@ class CountyGraphYearController < ApplicationController
 
 	def county_anual
 
+		get_all_state_names()
+
+		if params[:state_searched] != nil
+			find_all_counties_of_state_searched(params[:state_searched])
+		else
+			# do nothing
+		end
+
+		if params[:county_searched] != nil
+			find_all_researches_of_county_searched(params[:county_searched])
+			find_all_years_of_researches(@all_researches_of_county)
+			fuels_of_year(@years, @all_researches_of_county)
+			find_all_fuels_of_county(@researches_of_year_separeted)
+			get_prices_of_fuel(@all_fuels)
+			calculate_sum_of_fuels(@gas, @ethanol, @diesel)
+			generate_annual_graph_by_county(@sum_diesel,@sum_ethanol,@sum_gas, @years)
+
+		else
+			# do nothing
+		end
+
+	end
+
+	def get_all_state_names()
+
 		@states = State.get_state_names()
-		@state_searched = params[:state_searched]
 
-		if @state_searched != nil
-			@counties_of_state = State.search_state_counties_by_name(@state_searched)
-		else
-			# do nothing
+		return @states
+
+	end
+
+	def find_all_counties_of_state_searched(state_searched)
+
+		@counties_of_state = State.search_state_counties_by_name(state_searched)
+
+		return @counties_of_state
+
+	end
+
+	def find_all_researches_of_county_searched(county_searched)
+
+		@all_researches_of_county = FuelResearch.find_all_researches_of_county(county_searched)
+
+		return @all_researches_of_county
+
+	end
+
+	def find_all_years_of_researches(all_researches_of_county)
+
+		@years = FuelResearch.find_years_of_researches(all_researches_of_county)
+
+		return @years
+
+	end
+
+	def fuels_of_year(years, all_researches_of_county)
+
+		@researches_of_year_separeted = Hash.new
+
+		years.each do |year|
+
+			@researches_of_year = FuelResearch.researches_of_year(year.to_s, all_researches_of_county)
+
+			@researches_of_year_separeted[year.to_s] = @researches_of_year
+
 		end
 
-		@county_searched = params[:county_searched]
+		return @researches_of_year_separeted
 
-		if @county_searched != nil
-			generate_annual_graph_by_county()
-		else
-			# do nothing
+	end
+
+
+	def find_all_fuels_of_county(researches_of_year_separeted)
+
+		@all_fuels = Hash.new
+
+		researches_of_year_separeted.each do |years, all_year_researches_of_county|
+
+			@all_fuels[years] = []
+			@all_fuels[years] += Fuel.get_fuels_of_researchs(all_year_researches_of_county)
+
+		end
+
+		return @all_fuels
+
+
+	end
+
+
+	def get_prices_of_fuel(all_fuels)
+
+		@ethanol = Hash.new
+		@gas = Hash.new
+		@diesel = Hash.new
+
+		all_fuels.each do |year, all_fuels_by_year|
+
+			@ethanol[year] = []
+			@gas[year] = []
+			@diesel[year] = []
+
+			Fuel.separate_fuels_by_type!(all_fuels_by_year, @ethanol[year], @gas[year], @diesel[year], "medium_resale_price")
+
 		end
 
 	end
 
-	def generate_annual_graph_by_county
+	def calculate_sum_of_fuels(gas, ethanol, diesel)
 
-		@years = [2013, 2014, 2015]
+		@sum_gas = []
+		@sum_ethanol = []
+		@sum_diesel = []
 
-		title = "Preço do combustivel no decorrer dos anos" + " - " + @county_searched
+		gas.each do |year,gas_of_year|
 
-		return generate_graph(prices_of_fuel[0], prices_of_fuel[1], prices_of_fuel[2], title, @years)
-
-	end
-
-	def check_year_of_research(researches_of_county, researches_of_year, year)
-		researches_of_county.each do |research|
-
-			if research.date.strftime("%Y").to_i == year
-
-				research.fuels.each do |fuel|
-					researches_of_year << fuel
-				end
-			end
-		end
-	end
-
-	def fuels_of_year
-
-		@researches_of_county = County.find_by(name: @county_searched).fuel_researches
-		@years_of_researches = Hash.new
-
-		@years.each do |year|
-
-			@years_of_researches[year] = Hash.new
-			@researches_of_year = []
-
-			check_year_of_research(@researches_of_county, @researches_of_year, year)
-
-			@years_of_researches[year] = @researches_of_year
+			@sum_gas << (gas_of_year.inject{|number_1,number_2| number_1 + number_2}/gas_of_year.length).round(3)
 
 		end
+		ethanol.each do |year,ethanol_of_year|
 
-		return @years_of_researches
-
-	end
-
-	def prices_of_fuel
-
-		#These variables stores the three mediums prices of the three types of fuels.
-		@gas_prices_for_year = [] #FuelType id: 2
-		@ethanol_prices_for_year = [] #FuelType id: 1
-		@diesel_prices_for_year = [] #FuelType id: 5
-
-		fuels_of_year.each do |year, fuels|
-
-
-		#These variables will store the fuels that equals to the type evidenced by the name of the vectors.
-		@gas_prices_month = []
-		@ethanol_prices_month = []
-		@diesel_prices_month =[]
-
-		verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
-
-		@gas_prices_for_year << calculate_price_fuel(@gas_prices_month)
-		@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month)
-		@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month)
+			@sum_ethanol << (ethanol_of_year.inject{|number_1,number_2| number_1 + number_2}/ethanol_of_year.length).round(3)
 
 		end
+		diesel.each do |year,diesel_of_year|
 
-		@total_price = [@gas_prices_for_year, @ethanol_prices_for_year, @diesel_prices_for_year]
+			@sum_diesel << (diesel_of_year.inject{|number_1,number_2| number_1 + number_2}/diesel_of_year.length).round(3)
 
-		return @total_price
+		end
+		
 	end
 
-	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
-	def calculate_price_fuel(fuel_prices_month)
-		sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
-		fuel_price_div = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
+	def generate_annual_graph_by_county(sum_diesel,sum_ethanol,sum_gas, years)
 
-		fuel_prices_month.each do |fuel|
-			sum_fuel = sum_fuel + fuel.medium_resale_price
-			if fuel.medium_resale_price != 0.0
-				fuel_price_div = fuel_price_div + 1
-			end
-		end
+		title = "Preço do combustivel no decorrer dos anos - #{params[:county_searched].titleize}"
 
-		return (sum_fuel/fuel_price_div).round(3)
-	end
-
-	def verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
-		fuels.each do |fuel|
-
-			if fuel.fuel_type_id == 1
-				ethanol_prices << fuel
-			elsif fuel.fuel_type_id == 2
-				gas_prices << fuel
-			elsif fuel.fuel_type_id == 5
-				diesel_prices << fuel
-			end
-		end
+		return generate_graph(sum_gas, sum_ethanol, sum_diesel, title,years)
 	end
 
 end #end of class
