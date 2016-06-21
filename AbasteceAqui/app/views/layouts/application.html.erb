@@ -22,9 +22,8 @@
 			<%= yield %>
 		</div>
 
-		<script type="text/javascript">
-			<%= yield(:page_script) %>
-		</script>
+		<%= yield(:javascript) %>
+		
 		<%= render '/shared/footer' %>
 	</body>
 </html>
