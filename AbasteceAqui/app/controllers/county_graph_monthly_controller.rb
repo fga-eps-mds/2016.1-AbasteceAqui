@@ -74,7 +74,7 @@ class CountyGraphMonthlyController < ApplicationController
 	# method that separete all researches by year of county_searched
 	def find_researches_of_selected_year(selected_years,all_researches_of_county)
 
-		@researches_of_year = FuelResearch.fuels_of_year_by_month(selected_years, all_researches_of_county)
+		@researches_of_year = FuelResearch.researches_of_year(selected_years, all_researches_of_county)
 
 		return @researches_of_year
 
