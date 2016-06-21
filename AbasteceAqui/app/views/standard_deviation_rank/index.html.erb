@@ -14,18 +14,18 @@
       </div>
 
         <div class="rank-gasoline" id="rank-gasoline">
-          <%= render 'deviation_gasoline_rank' %>
+          <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted} %>
         </div>
 
         <div class="rank-ethanol" id="rank-ethanol">
-          <%= render 'deviation_ethanol_rank' %>
+          <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted} %>
         </div>
 
         <div class="rank-diesel" id="rank-diesel">
-          <%= render 'deviation_diesel_rank' %>
+          <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted} %>
         </div>
-
-      </div>
+        
+    </div>
   </div>
 </div>
 
