@@ -1,19 +1,21 @@
 <% content_for :header do -%>
-	<%= javascript_include_tag 'dinamic_selection.js' %>
-	<%= javascript_include_tag 'highcharts-custom.js' %>
+<%= javascript_include_tag 'dinamic_selection.js' %>
+<%= javascript_include_tag 'highcharts-custom.js' %>
 <% end %>
-<div class="container">
 
+<div class="container">
 	<%= form_tag("/statistics/state_monthly", method: "get", remote: false) do %>
-		<%= label_tag("Escolha o estado desejado:") %>
-		<%= select_tag 'state_searched', options_for_select(@states, :selected => params[:state_searched]), id: "select_tag" %>
-		<%= label_tag("Escolha o ano desejado:") %>
-		<%= select_tag 'years', options_for_select([""""] + @years, :selected => params[:years]), id: "select_tag1" %>
-		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
+	<%= select_tag 'state_searched', options_for_select(["Selecione um estado"] + @states, :selected => params[:state_searched]), id: "state_tag"%>
+	<br>
+	<br>
+	<% if params[:state_searched] != nil %>
+	<%= params[:years] = nil %>
+	<%= select_tag 'years', options_for_select(["Selecione um ano"] + @years, :selected => params[:years]), id: "year_tag" %>
+	<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 	<% end %>
 
 	<div class="graph_state_monthly">
 		<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 	</div>
-
+	<% end %>
 </div>

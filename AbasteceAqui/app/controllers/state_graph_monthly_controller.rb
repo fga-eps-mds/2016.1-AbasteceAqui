@@ -47,7 +47,7 @@ class StateGraphMonthlyController < ApplicationController
 	# generate the chart of state monthly
 	def generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
 
-		title = "Preço do combustivel no decorrer do ano - #{state_searched} #{year_searched}"
+		title = "Preço do combustivel no decorrer do ano - #{state_searched.titleize}, #{year_searched}"
 
 		return generate_graph(all_medias[0], all_medias[1], all_medias[2], title)
 
