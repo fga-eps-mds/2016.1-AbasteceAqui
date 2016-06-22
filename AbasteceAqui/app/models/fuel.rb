@@ -71,55 +71,31 @@ belongs_to :fuel_type
 
 		fuels.each do |fuel|
 
-			self.get_ethanol(fuel,ethanol,atribute_type)
-			self.get_gas(fuel, gas,atribute_type)
-			self.get_diesel(fuel, diesel,atribute_type)
+
+			self.get_fuel(fuel,ethanol,atribute_type , 1)
+			self.get_fuel(fuel, gas,atribute_type , 2)
+			self.get_fuel(fuel, diesel,atribute_type, 5)
 
 		end
 
 	end
 
-	def self.get_ethanol(fuel, ethanol, atribute_type)
+	def self.get_fuel(fuel, vector_fuels, atribute_type , type_fuel)
 
-		if fuel.fuel_type_id == 1 && atribute_type == "none"
-			ethanol << fuel
+		if fuel.fuel_type_id == type_fuel && atribute_type == "none"
+			vector_fuels << fuel
 
-		elsif fuel.fuel_type_id == 1
-			ethanol << fuel.medium_resale_price
+		elsif fuel.fuel_type_id == type_fuel
+			vector_fuels << fuel.medium_resale_price
 
 		else
 			# do nothing
 		end
 
-	end
-
-	def self.get_gas(fuel, gas, atribute_type)
-
-		if fuel.fuel_type_id == 2 && atribute_type == "none"
-			gas << fuel
-
-		elsif fuel.fuel_type_id == 2
-			gas << fuel.medium_resale_price
-
-		else
-			# do nothing
-		end
+		return vector_fuels
 
 	end
 
-	def self.get_diesel(fuel, diesel, atribute_type)
-
-		if fuel.fuel_type_id == 5 && atribute_type == "none"
-			diesel << fuel
-
-		elsif fuel.fuel_type_id == 5
-			diesel << fuel.medium_resale_price
-
-		else
-			# do nothing
-		end
-
-	end
 
 	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
 	def self.calculate_price_fuel(fuel_prices_month)
