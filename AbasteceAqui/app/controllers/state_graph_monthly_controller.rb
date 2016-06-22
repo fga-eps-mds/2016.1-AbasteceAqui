@@ -26,6 +26,17 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
+	# get all states from db
+	# needed at view to generate states dropdown
+	# return a state array with all states
+	def get_all_states()
+
+		states  = State.get_state_names()
+
+		return states
+
+	end
+
 	# get all years from db
 	# needed at view to generate years dropdown
 	# return a years array with all years that we have at db
@@ -52,7 +63,7 @@ class StateGraphMonthlyController < ApplicationController
 	def get_fuels_of_researches(researches_of_year)
 
 		fuels = Fuel.get_fuels_of_researchs(researches_of_year)
-		puts fuels
+
 		return fuels
 
 	end
