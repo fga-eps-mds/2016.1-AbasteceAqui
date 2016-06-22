@@ -51,7 +51,7 @@ RSpec.describe Fuel,  type: :model do
       fuels = Fuel.all
       sorted_fuel = Fuel.sort_fuel_by_type(fuels,2)
 
-        expect(sorted_fuel.count).to eq(1)      
+        expect(sorted_fuel.count).to eq(1)
         expect(sorted_fuel[0].fuel_type_id).to eq(2)
     end
   end
@@ -124,6 +124,17 @@ RSpec.describe Fuel,  type: :model do
       expect(fuels_selected_year_2015[0][1].id).to eq(2)
       expect(fuels_selected_year_2016[0][0].id).to eq(3)
 
+    end
+  end
+
+  describe "#get_fuel" do
+    it "should return an array with fuels where fuel_type = 2" do
+        gas = []
+        atribute_type = "none"
+        fuel = Fuel.find(2)
+
+        gas_fuels = Fuel.get_fuel(fuel, gas, atribute_type , 2)
+        expect(gas_fuels[0].fuel_type_id).to eq(2)
     end
   end
 
