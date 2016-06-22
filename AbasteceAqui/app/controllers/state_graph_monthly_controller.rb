@@ -13,22 +13,16 @@ class StateGraphMonthlyController < ApplicationController
 		year_searched = year_searched.to_i()
 
 		if year_searched != 0
-			all_medias = get_monthly_state_fuel_media(state_searched, year_searched)
-			@chart = generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
+			researches_of_year = find_researches_of_year(state_searched, year_searched)
+			fuels = get_fuels_of_researches(researches_of_year)
+			fuels_month = separate_fuels_by_month(fuels)
+			average_gasoline = calculate_average_of_fuel(fuels_month, "GASOLINE")
+			average_ethanol = calculate_average_of_fuel(fuels_month, "ETHANOL")
+			average_diesel = calculate_average_of_fuel(fuels_month, "DIESEL")
+			generate_monthly_graph_by_state(average_ethanol, average_gasoline, average_diesel, state_searched, year_searched)
 		else
 			# do nothing
 		end
-
-	end
-
-	# get all states from db
-	# needed at view to generate states dropdown
-	# return a state array with all states
-	def get_all_states()
-
-		states  = State.get_state_names()
-
-		return states
 
 	end
 
@@ -44,28 +38,6 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
-	# generate the chart of state monthly
-	def generate_monthly_graph_by_state(all_medias, state_searched, year_searched)
-
-		title = "Preço do combustivel no decorrer do ano - #{state_searched.titleize}, #{year_searched}"
-
-		return generate_graph(all_medias[0], all_medias[1], all_medias[2], title)
-
-	end
-
-	# get all monthly media of the states
-	def get_monthly_state_fuel_media(state, year)
-
-		researches_of_year = find_researches_of_year(state, year)
-
-		fuels = separete_fuels_of_researches(researches_of_year)
-
-		all_medias = calculate_media(fuels)
-
-		return all_medias
-
-	end
-
 	# find all researches of an year of a state
 	def find_researches_of_year(state, year)
 
@@ -76,89 +48,29 @@ class StateGraphMonthlyController < ApplicationController
 
 	end
 
-	# create fuels hash
-	def create_fuels_hash
+	# get all fuels of researches year of a state
+	def get_fuels_of_researches(researches_of_year)
 
-		# fuels == {
-		# 	1 => ['ethanol data for month 1']['gas data month 1']['disel data month 1']
-		# 	2 => ['ethanol data for month 2']['gas data month 2']['disel data month 2']
-		# 	3 => [][][]
-		# 	4 => [][][]
-		# 		...
-		# }
-
-		fuels = Hash.new
-
-		(1..12).each do |month|
-
-			gas = []
-			diesel = []
-			ethanol = []
-			fuels[month] = [ethanol, gas, diesel]
-
-		end
-
+		fuels = Fuel.get_fuels_of_researchs(researches_of_year)
+		puts fuels
 		return fuels
 
 	end
 
-	# fill fuels hash
-	def separete_fuels_of_researches(researches_of_year)
+	# separate all fuels found in months hash of name of fuel
+	def separate_fuels_by_month(fuels)
 
-		fuels = create_fuels_hash()
-
-		researches_of_year.each do |research|
-			separete_prices_by_fuel_type(fuels, research)
-		end
-
-		return fuels
+		fuels_month = Fuel.find_fuels_by_month(fuels)
+		return fuels_month
 
 	end
 
-	def separete_prices_by_fuel_type(fuels, research)
+	# generate the chart of state monthly
+	def generate_monthly_graph_by_state(ethanol_media, gas_media, diesel_media, state_searched, year_searched)
 
-		research.fuels.each do |f|
-			if f.medium_resale_price != 0.0
-				add_medium_resale_price_to_its_fuels(f, fuels, research)
-			else
-				# do nothing
-			end
+		title = "Preço do combustivel no decorrer do ano - #{state_searched.titleize}, #{year_searched}"
 
-		end
-
-	end
-
-	def add_medium_resale_price_to_its_fuels(f, fuels, research)
-
-		if f.fuel_type_id == 1
-			fuels[research.date.month][0] << f.medium_resale_price
-		elsif f.fuel_type_id == 2
-			fuels[research.date.month][1] << f.medium_resale_price
-		elsif f.fuel_type_id == 5
-			fuels[research.date.month][2] << f.medium_resale_price
-		end
-
-	end
-
-
-	# calculate media for each month of each fuel
-	def calculate_media(fuels)
-
-		ethanol_media = []
-		gas_media = []
-		diesel_media = []
-
-		fuels.each do |month, f|
-
-			ethanol_media << (f[0].sum / f[0].size.to_f).round(3)
-			gas_media << (f[1].sum / f[1].size.to_f).round(3)
-			diesel_media << (f[2].sum / f[2].size.to_f).round(3)
-
-		end
-
-		all_medias = [gas_media, ethanol_media, diesel_media]
-
-		return all_medias
+		return generate_graph(gas_media, ethanol_media, diesel_media, title)
 
 	end
 
