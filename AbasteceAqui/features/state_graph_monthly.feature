@@ -3,6 +3,7 @@ Feature: See statistics
 	As any kind of user
 	Should see the graphic
 
+	@javascript
 	Scenario: Success in see the monthly variation graphic of fuel price in a State in a year
 		Given I am in the monthly state chart page
 		When I fill "Escolha o Estado Desejado" with "ACRE "

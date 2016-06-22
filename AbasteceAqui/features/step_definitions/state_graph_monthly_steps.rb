@@ -4,16 +4,17 @@ Given(/^I am in the monthly state chart page$/) do
 end
 
 When (/^I fill "Escolha o Estado Desejado" with "ACRE "$/) do
-  	select('ACRE', :from => 'select_tag')
+  find(:xpath, '//span[@id="state_tagSelectBoxIt"]').click
+  find('.selectboxit-option[data-val="ACRE"]').click
 end
 
 
 When(/^I fill 'Ecolha o Ano Desejado'  with "([^"]*)"$/) do |year|
-	select(year, :from => 'select_tag1')
-	click_on('select_button')
+  find(:xpath, '//span[@id="year_tagSelectBoxIt"]').click
+  find('.selectboxit-option[data-val="2013"]').click
 end
 
 
 Then(/^the statistics page is load with the monthly variation graphic of fuel price in "([^"]*)" in the year of "([^"]*)"$/) do |arg1, arg2|
-	page.should have_content('Estatísticas')
+  expect(page).to have_content('Preço Da Gasolina')
 end

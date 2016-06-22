@@ -8,7 +8,7 @@ Given(/^I click on "Etanol"$/) do
 end
 
 Then(/^the page ranking by etanol is loaded$/) do
-  page.should have_content('Rank Preços Etanol')
+  expect(page).to have_content('Rank Preços Etanol')
 end
 
 #Scenario 2
@@ -17,7 +17,7 @@ Given(/^I click on "Diesel"$/) do
 end
 
 Then(/^the page ranking by diesel is loaded$/) do
-  page.should have_content('Rank Preços Diesel')
+  expect(page).to have_content('Rank Preços Diesel')
 end
 
 #Scenario 3
@@ -26,5 +26,5 @@ Given(/^I click on "Gasolina"$/) do
 end
 
 Then(/^the page ranking by gasolina is loaded$/) do
-  page.should have_content('Rank Preços Gasolina')
+    expect(page).to have_content('Rank Preços Gasolina')
 end
