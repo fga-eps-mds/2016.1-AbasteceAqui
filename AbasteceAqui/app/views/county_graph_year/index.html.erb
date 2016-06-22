@@ -1,6 +1,6 @@
 <% content_for :header do -%>
-	<%= javascript_include_tag 'dinamic_selection.js' %>
-	<%= javascript_include_tag 'highcharts-custom.js' %>
+<%= javascript_include_tag 'dinamic_selection.js' %>
+<%= javascript_include_tag 'highcharts-custom.js' %>
 <% end %>
 <div class="container">
 
@@ -15,20 +15,8 @@
 	</span>
 
 
-			<div class="graph_county_anual">
-				<%= render '/shared_graphs/graphs' %>
-			</div>
-			<% end %>
+	<div class="graph_county_anual">
+		<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
+	</div>
+	<% end %>
 </div>
-<script>
-	$(function ( ) {
-		$("select").selectBoxIt({
-
-			showEffect: "fadeIn",
-	    showEffectSpeed: 600,
-
-	    hideEffect: "fadeOut",
-	    hideEffectSpeed: 400
-	  });
-	});
-</script>
