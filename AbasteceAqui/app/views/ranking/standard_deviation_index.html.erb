@@ -15,19 +15,18 @@
 
       <div class="rank-gasoline" id="rank-gasoline">
         <p style="font-size:0px">Rank do Desivo Padrão da Gasolina</p>
-        <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted, attribute: "standardDeviation"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted, attribute: "standardDeviation"} %>
       </div>
 
       <div class="rank-ethanol" id="rank-ethanol">
         <p style="font-size:0px">Rank do Desivo Padrão do Etanol</p>
-        <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted, attribute: "standardDeviation"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted, attribute: "standardDeviation"} %>
       </div>
 
       <div class="rank-diesel" id="rank-diesel">
         <p style="font-size:0px">Rank do Desivo Padrão do Diesel</p>
-        <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted, attribute: "standardDeviation"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted, attribute: "standardDeviation"} %>
       </div>
-        
     </div>
   </div>
 </div>

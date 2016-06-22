@@ -2,6 +2,7 @@ class County < ActiveRecord::Base
 
 	belongs_to :state
 	has_many :fuel_researches
+	delegate :name,  :to => :state, :prefix => true
 
 	def self.search_county_research (county_searched)
 
@@ -26,7 +27,7 @@ class County < ActiveRecord::Base
 		return counties
 
 	end
-	
+
 	def self.find_counties_by_fuel_sorted(fuels)
 
 		counties_sorted = []
