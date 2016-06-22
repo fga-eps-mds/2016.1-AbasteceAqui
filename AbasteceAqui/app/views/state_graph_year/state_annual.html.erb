@@ -7,7 +7,7 @@
 	<span class="same_line">
 		Escolha o Estado Desejado:
 		<%= form_tag("/statistics/state_annual", method: "get", remote: false) do %>
-		<%= select_tag 'state_searched', options_for_select([[""]] + @states, :selected => params[:state_searched]), id: "select_tag"%>
+		<%= select_tag 'state_searched', options_for_select(["Selecione um estado"] + @states, :selected => params[:state_searched]), id: "state_tag"%>
 		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 		<% end %>
 	</span>
