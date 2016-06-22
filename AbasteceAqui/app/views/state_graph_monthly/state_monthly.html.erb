@@ -13,7 +13,7 @@
 	<% end %>
 
 	<div class="graph_state_monthly">
-		<%= render '/shared_graphs/graphs' %>
+		<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 	</div>
 
 </div>

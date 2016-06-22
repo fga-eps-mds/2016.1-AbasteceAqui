@@ -22,7 +22,7 @@
 		</span>
 
 		<div class="graph_county_anual">
-			<%= render '/shared_graphs/graphs' %>
+			<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 		</div>
 
 		<% end %>

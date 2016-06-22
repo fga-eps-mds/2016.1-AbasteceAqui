@@ -14,7 +14,7 @@
 
 	<% if @year_searched != nil %>
 		<div class="graph_country_monthly">
-			<%= render '/shared_graphs/graphs' %>
+			<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 		</div>
 
 	<% end %>

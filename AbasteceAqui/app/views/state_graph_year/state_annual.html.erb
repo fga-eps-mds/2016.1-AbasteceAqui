@@ -15,7 +15,7 @@
 
 	<% if @state_searched!= nil %>
 			<div class="graph_state_annual">
-				<%= render '/shared_graphs/graphs' %>
+				<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 			</div>
 	<% end %>
 </div>
