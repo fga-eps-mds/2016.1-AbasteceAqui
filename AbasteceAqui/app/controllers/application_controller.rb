@@ -4,23 +4,22 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery with: :exception
 	include ApplicationHelper
 
-	# remove needless values from the given array
-	# we use it to remove all nil values that we doesn't need at graph
-	def remove_needless_values!(fuel)
+	# calculate the averege of a fuel
+	def calculate_average_of_fuel(fuels_month, fuel_name)
 
-		last_valid_value = 0
+		average_of_fuel = []
+		for i in 0..(fuels_month.length-1)
 
-		for i in 0..11
-
-			if fuel[i] != nil
-				last_valid_value = i
+			average_of_fuel[i] = fuels_month[i][fuel_name].inject{|number_1,number_2| number_1 + number_2}
+			if average_of_fuel[i] != nil
+				average_of_fuel[i] = (average_of_fuel[i]/fuels_month[i][fuel_name].length).round(3)
+			else
+				#do nothing
 			end
 
 		end
 
-		# remove all values from last_valid_value + 1 until the end o array
-		fuel.slice!((last_valid_value + 1)..(fuel.length - 1))
-
+		return average_of_fuel
 	end
 
 end

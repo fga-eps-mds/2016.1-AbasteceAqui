@@ -160,6 +160,8 @@ delegate :date,  :to => :fuel_research, :prefix => true
 
 		end
 
+		return fuels_month
+
 	end
 
 	# create a struct that can receive separatad fuels by type
