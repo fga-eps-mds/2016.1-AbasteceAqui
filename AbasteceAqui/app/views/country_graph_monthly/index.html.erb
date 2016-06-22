@@ -7,7 +7,7 @@
 	<span class="same_line">
 		Escolha o ano Desejado:
 		<%= form_tag("/statistics/country_monthly", method: "get", remote: false) do %>
-		<%= select_tag 'years', options_for_select([""""] + @years, :selected => params[:years]), id: "select_tag" %>
+		<%= select_tag 'years', options_for_select(["Selecione um ano"] + @years, :selected => params[:years]), id: "year_tag" %>
 		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 		<% end %>
 	</span>
