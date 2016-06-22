@@ -1,5 +1,4 @@
 class CreateFuels < ActiveRecord::Migration
-  
   def change
     create_table :fuels do |t|
       t.integer :number_of_gas_station
@@ -15,7 +14,5 @@ class CreateFuels < ActiveRecord::Migration
       t.belongs_to :fuel_type
       t.timestamps null: false
     end
-  
   end
-
 end
