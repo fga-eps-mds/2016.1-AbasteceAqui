@@ -2,6 +2,8 @@ class Fuel < ActiveRecord::Base
 
 belongs_to :fuel_research
 belongs_to :fuel_type
+delegate :date,  :to => :fuel_research, :prefix => true
+
 
 	# receive a array of researches and return all fuels of each one
 	def self.get_fuels_of_researchs(researches)
@@ -146,15 +148,15 @@ belongs_to :fuel_type
 
 		if fuel_type_id == 1
 
-			fuels_month[fuel.fuel_research.date.month-1]["ETHANOL"] << fuel.medium_resale_price
+			fuels_month[fuel.fuel_research_date.month-1]["ETHANOL"] << fuel.medium_resale_price
 
 		elsif fuel_type_id == 2
 
-			fuels_month[fuel.fuel_research.date.month-1]["GASOLINE"] << fuel.medium_resale_price
+			fuels_month[fuel.fuel_research_date.month-1]["GASOLINE"] << fuel.medium_resale_price
 
 		elsif fuel_type_id == 5
 
-			fuels_month[fuel.fuel_research.date.month-1]["DIESEL"] << fuel.medium_resale_price
+			fuels_month[fuel.fuel_research_date.month-1]["DIESEL"] << fuel.medium_resale_price
 
 		end
 

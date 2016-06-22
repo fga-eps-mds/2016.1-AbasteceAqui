@@ -15,17 +15,17 @@
 
       <div class="rank-gasoline" id="rank-gasoline">
         <p style="font-size:0px">Rank Preços Gasolina</p>
-        <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted, attribute: "resalePrice"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted, attribute: "resalePrice"} %>
       </div>
 
       <div class="rank-ethanol" id="rank-ethanol">
         <p style="font-size:0px">Rank Preços Etanol</p>
-        <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted, attribute: "resalePrice"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted, attribute: "resalePrice"} %>
       </div>
 
       <div class="rank-diesel" id="rank-diesel">
         <p style="font-size:0px">Rank Preços Diesel</p>
-        <%= render partial: 'shared/ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted, attribute: "resalePrice"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted, attribute: "resalePrice"} %>
       </div>
 
     </div>
