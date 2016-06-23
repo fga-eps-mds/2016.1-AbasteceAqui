@@ -6,9 +6,14 @@ class SearchController < ApplicationController
 		@state_searched = params[:state_searched]
 		find_counties_of_state(@state_searched)
 		@county_searched = params[:county_searched]
-		find_researches_of_county(@county_searched)
-		find_date_last_research(@id_last_research, @county_searched)
-		search_fuels_last_research(@id_last_research, @county_searched)
+		if @county_searched != "Selecione um município" || @county_searched != nil
+			find_researches_of_county(@county_searched)
+			find_date_last_research(@id_last_research, @county_searched)
+			search_fuels_last_research(@id_last_research, @county_searched)
+		else
+			# do nothing
+
+		end
 
 	end
 
