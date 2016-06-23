@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui_1_9.min.js
+//= require jquery.selectBoxIt.min.js
 //= require turbolinks
 //= require navbar
 //= require bootstrap
 //= require bootstrap.js.coffee
 //= require bootstrap.min.js
 //= require jquery.dataTables.min.js
+//= require main.js
