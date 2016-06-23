@@ -1,6 +1,6 @@
 <% content_for :header do -%>
-<%= javascript_include_tag 'dinamic_selection.js' %>
-<%= javascript_include_tag 'highcharts-custom.js' %>
+	<%= javascript_include_tag 'dinamic_selection.js' %>
+	<%= javascript_include_tag 'highcharts-custom.js' %>
 <% end %>
 <div class="container">
 
@@ -14,8 +14,6 @@
 		<% end %>
 	</span>
 
-	<div class="graphs">
 		<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
-	</div>
 	<% end %>
 </div>

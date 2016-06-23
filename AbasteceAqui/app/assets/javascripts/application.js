@@ -20,4 +20,3 @@
 //= require bootstrap.js.coffee
 //= require bootstrap.min.js
 //= require jquery.dataTables.min.js
-//= require main.js
