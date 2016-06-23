@@ -1,13 +1,13 @@
 <% content_for :header do -%>
   <%= javascript_include_tag 'search' %>
 <% end %>
-<legend>SearchCounty</legend>
+<div class="container">
 <%= form_tag("/searcher", method: "get", class: "form-search") do %>
 <div id="state-group">
   <%= label_tag(:state_searched, "Estado:") %>
-  <select class="dropdown" name="state_searched" >
+  <select class="dropdown" name="state_searched">
     <optgroup label="Estado Selecionado">
-      <option value="<%= @state_searched %>"><%= @state_searched %></option>
+      <option value="<%= @state_searched %>" ><%= @state_searched %></option>
     </optgroup>
   </select>
 </div>
@@ -66,15 +66,4 @@
 <% else %>
   <!-- do nothing -->
 <% end %>
-<script>
-	$(function ( ) {
-		$("select").selectBoxIt({
-
-			showEffect: "fadeIn",
-	    showEffectSpeed: 600,
-
-	    hideEffect: "fadeOut",
-	    hideEffectSpeed: 400
-	  });
-	});
-</script>
+</div>

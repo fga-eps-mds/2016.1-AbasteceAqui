@@ -1,4 +1,5 @@
-<%= form_tag("/search-map-brazil", method: "get", class: "form-map") do %>
+<div class="container">
+	<%= form_tag("/search-map-brazil", method: "get", class: "form-map") do %>
 	<div>
 		<h1 id = "title-form">Selecione um estado:</h1>
 	</div>
@@ -1211,7 +1212,7 @@
 				664.72,383.93 668.46,382.55 673.00,381.28
 				675.30,381.15 676.63,380.95 679.00,381.28 Z" ></path>
 
-				<text x="668" y="407" data-name="BAHIA">BA</text>	
+				<text x="668" y="407" data-name="BAHIA">BA</text>
 
 			</a>
 
@@ -1429,12 +1430,9 @@
 				C 528.94,469.18 519.12,461.66 520.20,452.00
 				520.86,446.07 524.83,442.82 530.00,440.65
 				549.14,436.75 554.52,461.20 538.00,466.35 Z"></path>
-				<text x="524" y="458" data-name="DF">DF</text>	
+				<text x="524" y="458" data-name="DF">DF</text>
 			</a>
 		</svg>
-
-
-
 	</div>
-
-<% end%>
+	<% end%>
+</div>

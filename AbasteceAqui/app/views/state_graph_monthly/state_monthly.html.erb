@@ -14,7 +14,7 @@
 	<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 	<% end %>
 
-	<div class="graph_state_monthly">
+	<div class="graphs">
 		<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 	</div>
 	<% end %>

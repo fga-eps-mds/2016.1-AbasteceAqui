@@ -5,15 +5,14 @@
 <div class="container">
 
 	<span class="same_line">
-		Escolha o ano Desejado:
 		<%= form_tag("/statistics/country_monthly", method: "get", remote: false) do %>
 		<%= select_tag 'years', options_for_select(["Selecione um ano"] + @years, :selected => params[:years]), id: "year_tag" %>
 		<%= submit_tag "Confirmar", name: nil, id: "select_button"%>
 		<% end %>
 	</span>
 
-	<% if @year_searched != nil %>
-		<div class="graph_country_monthly">
+	<% if params[:years] != nil %>
+		<div class="graphs">
 			<%= render partial: '/shared_graphs/graphs', locals: {chart: @chart } %>
 		</div>
 	<% end %>
