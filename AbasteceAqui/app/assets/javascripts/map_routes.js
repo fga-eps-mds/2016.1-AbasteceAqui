@@ -16,12 +16,12 @@ let chosenFuel = 2; // default option
 let fuelsPosition = [];
 let mediumResalePriceRoute = 0;
 let fuelType = [
-  "ETANOL HIDRATADO",
-  "GASOLINA COMUM",
+  "Etanol Hidratado",
+  "Gasolina Comum",
   "GLP",
   "GNV",
-  "OLEO DIESEL",
-  "OLEO DIESEL S10"
+  "Óleo Diesel",
+  "Óleo Diesel S10"
 ];
 let whatMarkPut = [];
 
@@ -75,17 +75,20 @@ function initMap() {
 
   originBox.addListener('places_changed', onChangeHandler);
   destinationBox.addListener('places_changed', onChangeHandler);
+  $.alert({
+    title: 'Informação!',
+    content: 'Escolha um dos seis combustíveis para realizar a pesquisa! Caso não escolha nenhum deles, por padrão, o AbasteceAqui realizara a pesquisa da Gasolina Comum',
+  });
 
 }
 
 function disabledButton() {
-  document.getElementById("new-search").disabled = true;
-  document.getElementById("new-search").style.backgroundColor = "#fff";
-  document.getElementById("new-search").style.borderColor = "#fff";
+  document.getElementById("new-search").style.display = "none";
+  document.getElementById("is-loaded").style.display = "none";
 }
 $(document).ready(function() {
    disabledButton();
- });
+});
 
 function putMarks(geocoder, map) {
   var totalTimeMarks = 0;
@@ -182,6 +185,7 @@ function attachInstructionText(map, marker,fuel, address, isBlue) {
   if((countGeocodeAdress+1)==fuelsPosition.length) {
     clearInterval(loadingAnimation);
     document.getElementById("is-loaded").innerHTML = "Carregado com Sucesso";
+    $(document.getElementsByClassName("loading")).delay(8000).fadeOut("slow");
     textNextCity = '<h4>Cidade Destino</h4>';
 
   }
@@ -219,7 +223,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, map, fin
         content: 'Fazer buscas de rotas muito longas pode levar alguns minutos!',
       });
       document.getElementById("new-search").disabled = false;
-      document.getElementById("new-search").style.backgroundColor = "#5cb85c";
+      $(document.getElementsByClassName("new-search")).delay(600).fadeIn("slow");
+      $(document.getElementsByClassName("loading")).delay(800).fadeIn("slow");
+      //document.getElementById("is-loaded").style.removeProperty('display');
+      $(document.getElementsByClassName("buttons-map-route")).delay(400).fadeOut("slow");
       directionsDisplay.setDirections(response);
 			const steps = response.routes[0].legs[0].steps;
 			for(var i = 0; i < steps.length; i++) {
@@ -528,8 +535,8 @@ function removeDiacritics (str) {
 
 }
 
-function changeText(fuelName = "GASOLINA COMUM") {
-  document.getElementById("selectedFuel").innerHTML = fuelName;
+function changeText(fuelName = "Gasolina Comum") {
+  document.getElementById("selectedFuel").innerHTML = "Combustivel escolhido: " + fuelName;
 }
 
 $(document).ready(function() {
