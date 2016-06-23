@@ -4,20 +4,32 @@
       <th>Rank</th>
       <th>Municipio</th>
       <th>Estado</th>
-      <th>Preço médio</th>
+      <% if attribute == "standardDeviation" %>
+        <th>Desvio Padrão</th>
+        <% first = "more_atention.png" %>
+        <% second = "more_atention.png" %>
+        <% third = "more_atention.png" %>
+        <% last = "less_atention.png" %>
+      <% elsif attribute == "resalePrice" %>
+        <th>Preço médio</th>
+        <% first = "gold.png" %>
+        <% second = "silver.png" %>
+        <% third = "bronze.png" %>
+        <% last = "honor_medal.png" %>
+      <% end %>
     </tr>
   </thead>
   <tbody>
     <% for i in 0..(counties_sorted.length-1)%>
     <tr>
       <% if i == 0 %>
-        <td><%= image_tag("gold.png", :alt => "rank")%>
+        <td><%= image_tag(first, :alt => "rank")%>
       <% elsif i == 1 %>
-        <td><%= image_tag("silver.png", :alt => "rank")%>
+        <td><%= image_tag(second, :alt => "rank")%>
       <% elsif i == 2 %>
-        <td><%= image_tag("bronze.png", :alt => "rank")%>
+        <td><%= image_tag(third, :alt => "rank")%>
       <% elsif i > 2  %>
-        <td><%= image_tag("honor_medal.png", :alt => "rank")%>
+        <td><%= image_tag(last, :alt => "rank")%>
       <%end%>
       <%= i+1 %></td>
 

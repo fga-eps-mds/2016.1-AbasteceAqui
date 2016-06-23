@@ -4,6 +4,7 @@
 
 <div id="ranking-fuels">
   <div class="container">
+    <h1>Ranking de desvio padrão dos combustiveis nos municípios brasileiros</h1>
     <div id ="ranking-fuel-selection" class="ranking-fuel-selection">
       <div class="nav-center">
         <ul class="nav nav-tabs">
@@ -13,19 +14,35 @@
         </ul>
       </div>
 
+      <% image_name = ["more_atention.png","more_atention.png", "more_atention.png","less_atention.png"] %>
       <div class="rank-gasoline" id="rank-gasoline">
         <p style="font-size:0px">Rank do Desivo Padrão da Gasolina</p>
-        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_gasoline, fuel_sorted:@gasoline_sorted, attribute: "standardDeviation"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {
+            counties_sorted: @counties_sorted_gasoline,
+            fuel_sorted:@gasoline_sorted,
+            attribute: "standardDeviation"
+          } %>
+
       </div>
 
       <div class="rank-ethanol" id="rank-ethanol">
         <p style="font-size:0px">Rank do Desivo Padrão do Etanol</p>
-        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_ethanol, fuel_sorted:@ethanol_sorted, attribute: "standardDeviation"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {
+            counties_sorted: @counties_sorted_ethanol,
+            fuel_sorted:@ethanol_sorted,
+            attribute: "standardDeviation"
+           } %>
+
       </div>
 
       <div class="rank-diesel" id="rank-diesel">
         <p style="font-size:0px">Rank do Desivo Padrão do Diesel</p>
-        <%= render partial: 'ranking/ranking_table', locals: {counties_sorted: @counties_sorted_diesel, fuel_sorted:@diesel_sorted, attribute: "standardDeviation"} %>
+        <%= render partial: 'ranking/ranking_table', locals: {
+            counties_sorted: @counties_sorted_diesel,
+            fuel_sorted:@diesel_sorted,
+            attribute: "standardDeviation"
+          } %>
+
       </div>
     </div>
   </div>
