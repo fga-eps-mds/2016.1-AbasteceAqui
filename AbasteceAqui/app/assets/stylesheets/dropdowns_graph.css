@@ -1,0 +1,8 @@
+/* *= require dropdowns_graph.css */
+.selectboxit-container .selectboxit-options {
+  width: 210px;
+  max-height: 240px;
+}
+.graphs {
+  margin-top: 5%;
+}

@@ -34,47 +34,62 @@ RSpec.describe Fuel,  type: :model do
     fuel3.save
   end
 
-  describe "#fuels_latest_researches_counties" do
+  describe "#get_fuels_of_researchs" do
     it "should returns an array with 3 elements" do
 
       researches = FuelResearch.all
-      fuels = Fuel.fuels_latest_researches_counties(researches)
+      fuels = Fuel.get_fuels_of_researchs(researches)
 
       expect(fuels.count).to eq(3)
 
     end
   end
 
-  describe "#ethanol_sorted" do
-    it "should returns an array with 1 elements" do
+  describe "#sort_fuel_by_type" do
+    it "should returns an array of choosen type" do
 
       fuels = Fuel.all
-      ethanol_sorted = Fuel.ethanol_sorted(fuels)
+      sorted_fuel = Fuel.sort_fuel_by_type(fuels,2)
 
-      expect(ethanol_sorted.count).to eq(1)
+        expect(sorted_fuel.count).to eq(1)
+        expect(sorted_fuel[0].fuel_type_id).to eq(2)
+    end
+  end
+
+  describe "#find_fuels_by_month" do
+    it "should return an array with medium resale prices organized by fuel type" do
+
+      fuels = Fuel.all()
+
+      fuels_type_array = Fuel.find_fuels_by_month(fuels)
+
+      expect(fuels_type_array.count).to eq(12)
 
     end
   end
 
-  describe "#gasoline_sorted" do
-    it "should returns an array with 1 elements" do
+  describe "#find_fuels_by_month" do
+    it "should return an array with medium resale prices organized by gasoline, diesel and ethanol" do
 
-      fuels = Fuel.all
-      gasoline_sorted = Fuel.gasoline_sorted(fuels)
+      fuels = Fuel.all()
 
-      expect(gasoline_sorted.count).to eq(1)
+      fuels_type_array = Fuel.find_fuels_by_month(fuels)
+
+      expect(fuels_type_array[1]["GASOLINE"].count).to eq(1)
+      expect(fuels_type_array[1]["DIESEL"].count).to eq(1)
+      expect(fuels_type_array[1]["ETHANOL"].count).to eq(1)
 
     end
   end
 
-  describe "#diesel_sorted" do
-    it "should returns an array with 1 elements" do
+  describe "#get_fuel" do
+    it "should return an array with fuels where fuel_type = 2" do
+        gas = []
+        atribute_type = "none"
+        fuel = Fuel.find(2)
 
-      fuels = Fuel.all
-      diesel_sorted = Fuel.diesel_sorted(fuels)
-
-      expect(diesel_sorted.count).to eq(1)
-
+        gas_fuels = Fuel.get_fuel(fuel, gas, atribute_type , 2)
+        expect(gas_fuels[0].fuel_type_id).to eq(2)
     end
   end
 

@@ -6,25 +6,30 @@ class SearchController < ApplicationController
 		@state_searched = params[:state_searched]
 		find_counties_of_state(@state_searched)
 		@county_searched = params[:county_searched]
-		find_researches_of_county(@county_searched)
-		find_date_last_research(@id_last_research, @county_searched)
-		search_fuels_last_research(@id_last_research, @county_searched)
+		if @county_searched != "Selecione um município" || @county_searched != nil
+			find_researches_of_county(@county_searched)
+			find_date_last_research(@id_last_research, @county_searched)
+			search_fuels_last_research(@id_last_research, @county_searched)
+		else
+			# do nothing
+
+		end
 
 	end
 
-	def map_brazil 
+	def map_brazil
 		render :_map
 	end
 
 	def find_states
 
-		@states = State.fill_states
-		
+		@states = State.get_state_names
+
 	end
 
 	def find_counties_of_state(state_searched)
-		
-		@counties_of_state = State.search_state_counties(state_searched)
+
+		@counties_of_state = State.search_state_counties_by_name(state_searched)
 
 	end
 
@@ -34,11 +39,11 @@ class SearchController < ApplicationController
 
 	end
 
-	def find_date_last_research(id_last_research, county_searched) 
+	def find_date_last_research(id_last_research, county_searched)
 
 		if county_searched != nil
 			@date = FuelResearch.find_by(id: id_last_research).date
-		else 
+		else
 			#do nothing
 		end
 
@@ -48,7 +53,7 @@ class SearchController < ApplicationController
 
 		if county_searched != nil
 			@fuel = FuelResearch.search_fuels_research(id_last_research)
-		else 
+		else
 			#do nothing
 		end
 

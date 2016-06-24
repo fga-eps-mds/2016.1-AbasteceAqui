@@ -1,135 +1,139 @@
 class CountyGraphYearController < ApplicationController
 
-	def county_anual
+	def index
 
-		@states = State.fill_states
-		@state_searched = params[:state_searched]
+		get_all_state_names()
 
-		if @state_searched != nil
-			@counties_of_state = State.search_state_counties(@state_searched)
+		if params[:state_searched] != nil
+			find_all_counties_of_state_searched(params[:state_searched])
 		else
 			# do nothing
 		end
 
-		@county_searched = params[:county_searched]
+		if params[:county_searched] != nil
+			find_all_researches_of_county_searched(params[:county_searched])
+			find_all_years_of_researches(@all_researches_of_county)
+			fuels_of_year(@years, @all_researches_of_county)
+			find_all_fuels_of_county(@researches_of_year_separeted)
+			get_prices_of_fuel(@all_fuels)
 
-		if @county_searched != nil
-		generate_annual_graph_by_county()
+			@gas_price_averages = calculate_fuel_price_averages(@gas)
+			@ethanol_price_averages = calculate_fuel_price_averages(@ethanol)
+			@diesel_price_averages = calculate_fuel_price_averages(@diesel)
+
+			generate_annual_graph_by_county(@diesel_price_averages, @ethanol_price_averages, @gas_price_averages, @years)
+
 		else
 			# do nothing
 		end
 
 	end
 
-	def generate_annual_graph_by_county
+	def get_all_state_names()
 
-		@years = [2013, 2014, 2015]
+		@states = State.get_state_names()
 
-		titulo = "Preço do combustivel no decorrer dos anos"
+		return @states
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(text:  titulo + " - " + @county_searched)
-			f.xAxis(categories: @years)
-			f.series(name: "Preço Da Gasolina", yAxis: 0, data: prices_of_fuel[0])
-			f.series(name: "Preço Do Etanol", yAxis: 0, data: prices_of_fuel[1])
-			f.series(name: "Preço Do Diesel", yAxis: 0, data: prices_of_fuel[2])
-
-			f.yAxis [
-				{title: {text: "Preço Dos Combustíveis", margin: 70} },
-
-			]
-
-			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-			f.chart({defaultSeriesType: "line"})
-		end
 	end
 
-	def check_year_of_research(researches_of_county, researches_of_year, year)
-		researches_of_county.each do |research|
+	def find_all_counties_of_state_searched(state_searched)
 
-			if research.date.strftime("%Y").to_i == year
+		@counties_of_state = State.search_state_counties_by_name(state_searched)
 
-				research.fuels.each do |fuel|
-					researches_of_year << fuel
-				end
+		return @counties_of_state
+
+	end
+
+	def find_all_researches_of_county_searched(county_searched)
+
+		@all_researches_of_county = FuelResearch.find_all_researches_of_county(county_searched)
+
+		return @all_researches_of_county
+
+	end
+
+	def find_all_years_of_researches(all_researches_of_county)
+
+		@years = FuelResearch.find_years_of_researches(all_researches_of_county)
+
+		return @years
+
+	end
+
+	def fuels_of_year(years, all_researches_of_county)
+
+		@researches_of_year_separeted = Hash.new
+
+		years.each do |year|
+
+			@researches_of_year = FuelResearch.researches_of_year(year.to_s, all_researches_of_county)
+
+			@researches_of_year_separeted[year.to_s] = @researches_of_year
+
+		end
+
+		return @researches_of_year_separeted
+	end
+
+
+	def find_all_fuels_of_county(researches_of_year_separeted)
+
+		@all_fuels = Hash.new
+
+		researches_of_year_separeted.each do |years, all_year_researches_of_county|
+
+			@all_fuels[years] = []
+			@all_fuels[years] += Fuel.get_fuels_of_researchs(all_year_researches_of_county)
+
+		end
+
+		return @all_fuels
+
+
+	end
+
+
+	def get_prices_of_fuel(all_fuels)
+
+		@ethanol = Hash.new
+		@gas = Hash.new
+		@diesel = Hash.new
+
+		all_fuels.each do |year, all_fuels_by_year|
+
+			@ethanol[year] = []
+			@gas[year] = []
+			@diesel[year] = []
+
+			Fuel.separate_fuels_by_type!(all_fuels_by_year, @ethanol[year], @gas[year], @diesel[year], "medium_resale_price")
+
+		end
+
+	end
+
+
+	# recive a fuel and calculate the average price of a fuel in the years
+	def calculate_fuel_price_averages(fuel)
+
+		averages_price = []
+
+		fuel.each do |year,fuel_of_year|
+			if(fuel_of_year != [])
+				averages_price << (fuel_of_year.inject{|number_1,number_2| number_1 + number_2}/fuel_of_year.length).round(3)
 			end
+
 		end
+
+		return averages_price
 	end
 
-	def fuels_of_year
 
-		@researches_of_county = County.find_by(name: @county_searched).fuel_researches
-		@years_of_researches = Hash.new
+	def generate_annual_graph_by_county(diesel_price_averages, ethanol_price_averages, gas_price_averages, years)
 
-		@years.each do |year|
+		title = "Preço do combustivel no decorrer dos anos - #{params[:county_searched].titleize}"
 
-			@years_of_researches[year] = Hash.new
-			@researches_of_year = []
-
-			check_year_of_research(@researches_of_county, @researches_of_year, year)
-
-			@years_of_researches[year] = @researches_of_year
-
-		end
-
-		return @years_of_researches
-
-	end
-
-	def prices_of_fuel
-
-		#These variables stores the three mediums prices of the three types of fuels.
-		@gas_prices_for_year = [] #FuelType id: 2
-		@ethanol_prices_for_year = [] #FuelType id: 1
-		@diesel_prices_for_year = [] #FuelType id: 5
-
-		fuels_of_year.each do |year, fuels|
-
-
-		#These variables will store the fuels that equals to the type evidenced by the name of the vectors.
-		@gas_prices_month = []
-		@ethanol_prices_month = []
-		@diesel_prices_month =[]
-
-		verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
-
-		@gas_prices_for_year << calculate_price_fuel(@gas_prices_month)
-		@ethanol_prices_for_year << calculate_price_fuel(@ethanol_prices_month)
-		@diesel_prices_for_year << calculate_price_fuel(@diesel_prices_month)
-
-		end
-
-		@total_price = [@gas_prices_for_year, @ethanol_prices_for_year, @diesel_prices_for_year]
-
-		return @total_price
-	end
-
-	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
-	def calculate_price_fuel(fuel_prices_month)
-		sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
-		fuel_price_div = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
-
-		fuel_prices_month.each do |fuel|
-			sum_fuel = sum_fuel + fuel.medium_resale_price
-			if fuel.medium_resale_price != 0.0
-				fuel_price_div = fuel_price_div + 1
-			end
-		end
-
-		return (sum_fuel/fuel_price_div).round(3)
-	end
-
-	def verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
-		fuels.each do |fuel|
-
-			if fuel.fuel_type_id == 1
-				ethanol_prices << fuel
-			elsif fuel.fuel_type_id == 2
-				gas_prices << fuel
-			elsif fuel.fuel_type_id == 5
-				diesel_prices << fuel
-			end
-		end
+		return generate_graph(gas_price_averages, ethanol_price_averages, diesel_price_averages, title,years)
 	end
 
 end #end of class

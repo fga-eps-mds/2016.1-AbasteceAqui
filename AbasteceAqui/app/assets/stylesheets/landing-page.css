@@ -17,9 +17,12 @@ h6 {
     font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
+.padding-page-top > *:nth-of-type(1) {
+  padding-top: 80px;
+}
 
 .topnav {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .lead {
@@ -73,9 +76,9 @@ h6 {
 }
 
 .intro-message > h3 {
-    color: #FFFFFF; 
+    color: #FFFFFF;
     text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px
-    
+
 }
 
 @media(max-width:767px) {
@@ -204,13 +207,13 @@ html, body, .padding-page-top {
     height:90%;
 }
 body > .padding-page-top {
- height: auto; min-height: 100%;    
+ height: auto; min-height: 100%;
 }
 .padding-page-top > #tf-home {
     padding-top: 0px;
 }
-.padding-page-top { 
-    padding-bottom: 5em; 
+.padding-page-top {
+    padding-bottom: 5em;
 }
 
 p.copyright {

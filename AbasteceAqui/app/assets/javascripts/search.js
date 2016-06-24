@@ -13,3 +13,15 @@ $(function() {
         $(this).css("background-color", get_random_color());
     });
 });
+
+$(document ).ready(function ( ) {
+  $("select").selectBoxIt({
+    showFirstOption: false,
+
+    showEffect: "fadeIn",
+    showEffectSpeed: 600,
+
+    hideEffect: "fadeOut",
+    hideEffectSpeed: 400
+  });
+});

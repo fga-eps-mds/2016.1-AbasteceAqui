@@ -4,7 +4,7 @@ Given(/^I am on the welcome page$/) do
 end
 
 Given(/^I click on "Pesquisar preços de combustíveis por municípios"$/) do
-  click_link('Pesquisar preços de combustíveis por municípios')
+  click_link('pesquisa de preços AbasteceAqui')
 end
 
 Then(/^I should see the page to select a state$/) do

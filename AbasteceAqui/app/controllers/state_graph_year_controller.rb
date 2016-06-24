@@ -2,11 +2,11 @@ class StateGraphYearController < ApplicationController
 
 	def state_annual
 
-		@states = State.fill_states
+		@states = State.get_state_names()
 		@state_searched = params[:state_searched]
 
 		if @state_searched != nil
-			@counties_of_state = State.search_state_counties(@state_searched)
+			@counties_of_state = State.search_state_counties_by_name(@state_searched)
 			generate_annual_graph_by_state()
 		else
 			# do nothing
@@ -18,23 +18,10 @@ class StateGraphYearController < ApplicationController
 
 		@years = [2013, 2014, 2015]
 
-		titulo = "Preço do combustível no decorrer dos anos"
+		title = "Preço do combustível no decorrer dos anos"
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(text:  titulo + " - " + @state_searched)
-			f.xAxis(categories: @years)
-			f.series(name: "Preço Da Gasolina", yAxis: 0, data: prices_of_fuel[0])
-			f.series(name: "Preço Do Etanol", yAxis: 0, data: prices_of_fuel[1])
-			f.series(name: "Preço Do Diesel", yAxis: 0, data: prices_of_fuel[2])
+		return generate_graph(prices_of_fuel[0], prices_of_fuel[1], prices_of_fuel[2], title, @years)
 
-			f.yAxis [
-				{title: {text: "Preço Dos Combustíveis", margin: 70} },
-
-			]
-
-			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-			f.chart({defaultSeriesType: "line"})
-		end
 	end
 
 
@@ -52,7 +39,7 @@ class StateGraphYearController < ApplicationController
 			@ethanol_prices_month = []
 			@diesel_prices_month =[]
 
-			Fuel.verify_type_of_fuel(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
+			Fuel.separate_fuels_by_type!(fuels, @ethanol_prices_month, @gas_prices_month, @diesel_prices_month)
 
 			@gas_prices_for_year << Fuel.calculate_price_fuel(@gas_prices_month)
 			@ethanol_prices_for_year << Fuel.calculate_price_fuel(@ethanol_prices_month)
