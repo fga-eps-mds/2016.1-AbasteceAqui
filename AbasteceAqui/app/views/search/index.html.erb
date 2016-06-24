@@ -38,8 +38,7 @@
                   <div class="[ card-info-title ]">
                     <h2 id= "fuel-name"> <%= fuel_atributes.fuel_type.type_name %>   </h2>
                     <p><br>Preço médio: R$ <%= fuel_atributes.medium_resale_price %></p>
-                    <% standard_deviation = fuel_atributes.distribuition_standard_deviation %>
-                    <% type = fuel_atributes.fuel_type_id %>
+                    <% standard_deviation = fuel_atributes.resale_standard_deviation %>
                   </div>
                   <div class="[ card-info-detail ]">
                     <p>Preço mínimo: R$ <%= fuel_atributes.min_resale_price %></p>
@@ -47,7 +46,7 @@
                     <p>Postos pesquisados: <%= fuel_atributes.number_of_gas_station %></p>
                     <p>Unidade de medida: <%= fuel_atributes.fuel_type.unit_of_measurement %> </p>
                     <p>Data de pesquisa: <%= @date.strftime('%d/%m/%Y') %></p>
-                    <% if standard_deviation < 0.07 && (type == 1 || type == 2) %>
+                    <% if standard_deviation < 0.05 %>
                       <img class="img-responsive" src="assets/stamp.png" alt="">
                     <% else %>
                       <!-- do nothing -->

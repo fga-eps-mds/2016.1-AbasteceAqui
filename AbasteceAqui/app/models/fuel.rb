@@ -54,7 +54,7 @@ delegate :date,  :to => :fuel_research, :prefix => true
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == type && fuel.distribuition_standard_deviation != 0.0)
+			if(fuel.fuel_type_id == type && fuel.resale_standard_deviation != 0.0)
 				sorted_fuel << fuel
 			else
 				# do nothing
@@ -62,7 +62,7 @@ delegate :date,  :to => :fuel_research, :prefix => true
 
 		end
 
-		sorted_fuel.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
+		sorted_fuel.sort_by! {|const_sort| const_sort.resale_standard_deviation}
 
 		return sorted_fuel
 

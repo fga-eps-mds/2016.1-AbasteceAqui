@@ -284,7 +284,7 @@ var jconfirm, Jconfirm;
         title: 'Hello',
         content: 'Are you sure to continue?',
         icon: '',
-        confirmButton: 'Okay',
+        confirmButton: 'Ok',
         cancelButton: 'Cancel',
         confirmButtonClass: 'btn-default',
         cancelButtonClass: 'btn-default',

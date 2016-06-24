@@ -17,22 +17,22 @@ RSpec.describe RankingController, type: :controller do
     @fuel_research4 = FuelResearch.new(id:4, date:"2016-03-01", county_id: 2)
 
     @fuel1 = Fuel.new(id: 1, number_of_gas_station: 4, min_resale_price: 2.199,
-      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
+      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.01,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
       distribuition_standard_deviation: 0.01, fuel_research_id: 1, fuel_type_id: 1)
 
     @fuel2 = Fuel.new(id: 2, number_of_gas_station: 4, min_resale_price: 2.199,
-      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
+      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.01,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
       distribuition_standard_deviation: 0.02, fuel_research_id: 2, fuel_type_id: 2)
 
     @fuel3 = Fuel.new(id: 3, number_of_gas_station: 4, min_resale_price: 2.199,
-      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
+      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.01,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
       distribuition_standard_deviation: 0.03, fuel_research_id: 3, fuel_type_id: 3)
 
     @fuel4 = Fuel.new(id: 4, number_of_gas_station: 4, min_resale_price: 2.199,
-      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.0,
+      medium_resale_price: 2.199, max_resale_price: 2.199, resale_standard_deviation: 0.01,
       min_distribuition_price: 0.0, medium_distribuition_price: 0.0, max_distribuition_price: 0.0,
       distribuition_standard_deviation: 0.04, fuel_research_id: 4, fuel_type_id: 5)
 
@@ -132,7 +132,7 @@ RSpec.describe RankingController, type: :controller do
     end
   end
 
-  
+
   describe "#find_ethanol_fuels_sorted_by_standard_deviation" do
     it "Should return one objects of fuel" do
 

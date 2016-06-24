@@ -76,10 +76,9 @@ function initMap() {
   originBox.addListener('places_changed', onChangeHandler);
   destinationBox.addListener('places_changed', onChangeHandler);
   $.alert({
-    title: 'Informação!',
-    content: 'Escolha um dos seis combustíveis para realizar a pesquisa! Caso não escolha nenhum deles, por padrão, o AbasteceAqui realizara a pesquisa da Gasolina Comum',
+    title: 'Instruções!',
+    content: 'Escolha um dos seis combustíveis para realizar a pesquisa! Caso não escolha nenhum deles, por padrão, o AbasteceAqui realizara a pesquisa da Gasolina Comum. Após escolher um dos combustiveis, digite a cidade origem e cidade destino da sua viagem',
   });
-
 }
 
 function disabledButton() {
@@ -167,6 +166,9 @@ function attachInstructionText(map, marker,fuel, address, isBlue) {
                 '<p> Preço médio: '+ fuel.medium_resale_price +'</p>'+
                 '<p> Maior preço: '+ fuel.max_resale_price +'</p>'+
                 '<p> Menor preço: '+ fuel.min_resale_price +'</p>';
+    if(fuel.resale_standard_deviation < 0.071) {
+      text = text + '<h3>Há grandes chances do preço do combustivel desta cidade ser tabelado </h3>';
+    }
     if(fuelsPosition[countGeocodeAdress+1] != -1 && (countGeocodeAdress+1) != (fuelsPosition.length)) {
       if(fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price < fuels[fuelsPosition[countGeocodeAdress]].medium_resale_price) {
         textNextCity = '<font color='+green+'>Preço médio da próxima cidade: '+fuels[fuelsPosition[countGeocodeAdress+1]].medium_resale_price+'</font>';

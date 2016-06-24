@@ -2,8 +2,10 @@
 	<%= javascript_include_tag 'dinamic_selection.js' %>
 	<%= javascript_include_tag 'highcharts-custom.js' %>
 <% end %>
-<div class="container">
 
+<%= render '/shared/back_statistics' %>
+
+<div class="container">
 	<span class="same_line">
 		<%= form_tag("/statistics/county_anual", method: "get", remote: false) do %>
 		<%= select_tag 'state_searched', options_for_select(["Selecione um estado"] + @states, :selected => params[:state_searched]), id: "state_tag"%>

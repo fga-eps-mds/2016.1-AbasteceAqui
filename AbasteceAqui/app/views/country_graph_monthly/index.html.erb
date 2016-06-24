@@ -3,6 +3,8 @@
 	<%= javascript_include_tag 'highcharts-custom.js' %>
 <% end %>
 
+<%= render '/shared/back_statistics' %>
+
 <div class="container">
 	<span class="same_line">
 		<%= form_tag("/statistics/country_monthly", method: "get", remote: false) do %>
