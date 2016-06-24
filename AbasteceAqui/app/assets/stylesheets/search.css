@@ -54,8 +54,7 @@ input[name=commit] {
   height: auto;
   margin-left: 70px;
   margin-right: 80px;
-  margin-top: 50px;
-  
+
 }
 
 .animate {
@@ -67,7 +66,7 @@ input[name=commit] {
   border: 1px solid rgb(215, 215, 215);
   position: relative;
   font-family: 'Lato', sans-serif;
-  margin-top: 25%;  
+  margin-top: 25%;
   overflow: hidden;
   box-shadow: 0 27px 55px 0 rgba(0, 0, 0, 0.3),  0 17px 17px 0 rgba(0, 0, 0, 0.15);
 }
@@ -91,7 +90,7 @@ input[name=commit] {
 
 
 .card-info .card-info-details .card-info-title {
-  height: auto;   
+  height: auto;
   bottom: 100%;
   padding: 10px 5px;
 }
@@ -109,7 +108,7 @@ input[name=commit] {
   padding-bottom: 25px;
 }
 
-.card-info .card-info-details .card-info-title h2,  
+.card-info .card-info-details .card-info-title h2,
 .card-info .card-info-details .card-info-title p {
   color: rgb(62, 62, 62);
   font-size: 18px;
@@ -150,7 +149,7 @@ input[name=commit] {
   border-style: solid ;
   border-radius: 5px;
   background: #f1f1f1;
-  width: 25% !important;
+  width: 250px !important;
   height:25px;
   color: #626364;
 }
@@ -168,12 +167,7 @@ label[for=county_searched] {
   color: #000;
 }
 
-#county-group {
-  margin-left: 40%;
-}
-
 #state-group {
-  margin-left: 40%;
   margin-top: 30px;
   margin-bottom: 15px;
 }
@@ -202,7 +196,6 @@ label[for=county_searched] {
   }
   #search-buttons {
     margin-top: 30px;
-    margin-left: calc(50% - 80px);
   }
 
   .dropdown {
@@ -269,6 +262,3 @@ label[for=county_searched] {
   font-size: 10px;
  }
 }
-
-
-

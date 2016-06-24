@@ -3,7 +3,7 @@ class FuelResearch < ActiveRecord::Base
 	belongs_to :county
 	has_many :fuels
 
-	def self.search_fuels_research (id_last_research)
+	def self.search_fuels_research(id_last_research)
 
 
 		fuel_researches = FuelResearch.find_by(id: id_last_research).fuels
@@ -18,8 +18,7 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-	def self.fill_object_last_research (counties)
-
+	def self.fill_object_last_research(counties)
 
 		last_researches  = []
 
@@ -31,7 +30,7 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
-	def self.find_all_researches
+	def self.find_all_researches()
 
 		all_researches = FuelResearch.all
 
@@ -53,23 +52,25 @@ class FuelResearch < ActiveRecord::Base
 
 	end
 
+	# get all years from a research array
+	# return a years array with all years that we found at research array
 	def self.find_years_of_researches(researches)
-			year = []
+		year = []
 
-			researches.each do |research|
+		researches.each do |research|
 
-				year << research.date.year
+			year << research.date.year
 
-			end
+		end
 
-			year.uniq!
+		year.uniq!
 
-			return year
+		return year
 
 	end
 
-	#This method returns fuels of the choosen year by month.
-	def self.fuels_of_year_by_month (year, researches)
+	#This method returns researches of the choosen year
+	def self.researches_of_year(year, researches)
 
 		researches_of_year = []
 
@@ -90,10 +91,11 @@ class FuelResearch < ActiveRecord::Base
 	def self.find_all_researches_of_county(county_searched)
 
 		county = County.find_by(name: county_searched)
+
 		all_researches_of_county = county.fuel_researches
 
 		return all_researches_of_county
 
 	end
 
-end # end of class
+end

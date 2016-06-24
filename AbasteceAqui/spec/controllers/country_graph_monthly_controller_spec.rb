@@ -124,25 +124,27 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 		end
 	end
 
-	describe "#calculate_average_of_gasoline comparing array size" do
+	describe "#calculate_average_of_fuel comparing array size" do
 		it "shold return gasoline separeted by month" do
+			fuel_name = "GASOLINE"
 			all_researches = controller.find_all_researches()
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 			fuels_month = controller.find_fuels_by_type(fuels)
-			average_gasoline = controller.calculate_average_of_gasoline(fuels_month)
+			average_gasoline = controller.calculate_average_of_fuel(fuels_month, fuel_name)
 
 			expect(average_gasoline.count).to eq(12)
 		end
 	end
 
-	describe "#calculate_average_of_gasoline comparing array size" do
+	describe "#calculate_average_of_fuel comparing array size" do
 		it "shold return gasoline separeted by month" do
+			fuel_name = "GASOLINE"
 			all_researches = controller.find_all_researches()
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 			fuels_month = controller.find_fuels_by_type(fuels)
-			average_gasoline = controller.calculate_average_of_gasoline(fuels_month)
+			average_gasoline = controller.calculate_average_of_fuel(fuels_month, fuel_name)
 
 			expect(average_gasoline[0]).to eq(nil)
 			expect(average_gasoline[3]).to eq(5.0)
@@ -151,50 +153,54 @@ RSpec.describe CountryGraphMonthlyController, type: :controller do
 
 
 
-	describe "#calculate_average_of_ethanol comparing average" do
+	describe "#calculate_average_of_fuel comparing average" do
 		it "shold return ethanol separeted by month" do
+			fuel_name = "ETHANOL"
 			all_researches = controller.find_all_researches()
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 			fuels_month = controller.find_fuels_by_type(fuels)
-			average_ethanol = controller.calculate_average_of_ethanol(fuels_month)
+			average_ethanol = controller.calculate_average_of_fuel(fuels_month, fuel_name)
 
 			expect(average_ethanol.count).to eq(12)
 		end
 	end
 
-	describe "#calculate_average_of_ethanol comparing average" do
+	describe "#calculate_average_of_fuel comparing average" do
 		it "shold return ethanol separeted by month" do
+			fuel_name = "ETHANOL"
 			all_researches = controller.find_all_researches()
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 			fuels_month = controller.find_fuels_by_type(fuels)
-			average_ethanol = controller.calculate_average_of_ethanol(fuels_month)
+			average_ethanol = controller.calculate_average_of_fuel(fuels_month, fuel_name)
 
 			expect(average_ethanol[0]).to eq(nil)
 			expect(average_ethanol[3]).to eq(3.0)
 		end
 	end
 
-	describe "#calculate_average_of_diesel comparing array size" do
+	describe "#calculate_average_of_fuel comparing array size" do
 		it "shold return diesel separeted by month" do
+			fuel_name = "DIESEL"
 			all_researches = controller.find_all_researches()
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 			fuels_month = controller.find_fuels_by_type(fuels)
-			average_diesel = controller.calculate_average_of_diesel(fuels_month)
+			average_diesel = controller.calculate_average_of_fuel(fuels_month, fuel_name)
 
 			expect(average_diesel.count).to eq(12)
 		end
 	end
 
-	describe "#calculate_average_of_diesel comparing average" do
+	describe "#calculate_average_of_fuel comparing average" do
 		it "shold return diesel separeted by month" do
+			fuel_name = "DIESEL"
 			all_researches = controller.find_all_researches()
 			all_researches_selected_year = controller.find_researches_of_selected_year("2015", all_researches)
 			fuels = controller.find_fuels_of_research_of_year(all_researches_selected_year)
 			fuels_month = controller.find_fuels_by_type(fuels)
-			average_diesel = controller.calculate_average_of_diesel(fuels_month)
+			average_diesel = controller.calculate_average_of_fuel(fuels_month, fuel_name)
 
 			expect(average_diesel[0]).to eq(nil)
 			expect(average_diesel[3]).to eq(6.0)

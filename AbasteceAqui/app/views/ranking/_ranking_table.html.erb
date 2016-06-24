@@ -1,0 +1,49 @@
+<table id ="data-table">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Municipio</th>
+      <th>Estado</th>
+      <% if attribute == "standardDeviation" %>
+        <th>Desvio Padrão</th>
+        <% first = "more_atention.png" %>
+        <% second = "more_atention.png" %>
+        <% third = "more_atention.png" %>
+        <% last = "less_atention.png" %>
+      <% elsif attribute == "resalePrice" %>
+        <th>Preço médio</th>
+        <% first = "gold.png" %>
+        <% second = "silver.png" %>
+        <% third = "bronze.png" %>
+        <% last = "honor_medal.png" %>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% for i in 0..(counties_sorted.length-1)%>
+    <tr>
+      <% if i == 0 %>
+        <td><%= image_tag(first, :alt => "rank")%>
+      <% elsif i == 1 %>
+        <td><%= image_tag(second, :alt => "rank")%>
+      <% elsif i == 2 %>
+        <td><%= image_tag(third, :alt => "rank")%>
+      <% elsif i > 2  %>
+        <td><%= image_tag(last, :alt => "rank")%>
+      <%end%>
+      <%= i+1 %></td>
+
+      <td><%= counties_sorted[i].name.titleize %></td>
+      <td><%= counties_sorted[i].state_name.titleize %></td>
+
+      <% if attribute == "standardDeviation" %>
+        <td><%= fuel_sorted[i].resale_standard_deviation %></td>
+      <% elsif attribute == "resalePrice" %>
+        <td><%= fuel_sorted[i].medium_resale_price %></td>
+      <% end %>
+
+    </tr>
+    <% end %>
+
+  </tbody>
+</table>

@@ -304,11 +304,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#sorting_gasoline_of_county comparing by array size" do
+  describe "#sorting_a_fuel_of_county comparing by array size" do
     it "should return gasoline array without hash sorted by month of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      fuel_name = "GASOLINE"
 
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
@@ -321,8 +322,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
       fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
 
-      gasoline_month_brasilia = controller.sorting_gasoline_of_county(fuels_month_brasilia)
-      gasoline_month_rio_de_janeiro = controller.sorting_gasoline_of_county(fuels_month_rio_de_janeiro)
+      gasoline_month_brasilia = controller.sorting_a_fuel_of_county(fuels_month_brasilia, fuel_name)
+      gasoline_month_rio_de_janeiro = controller.sorting_a_fuel_of_county(fuels_month_rio_de_janeiro, fuel_name)
 
       expect(gasoline_month_brasilia.count).to eq(12)
 
@@ -331,11 +332,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#sorting_ethanol_of_county comparing by array size" do
+  describe "#sorting_a_fuel_of_county comparing by array size" do
     it "should return ethanol array without hash sorted by month of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      fuel_name = "ETHANOL"
 
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
@@ -348,8 +350,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
       fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
 
-      ethanol_month_brasilia = controller.sorting_ethanol_of_county(fuels_month_brasilia)
-      ethanol_month_rio_de_janeiro = controller.sorting_ethanol_of_county(fuels_month_rio_de_janeiro)
+      ethanol_month_brasilia = controller.sorting_a_fuel_of_county(fuels_month_brasilia, fuel_name)
+      ethanol_month_rio_de_janeiro = controller.sorting_a_fuel_of_county(fuels_month_rio_de_janeiro, fuel_name)
 
       expect(ethanol_month_brasilia.count).to eq(12)
 
@@ -358,11 +360,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#sorting_diesel_of_county comparing by array size" do
+  describe "#sorting_a_fuel_of_county comparing by array size" do
     it "should return diesel array without hash sorted by month of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      fuel_name = "DIESEL"
 
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
@@ -375,8 +378,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
       fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
 
-      diesel_month_brasilia = controller.sorting_diesel_of_county(fuels_month_brasilia)
-      diesel_month_rio_de_janeiro = controller.sorting_diesel_of_county(fuels_month_rio_de_janeiro)
+      diesel_month_brasilia = controller.sorting_a_fuel_of_county(fuels_month_brasilia, fuel_name)
+      diesel_month_rio_de_janeiro = controller.sorting_a_fuel_of_county(fuels_month_rio_de_janeiro, fuel_name)
 
       expect(diesel_month_brasilia.count).to eq(12)
 
@@ -385,11 +388,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#sorting_gasoline_of_county comparing by content value" do
+  describe "#sorting_a_fuel_of_county comparing by content value" do
     it "should return gasoline array without hash sorted by month of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      fuel_name = "GASOLINE"
 
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
@@ -402,8 +406,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
       fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
 
-      gasoline_month_brasilia = controller.sorting_gasoline_of_county(fuels_month_brasilia)
-      gasoline_month_rio_de_janeiro = controller.sorting_gasoline_of_county(fuels_month_rio_de_janeiro)
+      gasoline_month_brasilia = controller.sorting_a_fuel_of_county(fuels_month_brasilia, fuel_name)
+      gasoline_month_rio_de_janeiro = controller.sorting_a_fuel_of_county(fuels_month_rio_de_janeiro, fuel_name)
 
       expect(gasoline_month_brasilia[0]).to eq(nil)
       expect(gasoline_month_brasilia[1]).to eq([2.299])
@@ -413,11 +417,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#sorting_ethanol_of_county comparing by content value" do
+  describe "#sorting_a_fuel_of_county comparing by content value" do
     it "should return ethanol array without hash sorted by month of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      fuel_name = "ETHANOL"
 
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
@@ -430,8 +435,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
       fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
 
-      ethanol_month_brasilia = controller.sorting_ethanol_of_county(fuels_month_brasilia)
-      ethanol_month_rio_de_janeiro = controller.sorting_ethanol_of_county(fuels_month_rio_de_janeiro)
+      ethanol_month_brasilia = controller.sorting_a_fuel_of_county(fuels_month_brasilia, fuel_name)
+      ethanol_month_rio_de_janeiro = controller.sorting_a_fuel_of_county(fuels_month_rio_de_janeiro, fuel_name)
 
       expect(ethanol_month_brasilia[0]).to eq(nil)
       expect(ethanol_month_brasilia[1]).to eq([2.199])
@@ -441,11 +446,12 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#sorting_diesel_of_county comparing by content value" do
+  describe "#sorting_a_fuel_of_county comparing by content value" do
     it "should return diesel array without hash sorted by month of research's county of selected year" do
 
       county_searched_brasilia = "BRASILIA"
       county_searched_rio_de_janeiro = "RIO DE JANEIRO"
+      fuel_name = "DIESEL"
 
       researches_county_brasilia = controller.find_all_researches_of_county_searched(county_searched_brasilia)
       researches_county_rio_de_janeiro = controller.find_all_researches_of_county_searched(county_searched_rio_de_janeiro)
@@ -458,8 +464,8 @@ RSpec.describe CountyGraphMonthlyController, type: :controller do
       fuels_month_brasilia = controller.find_fuels_of_county_by_month(fuels_brasilia)
       fuels_month_rio_de_janeiro = controller.find_fuels_of_county_by_month(fuels_rio_de_janeiro)
 
-      diesel_month_brasilia = controller.sorting_diesel_of_county(fuels_month_brasilia)
-      diesel_month_rio_de_janeiro = controller.sorting_diesel_of_county(fuels_month_rio_de_janeiro)
+      diesel_month_brasilia = controller.sorting_a_fuel_of_county(fuels_month_brasilia, fuel_name)
+      diesel_month_rio_de_janeiro = controller.sorting_a_fuel_of_county(fuels_month_rio_de_janeiro, fuel_name)
 
       expect(diesel_month_brasilia[0]).to eq(nil)
 

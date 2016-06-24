@@ -31,16 +31,32 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#get_monthly_state_fuel_media" do
-    it "should return all medias" do
-      medias = controller.get_monthly_state_fuel_media(@state1.name, 2015)
-      expect(medias.count).to eq(3)
+  describe "#get_all_states" do
+    it "return all states name" do
+      states = controller.get_all_states()
+
+      states_name = []
+      # get all states name
+      for state in State.all
+
+        states_name << state.name
+
+      end
+
+      expect(states).to eq(states_name)
+    end
+  end
+
+  describe "#get_all_years_from_researches" do
+    it "return all db years" do
+      years = controller.get_all_years_from_researches()
+      expect(years).to eq([2015,2014])
     end
   end
 
   describe "#find_years" do
     it "should return all years" do
-      years = controller.find_years()
+      years = controller.get_all_years_from_researches()
       expect(years.count).to eq(2)
     end
   end
@@ -52,29 +68,20 @@ RSpec.describe StateGraphMonthlyController, type: :controller do
     end
   end
 
-  describe "#create_fuels_hash" do
-    it "should return hash of fuels" do
-      fuels = controller.create_fuels_hash
-      expect(fuels.count).to eq(12)
-    end
-  end
-
-  describe "#fill_fuels_hash" do
-    it "should fill the hash" do
-      fuels = controller.create_fuels_hash
+  describe "#separete_fuels_of_researches" do
+    it "separate the researches's fuels" do
       researches = controller.find_researches_of_year(@state1.name, 2015)
-      fuels = controller.fill_fuels_hash(researches, fuels)
-      expect(fuels[4][1][0]).to eq(5.0)
+      fuels = controller.get_fuels_of_researches(researches)
+      expect(fuels[0].medium_resale_price).to eq(3.0)
     end
   end
 
-  describe "#calculate_media" do
-    it "should return the array of medias" do
-      fuels = controller.create_fuels_hash
-      medias = controller.calculate_media(fuels)
-      expect(medias.count).to eq(3)
+  describe "#separate_fuels_by_month" do
+    it "separate the fuels by month" do
+      fuels = Fuel.all
+      fuels_month = controller.separate_fuels_by_month(fuels)
+      expect(fuels[0].medium_resale_price).to eq(3.0)
     end
   end
-
 
 end

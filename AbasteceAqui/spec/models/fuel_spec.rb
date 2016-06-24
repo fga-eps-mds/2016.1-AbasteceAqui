@@ -34,47 +34,25 @@ RSpec.describe Fuel,  type: :model do
     fuel3.save
   end
 
-  describe "#fuels_latest_researches_counties" do
+  describe "#get_fuels_of_researchs" do
     it "should returns an array with 3 elements" do
 
       researches = FuelResearch.all
-      fuels = Fuel.fuels_latest_researches_counties(researches)
+      fuels = Fuel.get_fuels_of_researchs(researches)
 
       expect(fuels.count).to eq(3)
 
     end
   end
 
-  describe "#ethanol_sorted" do
-    it "should returns an array with 1 elements" do
+  describe "#sort_fuel_by_type" do
+    it "should returns an array of choosen type" do
 
       fuels = Fuel.all
-      ethanol_sorted = Fuel.ethanol_sorted(fuels)
+      sorted_fuel = Fuel.sort_fuel_by_type(fuels,2)
 
-      expect(ethanol_sorted.count).to eq(1)
-
-    end
-  end
-
-  describe "#gasoline_sorted" do
-    it "should returns an array with 1 elements" do
-
-      fuels = Fuel.all
-      gasoline_sorted = Fuel.gasoline_sorted(fuels)
-
-      expect(gasoline_sorted.count).to eq(1)
-
-    end
-  end
-
-  describe "#diesel_sorted" do
-    it "should returns an array with 1 elements" do
-
-      fuels = Fuel.all
-      diesel_sorted = Fuel.diesel_sorted(fuels)
-
-      expect(diesel_sorted.count).to eq(1)
-
+        expect(sorted_fuel.count).to eq(1)
+        expect(sorted_fuel[0].fuel_type_id).to eq(2)
     end
   end
 
@@ -104,48 +82,14 @@ RSpec.describe Fuel,  type: :model do
     end
   end
 
-  describe "#find_all_fuels_of_county_of_selected_year comparing by array size" do
-    it "should return an array with fuels by year selected" do
+  describe "#get_fuel" do
+    it "should return an array with fuels where fuel_type = 2" do
+        gas = []
+        atribute_type = "none"
+        fuel = Fuel.find(2)
 
-      researches = FuelResearch.all()
-
-      fuels_selected_year_2015 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2015")
-      fuels_selected_year_2016 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2016")
-      fuels_selected_year_2013 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2013")
-
-      expect(fuels_selected_year_2015.count).to eq(1)
-      expect(fuels_selected_year_2016.count).to eq(1)
-      expect(fuels_selected_year_2013.count).to eq(0)
-
-    end
-  end
-
-  describe "#find_all_fuels_of_county_of_selected_year comparing array in array size" do
-    it "should return an array with fuels by year selected" do
-
-      researches = FuelResearch.all()
-
-      fuels_selected_year_2015 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2015")
-      fuels_selected_year_2016 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2016")
-
-      expect(fuels_selected_year_2015[0].count).to eq(2)
-      expect(fuels_selected_year_2016[0].count).to eq(1)
-
-    end
-  end
-
-  describe "#find_all_fuels_of_county_of_selected_year comparing by id" do
-    it "should return an array with fuels by year selected" do
-
-      researches = FuelResearch.all()
-
-      fuels_selected_year_2015 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2015")
-      fuels_selected_year_2016 = Fuel.find_all_fuels_of_county_of_selected_year(researches, "2016")
-
-      expect(fuels_selected_year_2015[0][0].id).to eq(1)
-      expect(fuels_selected_year_2015[0][1].id).to eq(2)
-      expect(fuels_selected_year_2016[0][0].id).to eq(3)
-
+        gas_fuels = Fuel.get_fuel(fuel, gas, atribute_type , 2)
+        expect(gas_fuels[0].fuel_type_id).to eq(2)
     end
   end
 

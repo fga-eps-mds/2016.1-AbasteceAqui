@@ -1,0 +1,53 @@
+<% content_for :header do -%>
+  <%= javascript_include_tag 'county_rank.js' %>
+<% end %>
+
+<%= render '/shared/back_statistics' %>
+
+<div id="ranking-fuels">
+  <div class="container">
+    <h1>Ranking do preço médio dos combustiveis nos municípios brasileiros</h1>
+    <div id ="ranking-fuel-selection" class="ranking-fuel-selection">
+      <div class="nav-center">
+        <ul class="nav nav-tabs">
+          <li role="presentation" id="gasoline-rank-btn" class="active"><a href="#">Gasolina</a></li>
+          <li role="presentation" id="ethanol-rank-btn"><a href="#">Etanol</a></li>
+          <li role="presentation" id="diesel-rank-btn"><a href="#">Diesel</a></li>
+        </ul>
+      </div>
+
+
+      <div class="rank-gasoline" id="rank-gasoline">
+        <p style="font-size:0px">Rank Preços Gasolina</p>
+        <%= render partial: 'ranking/ranking_table', locals: {
+            counties_sorted: @counties_sorted_gasoline,
+            fuel_sorted:@gasoline_sorted,
+            attribute: "resalePrice"
+          } %>
+      </div>
+
+      <div class="rank-ethanol" id="rank-ethanol">
+        <p style="font-size:0px">Rank Preços Etanol</p>
+        <%= render partial: 'ranking/ranking_table', locals: {
+            counties_sorted: @counties_sorted_ethanol,
+            fuel_sorted:@ethanol_sorted,
+            attribute: "resalePrice"
+          } %>
+      </div>
+
+      <div class="rank-diesel" id="rank-diesel">
+        <p style="font-size:0px">Rank Preços Diesel</p>
+        <%= render partial: 'ranking/ranking_table', locals: {
+            counties_sorted: @counties_sorted_diesel,
+            fuel_sorted:@diesel_sorted,
+            attribute: "resalePrice"
+          } %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript do -%>
+    <%= javascript_include_tag 'data_table_options.js' %>
+<% end %>

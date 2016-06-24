@@ -4,14 +4,15 @@ Given(/^I am in the statistics page$/) do
 end
 
 When (/^I fill "Escolha o Estado Desejado" field with "Acre"$/) do
-  	select('ACRE', :from => 'select_tag')
-  	click_on('select_button')
+  find(:xpath, '//span[@id="state_tagSelectBoxIt"]').click
+  find('.selectboxit-option[data-val="ACRE"]').click
 end
 
 And (/^I fill "Escolha o Municipio Desejado" field with "Cruzeiro do Sul"$/) do
-	select('Cruzeiro do Sul', :from => 'select_tag1')
+  find(:xpath, '//span[@id="county_tagSelectBoxIt"]').click
+  find('.selectboxit-option[data-val="CRUZEIRO DO SUL"]').click
 end
 
 Then(/^the statistic page is loaded with the yearly variation graphic of fuel price in 'Cruzeiro do Sul'$/) do
-  page.should have_content('Estatísticas')
+  expect(page).to have_content('Preço Da Gasolina')
 end

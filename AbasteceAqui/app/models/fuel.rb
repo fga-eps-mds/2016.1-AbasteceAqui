@@ -2,8 +2,11 @@ class Fuel < ActiveRecord::Base
 
 belongs_to :fuel_research
 belongs_to :fuel_type
+delegate :date,  :to => :fuel_research, :prefix => true
 
-	def self.fuels_latest_researches_counties(researches)
+
+	# receive a array of researches and return all fuels of each one
+	def self.get_fuels_of_researchs(researches)
 
 		fuels = []
 
@@ -21,153 +24,82 @@ belongs_to :fuel_type
 
 	end
 
+	# receive a fuels array and a fuel type
+	# returns a sorted array of given type
+	def self.sort_fuel_by_type(fuels, type)
 
-	def self.ethanol_sorted(fuels)
-
-		ethanol = []
+		sorted_fuel = []
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 1)
-				ethanol << fuel
-
+			if fuel.fuel_type_id == type
+				sorted_fuel << fuel
 			else
-				#do nothing
-
+				# do nothing
 			end
 
 		end
 
-		ethanol.sort_by! {|const_sort| const_sort.medium_resale_price}
+		sorted_fuel.sort_by! {|const_sort| const_sort.medium_resale_price}
 
-		return ethanol
+		return sorted_fuel
 
 	end
 
-	def self.ethanol_sorted_by_standard_deviation(fuels)
+	# receive a fuels array and a fuel type
+	# returns a sorted array with distribution standard deviation of given type
+	def self.sort_fuel_by_standard_deviation(fuels, type)
 
-		ethanol = []
+		sorted_fuel = []
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 1 && fuel.distribuition_standard_deviation != 0.0)
-				ethanol << fuel
-
+			if(fuel.fuel_type_id == type && fuel.resale_standard_deviation != 0.0)
+				sorted_fuel << fuel
 			else
-				#do nothing
-
+				# do nothing
 			end
 
 		end
 
-		ethanol.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
+		sorted_fuel.sort_by! {|const_sort| const_sort.resale_standard_deviation}
 
-		return ethanol
+		return sorted_fuel
 
 	end
 
-	def self.gasoline_sorted(fuels)
-
-		gasoline = []
+	# receive a array of fuels and separate it by type
+	def self.separate_fuels_by_type!(fuels, ethanol, gas, diesel, atribute_type = "none")
 
 		fuels.each do |fuel|
 
-			if(fuel.fuel_type_id == 2)
-				gasoline << fuel
 
-			else
-				#do nothing
-
-			end
+			self.get_fuel(fuel,ethanol,atribute_type , 1)
+			self.get_fuel(fuel, gas,atribute_type , 2)
+			self.get_fuel(fuel, diesel,atribute_type, 5)
 
 		end
 
-		gasoline.sort_by! {|const_sort| const_sort.medium_resale_price}
-
-		return gasoline
-
 	end
 
-	def self.gasoline_sorted_by_standard_deviation(fuels)
+	def self.get_fuel(fuel, vector_fuels, atribute_type , type_fuel)
 
-		gasoline = []
+		if fuel.fuel_type_id == type_fuel && atribute_type == "none"
+			vector_fuels << fuel
 
-		fuels.each do |fuel|
+		elsif fuel.fuel_type_id == type_fuel
+			vector_fuels << fuel.medium_resale_price
 
-			if(fuel.fuel_type_id == 2 && fuel.distribuition_standard_deviation != 0.0)
-				gasoline << fuel
-
-			else
-				#do nothing
-
-			end
-
+		else
+			# do nothing
 		end
 
-		gasoline.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
-
-		return gasoline
+		return vector_fuels
 
 	end
 
-	def self.diesel_sorted(fuels)
 
-		diesel = []
-
-		fuels.each do |fuel|
-
-			if(fuel.fuel_type_id == 5)
-				diesel << fuel
-
-			else
-				#do nothing
-
-			end
-
-		end
-
-		diesel.sort_by! {|const_sort| const_sort.medium_resale_price}
-
-		return diesel
-
-	end
-
-	def self.diesel_sorted_by_standard_deviation(fuels)
-
-		diesel = []
-
-		fuels.each do |fuel|
-
-			if(fuel.fuel_type_id == 5 && fuel.distribuition_standard_deviation != 0.0)
-				diesel << fuel
-
-			else
-				#do nothing
-
-			end
-
-		end
-
-		diesel.sort_by! {|const_sort| const_sort.distribuition_standard_deviation}
-
-		return diesel
-
-	end
-
-	def self.verify_type_of_fuel(fuels, ethanol_prices, gas_prices, diesel_prices)
-		fuels.each do |fuel|
-
-			if fuel.fuel_type_id == 1
-				ethanol_prices << fuel
-			elsif fuel.fuel_type_id == 2
-				gas_prices << fuel
-			elsif fuel.fuel_type_id == 5
-				diesel_prices << fuel
-			end
-		end
-	end
-
-		# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
+	# This method calculates the average of the medium distribution of the type of fuel in question in relation to the 12 months of year
 	def self.calculate_price_fuel(fuel_prices_month)
 		sum_fuel = 0.0 # This variable holds the value of the sum of the type of fuel in question in relation to the 12 months of year
 		number_of_prices_researches = 0.0 # this variable holds the division factor in relation to the months that do not have value 0
@@ -193,38 +125,14 @@ belongs_to :fuel_type
 		return total_of_the_year_state.round(3)
 	end
 
+	# separate fuels by medium resale price by type and by month
 	def self.find_fuels_by_month(fuels)
 
-		fuels_month = [0,1,2,3,4,5,6,7,8,9,10,11]
-		ethanol_prices = []
-		gas_prices = []
-		diesel_prices = []
-
-		for i in 0..11
-
-			fuels_month[i] = Hash.new
-			fuels_month[i]["ETHANOL"] = []
-			fuels_month[i]["GASOLINE"] = []
-			fuels_month[i]["DIESEL"] = []
-
-		end
+		fuels_month = self.create_struct_for_separetaded_fuels()
 
 		fuels.each do |fuel|
 
-
-			if fuel.fuel_type_id == 1
-
-				fuels_month[fuel.fuel_research.date.month-1]["ETHANOL"] << fuel.medium_resale_price
-
-			elsif fuel.fuel_type_id == 2
-
-				fuels_month[fuel.fuel_research.date.month-1]["GASOLINE"] << fuel.medium_resale_price
-
-			elsif fuel.fuel_type_id == 5
-
-				fuels_month[fuel.fuel_research.date.month-1]["DIESEL"] << fuel.medium_resale_price
-
-			end
+			put_fuel_price_in_fuels_month!(fuels_month, fuel)
 
 		end
 
@@ -232,20 +140,52 @@ belongs_to :fuel_type
 
 	end
 
-	def self.find_all_fuels_of_county_of_selected_year(all_researches, year)
+	# receive a fuel_month array and a fuel
+	# separate that fuel to the right position
+	def self.put_fuel_price_in_fuels_month!(fuels_month, fuel)
 
-		fuels = []
+		fuel_type_id = fuel.fuel_type_id
 
-		all_researches.each do |research|
+		if fuel_type_id == 1
 
-			if research.date.year == year.to_i
-				fuels << research.fuels
-			end
+			fuels_month[fuel.fuel_research_date.month-1]["ETHANOL"] << fuel.medium_resale_price
+
+		elsif fuel_type_id == 2
+
+			fuels_month[fuel.fuel_research_date.month-1]["GASOLINE"] << fuel.medium_resale_price
+
+		elsif fuel_type_id == 5
+
+			fuels_month[fuel.fuel_research_date.month-1]["DIESEL"] << fuel.medium_resale_price
 
 		end
 
-		return fuels
-	
+		return fuels_month
+
+	end
+
+	# create a struct that can receive separatad fuels by type
+	def self.create_struct_for_separetaded_fuels()
+
+		months = []
+
+		# months[] == [
+		# 	1 = {"ETHANOL" => [...]},{"GASOLINE" => [...]},{"DIESEL" => [...]},
+		# 	2 = {"ETHANOL" => [...]},{"GASOLINE" => [...]},{"DIESEL" => [...]},
+		# 	3 = {"ETHANOL" => [...]},{"GASOLINE" => [...]},{"DIESEL" => [...]},
+		# 	...
+		# ]
+
+		for i in (0..11)
+
+			months[i] = Hash.new
+			months[i]["ETHANOL"] = []
+			months[i]["GASOLINE"] = []
+			months[i]["DIESEL"] = []
+
+		end
+
+		return months
 	end
 
 end #end of class

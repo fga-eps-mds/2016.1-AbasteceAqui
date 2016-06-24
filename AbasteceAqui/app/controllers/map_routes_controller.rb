@@ -1,7 +1,7 @@
 class MapRoutesController < ApplicationController
 
 	def index
-		
+
 	end
 
 	def index_database
@@ -15,7 +15,7 @@ class MapRoutesController < ApplicationController
 
 	def find_states
 
-		@states = State.fill_object_states()
+		@states = State.get_state_objects()
 
 		return @states
 
@@ -39,7 +39,7 @@ class MapRoutesController < ApplicationController
 
 	def find_fuels_of_research(researches)
 
-		@fuels = Fuel.fuels_latest_researches_counties(researches)
+		@fuels = Fuel.get_fuels_of_researchs(researches)
 
 		return @fuels
 

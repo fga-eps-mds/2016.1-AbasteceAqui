@@ -1,159 +1,87 @@
 class StateGraphMonthlyController < ApplicationController
 
-	MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-				"Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-
 	# index page
-	def state_monthly
+	def state_monthly()
 
-		@states = State.fill_states
-		@state_searched = params[:state_searched]
-		
-		find_years()
-		@year_searched = params[:years].to_i
+		@states = get_all_states()
+		@years = get_all_years_from_researches()
 
-		# when string is and cast to integer it becomes 0
-		if @year_searched != 0
-			all_medias = get_monthly_state_fuel_media(@state_searched, @year_searched)
-			generate_monthly_graph_by_state(all_medias)
+		state_searched = params[:state_searched]
+		year_searched = params[:years]
+
+		# convert year_searched string to int, if it's nil  it become 0
+		year_searched = year_searched.to_i()
+
+		if year_searched != 0
+			researches_of_year = find_researches_of_year(state_searched, year_searched)
+			fuels = get_fuels_of_researches(researches_of_year)
+			fuels_month = separate_fuels_by_month(fuels)
+			average_gasoline = calculate_average_of_fuel(fuels_month, "GASOLINE")
+			average_ethanol = calculate_average_of_fuel(fuels_month, "ETHANOL")
+			average_diesel = calculate_average_of_fuel(fuels_month, "DIESEL")
+			generate_monthly_graph_by_state(average_ethanol, average_gasoline, average_diesel, state_searched, year_searched)
 		else
 			# do nothing
 		end
 
 	end
 
-	# get all monthly media of the states
-	def get_monthly_state_fuel_media(state, year)
+	# get all states from db
+	# needed at view to generate states dropdown
+	# return a state array with all states
+	def get_all_states()
 
-		researches_of_year = find_researches_of_year(state, year)
+		states  = State.get_state_names()
 
-		fuels = create_fuels_hash()
-
-		fuels = fill_fuels_hash(researches_of_year, fuels)
-		
-		all_medias = calculate_media(fuels)
-
-		return all_medias
+		return states
 
 	end
 
-	# generate the chart of state monthly
-	def generate_monthly_graph_by_state(all_medias)
+	# get all years from db
+	# needed at view to generate years dropdown
+	# return a years array with all years that we have at db
+	def get_all_years_from_researches()
 
-		titulo = "Preço do combustivel no decorrer do ano - #{@state_searched} #{@year_searched}"
+		all_researches = FuelResearch.find_all_researches()
+		years = FuelResearch.find_years_of_researches(all_researches)
 
-		@chart = LazyHighCharts::HighChart.new('graph') do |f|
-			f.title(text:  titulo)
-			f.xAxis(categories: MONTHS)
-			f.series(name: "Preço Da Gasolina", yAxis: 0, data: all_medias[0])
-			f.series(name: "Preço Do Etanol", yAxis: 0, data: all_medias[1])
-			f.series(name: "Preço Do Diesel", yAxis: 0, data: all_medias[2])
-
-			f.yAxis [
-				{title: {text: "Preço Dos Combustíveis", margin: 70} },
-			]
-
-			f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-			f.chart({defaultSeriesType: "line"})
-		end
-	end
-
-	# find all years of the BD
-	def find_years
-
-		@years = Set.new
-		all_researches = FuelResearch.find_all_researches
-
-		all_researches.each do |research|
-
-			@years.add(research.date.year)
-
-		end
-
-		@years = @years.to_a
-
-		return @years
+		return years
 
 	end
 
 	# find all researches of an year of a state
 	def find_researches_of_year(state, year)
 
-		counties = State.search_state_counties(state, "object")
-		
-		researches_of_year = []
+		counties = State.search_state_counties_by_object(state)
+		counties_year_researches = State.find_all_researches_of_counties_by_year(counties, year)
 
-		counties.each do |county|
-			
-			research = County.researches_of_year(county, year)
-
-			research.each do |r|
-				researches_of_year << r
-			end
-
-		end
-
-		return researches_of_year
+		return counties_year_researches
 
 	end
 
-	# create fuels hash
-	def create_fuels_hash
+	# get all fuels of researches year of a state
+	def get_fuels_of_researches(researches_of_year)
 
-		fuels = Hash.new
-
-		(1..12).each do |month|
-
-			gas = []
-			diesel = []
-			ethanol = []
-			fuels[month] = [ethanol, gas, diesel]
-		
-		end
+		fuels = Fuel.get_fuels_of_researchs(researches_of_year)
 
 		return fuels
 
 	end
 
-	# fill fuels hash
-	def fill_fuels_hash(researches_of_year, fuels)
+	# separate all fuels found in months hash of name of fuel
+	def separate_fuels_by_month(fuels)
 
-		researches_of_year.each do |research|
-
-			research.fuels.each do |f|
-				if f.medium_resale_price != 0.0
-					if f.fuel_type_id == 1
-						fuels[research.date.month][0] << f.medium_resale_price
-					elsif f.fuel_type_id == 2
-						fuels[research.date.month][1] << f.medium_resale_price
-					elsif f.fuel_type_id == 5
-						fuels[research.date.month][2] << f.medium_resale_price
-					end
-				end
-			end		
-		end
-
-		return fuels
+		fuels_month = Fuel.find_fuels_by_month(fuels)
+		return fuels_month
 
 	end
 
-	def calculate_media(fuels)
+	# generate the chart of state monthly
+	def generate_monthly_graph_by_state(ethanol_media, gas_media, diesel_media, state_searched, year_searched)
 
-		ethanol_media = []
-		gas_media = []
-		diesel_media = []
+		title = "Preço do combustivel no decorrer do ano - #{state_searched.titleize}, #{year_searched}"
 
-		fuels.each do |month, f|
-
-			ethanol_media << (f[0].sum / f[0].size.to_f).round(3)
-			gas_media << (f[1].sum / f[1].size.to_f).round(3)
-			diesel_media << (f[2].sum / f[2].size.to_f).round(3)
-
-		end
-
-		all_medias = [gas_media, ethanol_media, diesel_media]
-
-		return all_medias
+		return generate_graph(gas_media, ethanol_media, diesel_media, title)
 
 	end
 

@@ -2,7 +2,7 @@ Before do
   state = State.new(id: 1, name: "ACRE", region_id: 1)
   state.save
 
-  county = County.new(name: "Cruzeiro do Sul", state_id: 1)
+  county = County.new(name: "CRUZEIRO DO SUL", state_id: 1)
   county.save
 
 

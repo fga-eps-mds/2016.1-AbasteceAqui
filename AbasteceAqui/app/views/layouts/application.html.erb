@@ -8,7 +8,9 @@
 		<meta name="author" content="Abastece Aqui	">
 		<title>Abastece Aqui</title>
 		<link rel="icon" href="http://imageshack.com/a/img923/4266/L3oW40.png" />
-		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+		<link type="text/css" rel="stylesheet" href="http://gregfranko.com/jquery.selectBoxIt.js/css/jquery.selectBoxIt.css" />
+		<link type="text/css" rel="stylesheet" href="http://http://gregfranko.com/jquery.selectBoxIt.js/css/jquery.selectBoxIt.css" />
 		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 		<%= yield(:header) %>
 		<%= csrf_meta_tags %>
@@ -21,6 +23,9 @@
 		<div class= "padding-page-top">
 			<%= yield %>
 		</div>
+		
+		<%= yield(:javascript) %>
+
 		<%= render '/shared/footer' %>
 	</body>
 </html>

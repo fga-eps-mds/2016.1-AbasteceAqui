@@ -1,4 +1,4 @@
-#Scenario 1	
+#Scenario 1
 
 Given (/^I am in the state annual chart page$/) do
   visit 'http://localhost:3000/statistics/state_annual'
@@ -9,11 +9,11 @@ And (/^I click on "Gráfico Estadual Anual"$/) do
 end
 
 
-And (/^I fill "Escolha o Estado Desejado" with "ACRE"$/) do 
-  	select('ACRE', :from => 'select_tag')
-  	click_on('select_button')		
+And (/^I fill "Escolha o Estado Desejado" with "ACRE"$/) do
+  find(:xpath, '//span[@id="state_tagSelectBoxIt"]').click
+  find('.selectboxit-option[data-val="ACRE"]').click
 end
 
 Then(/^the statistic page is loaded with the yearly variation graphic of fuel price in 'ACRE'$/) do
-  page.should have_content('Estatísticas')
+  expect(page).to have_content('Preço Da Gasolina')
 end

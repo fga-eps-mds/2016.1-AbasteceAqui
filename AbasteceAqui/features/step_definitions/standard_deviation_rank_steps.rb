@@ -8,7 +8,7 @@ Given(/^I click on "Etanol Tab"$/) do
 end
 
 Then(/^the page ranking by etanol deviation is loaded$/) do
-  page.should have_content('Rank do Desivo Padrão do Etanol')
+  expect(page).to have_content('Rank do Desivo Padrão do Etanol')
 end
 
 
@@ -18,14 +18,14 @@ Given(/^I click on "Diesel Tab"$/) do
 end
 
 Then(/^the page ranking by diesel is loaded deviation$/) do
-  page.should have_content('Rank do Desivo Padrão do Diesel')
+  expect(page).to have_content('Rank do Desivo Padrão do Diesel')
 end
-	
+
 #Scenario 3
 Given(/^I click on "Gasolina Tab"$/) do
   click_link('Gasolina')
 end
 
 Then(/^the page ranking by gasolina deviation is loaded$/) do
-  page.should have_content('Rank do Desivo Padrão da Gasolina')
+  expect(page).to have_content('Rank do Desivo Padrão da Gasolina')
 end
